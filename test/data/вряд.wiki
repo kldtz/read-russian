@@ -1,0 +1,13 @@
+==Russian==
+
+===Pronunciation===
+* {{ru-IPA}}
+* {{audio|Ru-вряд.ogg|Audio|lang=ru}}
+
+===Particle===
+{{head|ru|particle}}
+
+# {{lb|ru|dated}} [[hardly]], [[scarcely]]
+
+====Synonyms====
+* {{l|ru|едва́}}, {{l|ru|вря́д ли}}

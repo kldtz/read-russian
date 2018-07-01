@@ -9,7 +9,7 @@ var selectionHandler = function (e) {
       if (parseInt(hits) > 0) {
         var title = json.query.search[0].title;
         httpGetAsync('https://en.wiktionary.org/wiki/' + title + '?action=raw', function (article) {
-          const info = parseArticle(article);
+          const info = parseArticle(article, title);
           var infoString = 'Pronunciation: ' + info.pronunciation + '\n';
           for (var key in info.definitions) {
             infoString += key + ': ' + info.definitions[key];

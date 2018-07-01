@@ -2,8 +2,8 @@ var POS_HEADERS = new Set(['Adjective', 'Adverb', 'Article', 'Classifier', 'Conj
   'Contraction', 'Counter', 'Determiner', 'Interjection', 'Noun', 'Numeral',
   'Participle', 'Particle', 'Postposition', 'Preposition', 'Pronoun', 'Proper noun', 'Verb']);
 
-export default function parseArticle(markup) {
-  var info = { definitions: {} };
+export default function parseArticle(markup, title) {
+  var info = { definitions: {}, title: title };
   var state = { russian: false, pos: null };
   for (var line of markup.split(/\r?\n/)) {
     updateLanguage(state, line);
@@ -25,8 +25,12 @@ function updateLanguage(state, line) {
 }
 
 function addPronunciation(info, line) {
+  if (!info.pronunciation && line.includes('{{ru-IPA}}')) {
+    info['pronunciation'] = info.title;
+    return;
+  }
   var pronMatch = /{{ru\-IPA\|(.+?)(\|.+?)?}}/.exec(line);
-  if (!info.pronunciation && pronMatch) {
+  if ((!info.pronunciation || info.pronunciation === info.title) && pronMatch) {
     info['pronunciation'] = pronMatch[1];
   }
 }
