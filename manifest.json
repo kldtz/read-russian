@@ -1,0 +1,36 @@
+{
+    "name": "Read Russian",
+    "version": "1.0",
+    "description": "Annotates Russian words with information from Wiktionary.",
+    "permissions": [
+        "activeTab",
+        "declarativeContent",
+        "storage",
+        "contextMenus",
+        "tabs"
+    ],
+    "background": {
+        "page": "background.html"
+    },
+    "page_action": {
+        "default_icon": {
+            "48": "images/wikt.png"
+        }
+    },
+    "icons": {
+        "48": "images/wikt.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "annotate.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "manifest_version": 2
+}

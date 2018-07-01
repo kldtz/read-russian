@@ -1,0 +1,8 @@
+{
+    "babel": {
+        "presets": ["es2015"]
+    },
+    "ava": {
+        "require": ["babel-register"]
+    }
+}
