@@ -1,0 +1,11 @@
+==Russian==
+
+===Pronunciation===
+* {{ru-IPA|шко́лы}}
+
+===Noun===
+{{ru-noun form|шко́лы|f-in|g2=f-in-p}}
+
+# {{inflection of|lang=ru|шко́ла||gen|s}}
+# {{inflection of|lang=ru|шко́ла||nom|p}}
+# {{inflection of|lang=ru|шко́ла||acc|p}}

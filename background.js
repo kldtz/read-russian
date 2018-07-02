@@ -14,6 +14,11 @@ var selectionHandler = function (e) {
           for (var key in info.definitions) {
             infoString += key + ': ' + info.definitions[key];
           }
+          if (info.inflections) {
+            for (var key in info.inflections) {
+              infoString += key + ': ' + info.inflections[key].lemma + ' - ' + info.inflections[key].grammarInfos;
+            }
+          }
           alert(infoString);
         });
       }

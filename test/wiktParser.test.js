@@ -3,7 +3,7 @@ import fs from 'fs';
 
 import parseArticle from '../wiktParser.js'
 
-test('readsOnlyRussianSection', t => {
+test('reads only Russian section', t => {
         const article = fs.readFileSync('test/data/число.wiki').toString();
         
         const info = parseArticle(article, 'число');
@@ -12,10 +12,19 @@ test('readsOnlyRussianSection', t => {
         t.is(info.definitions.Noun.length, 4);
 });
 
-test('recognizesDefaultPronunciation', t => {
+test('recognizes default pronunciation', t => {
         const article = fs.readFileSync('test/data/вряд.wiki').toString();
 
         const info = parseArticle(article, 'вряд');
 
         t.is(info.pronunciation, 'вряд');
+});
+
+test('extracts lemma and grammar infos from inflection-of template', t => {
+        const article = fs.readFileSync('test/data/школы.wiki').toString();
+
+        const info = parseArticle(article, 'школы');
+
+        t.is(info.inflections.Noun.lemma, 'шко́ла');
+        t.deepEqual(info.inflections.Noun.grammarInfos, ['gen|s', 'nom|p', 'acc|p']);
 });

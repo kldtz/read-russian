@@ -10,7 +10,7 @@ export default function parseArticle(markup, title) {
     if (state.russian) {
       addPronunciation(info, line);
       updatePos(state, line);
-      addDefinition(state.pos, info.definitions, line);
+      addDefinition(state.pos, info, line);
     }
   }
   return info;
@@ -47,11 +47,30 @@ function updatePos(state, line) {
   }
 }
 
-function addDefinition(pos, definitions, line) {
+function addDefinition(pos, info, line) {
   if (pos) {
-    var definition = extractDefinition(line);
+    const inflectionOf = /{{inflection of\|lang=ru\|([^|]+)\|.*?\|(.+?)}}/.exec(line);
+    if (inflectionOf) {
+      let lemma = inflectionOf[1];
+      let grammarInfo = inflectionOf[2];
+      if (!info.inflections) {
+        info.inflections = {};
+      }
+      if (!info.inflections[pos]) {
+        info.inflections[pos] = {};
+      }
+      if (!info.inflections[pos].lemma) {
+        info.inflections[pos].lemma = lemma;
+      }
+      if (!info.inflections[pos].grammarInfos) {
+        info.inflections[pos].grammarInfos = []
+      }
+      info.inflections[pos].grammarInfos.push(grammarInfo);
+      return;
+    }
+    const definition = extractDefinition(line);
     if (definition) {
-      addValue(definitions, pos, definition);
+      addValue(info.definitions, pos, definition);
     }
   }
 }
