@@ -1,8 +1,36 @@
 {
-    "babel": {
-        "presets": ["es2015"]
-    },
-    "ava": {
-        "require": ["babel-register"]
-    }
+  "name": "read-russian",
+  "version": "1.0.0",
+  "description": "Annotate Russian words with information from Wiktionary.",
+  "main": "wiktParser.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "babel-register": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "ava": {
+    "require": [
+      "babel-register"
+    ]
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kldtz/chrome-exts.git"
+  },
+  "author": "Tobias Kolditz",
+  "bugs": {
+    "url": "https://github.com/kldtz/chrome-exts/issues"
+  },
+  "homepage": "https://github.com/kldtz/chrome-exts#readme"
 }
