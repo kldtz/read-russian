@@ -12,11 +12,11 @@ var selectionHandler = function (e) {
           const info = parseArticle(article, title);
           var infoString = 'Pronunciation: ' + info.pronunciation + '\n';
           for (var key in info.definitions) {
-            infoString += key + ': ' + info.definitions[key];
+            infoString += key + ': ' + info.definitions[key] + '\n';
           }
           if (info.inflections) {
             for (var key in info.inflections) {
-              infoString += key + ': ' + info.inflections[key].lemma + ' - ' + info.inflections[key].grammarInfos;
+              infoString += key + ': ' + info.inflections[key].lemma + ' - ' + info.inflections[key].grammarInfos + '\n';
             }
           }
           alert(infoString);
