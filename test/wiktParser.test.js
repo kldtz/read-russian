@@ -40,3 +40,20 @@ test('reads only filtered pos', t => {
         t.truthy(info.definitions.Verb)
         t.falsy(info.definitions.Adverb)
 })
+
+test('extracts alternative form', t => {
+        const article = fs.readFileSync('test/data/счет.wiki').toString();
+
+        const info = parseArticle(article, 'счет');
+
+        t.is(info.inflections.Noun.alternative, 'счёт');
+})
+
+test('extract only second part of link', t => {
+        const article = fs.readFileSync('test/data/место.wiki').toString();
+
+        const info = parseArticle(article, 'счет');
+
+        t.is(info.definitions.Noun[0], 'place');
+        t.is(info.definitions.Noun[2], 'site, scene')
+})

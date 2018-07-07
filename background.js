@@ -12,9 +12,12 @@ var selectionHandler = function (e) {
           var info = parseArticle(article, title);
           if (!info.definitions && info.inflections) {
             for (var pos in info.inflections) {
-              var normalizedLemma = info.inflections[pos].normalizedLemma;
-              httpGetAsync('https://en.wiktionary.org/wiki/' + normalizedLemma + '?action=raw', function (lemmaArticle) {
-                const lemmaInfo = parseArticle(lemmaArticle, normalizedLemma, new Set([pos]));
+              var link = info.inflections[pos].normalizedLemma;
+              if (!link) {
+                link = info.inflections[pos].alternative;
+              }
+              httpGetAsync('https://en.wiktionary.org/wiki/' + link + '?action=raw', function (lemmaArticle) {
+                const lemmaInfo = parseArticle(lemmaArticle, link, new Set([pos]));
                 mergeDefinitions(info, lemmaInfo);
                 sendMessage(info);
               });

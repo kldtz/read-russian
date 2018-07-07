@@ -14,6 +14,7 @@ export default function parseArticle(markup, title, posFilter) {
       addPronunciation(info, line);
       updatePos(state, line, posFilter);
       if (state.pos) {
+        addAlternativeForm(info, line, state.pos);
         let hasInflection = addInflection(info, line, state.pos);
         if (!hasInflection) {
           addDefinition(info, line, state.pos);
@@ -52,6 +53,19 @@ function updatePos(state, line, posFilter) {
     } else {
       state.pos = null;
     }
+  }
+}
+
+function addAlternativeForm(info, line, pos) {
+  var alternative = /{{ru-.+?-alt-ё\|(.+?)\|?[^|]*?}}/.exec(line);
+  if (alternative) {
+    if (!info.inflections) {
+      info.inflections = {};
+    }
+    if (!info.inflections[pos]) {
+      info.inflections[pos] = {};
+    }
+    info.inflections[pos].alternative = alternative[1];
   }
 }
 
@@ -97,11 +111,12 @@ function normalize(word) {
 
 function extractDefinition(line) {
   if (line.startsWith('#')) {
-    var definition = line.replace(/(\[\[|\]\]|#)/g, '');
+    var definition = line.substring(1).replace(/\[\[.+?\|/g, '');
+    definition = definition.replace(/(\[\[|\]\])/g, '');
     definition = definition.replace(/{{.+?}}/g, '');
     if (definition && !definition.match(/^[\s\W]+$/)) {
       definition = definition.replace(/[\s]+/g, ' ');
-      return definition;
+      return definition.trim();
     }
   }
   return null;
