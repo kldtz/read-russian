@@ -1,0 +1,106 @@
+==Russian==
+
+===Etymology===
+{{PIE root|ru|ǵneh₃}}
+From {{inh|ru|orv|знати}}, from {{inh|ru|sla-pro|*znati}}, from {{der|ru|ine-pro|*ǵneh₃-}}.
+
+===Pronunciation===
+* {{ru-IPA}}
+* {{audio|Ru-знать.ogg|Audio|lang=ru}}
+
+===Verb===
+{{ru-verb|знать|impf|pf=узна́ть}}
+
+# to [[know]]: to be familiar with or accustomed to a person, place, or thing
+#: {{uxi|ru|[[я|Я]] [[её]] [[хорошо́]] '''зна́ю'''.|I '''know''' her well.}}
+#: {{uxi|ru|[[я|Я]] [[хорошо́]] '''зна́ю''' [[математика|матема́тику]].|I '''know''' math well.}}
+# to [[know]]: to be in possession of a specific fact or datum
+#: {{uxi|ru|[[я|Я]] '''зна́ю''', [[где]] [[он]] [[жить|живёт]].|I '''know''' where he lives.}}
+#: {{uxi|ru|[[я|Я]] '''зна́ю''', [[ско́лько]] [[два]] [[плюс]] [[два]].|I '''know''' how much two plus two is.}}
+#: {{uxi|ru|[[я|Я]] [[не]] '''зна́ю''', [[когда́]] [[э́то]] [[быть|бы́ло]].|I don’t '''know''' when it was.}}
+
+====Conjugation====
+{{ru-conj|impf|1a|зна́|ppp=-}}
+{{ru-conj-old|impf|1a|зна́|ppp=-}}
+
+====Derived terms====
+{{top2}}
+''imperfective''
+* {{l|ru|зна́ться}}
+* {{l|ru|знава́ть}}
+* {{l|ru|вызнава́ть}}
+* {{l|ru|дознава́ться}}
+* {{l|ru|зазнава́ться}}
+* {{l|ru|обознава́ться}}
+* {{l|ru|опознава́ть}}
+* {{l|ru|осознава́ть}}
+* {{l|ru|познава́ть}}
+* {{l|ru|познава́ться}}
+* (no equivalent)
+* {{l|ru|предузнава́ть}}
+* {{l|ru|признава́ть}}
+* {{l|ru|признава́ться}}
+* {{l|ru|прознава́ть}}
+* {{l|ru|разузнава́ть}}
+* {{l|ru|распознава́ть}}
+* {{l|ru|сознава́ть}}
+* {{l|ru|сознава́ться}}
+* {{l|ru|спознава́ться}}
+* {{l|ru|узнава́ть}}
+* {{l|ru|узнава́ться}}
+{{mid2}}
+''perfective''
+* (no equivalent)
+* (no equivalent)
+* {{l|ru|вы́знать}}
+* {{l|ru|дозна́ться}}
+* {{l|ru|зазна́ться}}
+* {{l|ru|обозна́ться}}
+* {{l|ru|опозна́ть}}
+* {{l|ru|осозна́ть}}
+* {{l|ru|позна́ть}}
+* (no equivalent)
+* {{l|ru|поразузна́ть}}
+* {{l|ru|предузна́ть}}
+* {{l|ru|призна́ть}}
+* {{l|ru|призна́ться}}
+* {{l|ru|прозна́ть}}
+* {{l|ru|разузна́ть}}
+* {{l|ru|распозна́ть}}
+* {{l|ru|созна́ть}}
+* {{l|ru|созна́ться}}
+* {{l|ru|спозна́ться}}
+* {{l|ru|узна́ть}}
+* {{l|ru|узна́ться}}
+{{bottom2}}
+
+===Noun===
+{{ru-noun+||f|n=sg}}
+
+# {{lb|ru|collective}} [[nobility]], [[noble]] [[people]]
+
+====Declension====
+{{ru-noun-table||f|n=sg}}
+{{ru-noun-old||f|n=sg}}
+
+====Synonyms====
+* {{sense|nobility}} {{l|ru|аристокра́тия}}, {{l|ru|вы́сшее о́бщество}}, {{l|ru|эли́та}}
+
+===Adverb===
+{{ru-adv|знать}}
+
+# {{lb|ru|informal}} [[it]] [[seems]], [[then]]
+
+====Synonyms====
+* {{l|ru|вида́ть}}, {{l|ru|ви́дно}}, {{l|ru|зна́чит}}
+
+===Related terms===
+* {{l|ru|дозна́ние}}
+* {{l|ru|дознаватель}}
+* {{l|ru|зазнайка}}
+* {{l|ru|зна́ние}}
+* {{l|ru|зна́тный}}
+* {{l|ru|осозна́ние}}
+* {{l|ru|призна́ние}}
+* {{l|ru|прознать}}
+* {{l|ru|созна́ние}}

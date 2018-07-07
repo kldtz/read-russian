@@ -2,14 +2,17 @@ var POS_HEADERS = new Set(['Adjective', 'Adverb', 'Article', 'Classifier', 'Conj
   'Contraction', 'Counter', 'Determiner', 'Interjection', 'Noun', 'Numeral',
   'Participle', 'Particle', 'Postposition', 'Preposition', 'Pronoun', 'Proper noun', 'Verb']);
 
-export default function parseArticle(markup, title) {
+export default function parseArticle(markup, title, posFilter) {
   var info = { definitions: {}, title: title };
   var state = { russian: false, pos: null };
+  if (!posFilter) {
+    posFilter = POS_HEADERS;
+  }
   for (var line of markup.split(/\r?\n/)) {
     updateLanguage(state, line);
     if (state.russian) {
       addPronunciation(info, line);
-      updatePos(state, line);
+      updatePos(state, line, posFilter);
       addDefinition(state.pos, info, line);
     }
   }
@@ -35,11 +38,11 @@ function addPronunciation(info, line) {
   }
 }
 
-function updatePos(state, line) {
+function updatePos(state, line, posFilter) {
   var headerMatch = /===([^=]+)===/g.exec(line);
   if (headerMatch) {
     var heading = headerMatch[1];
-    if (POS_HEADERS.has(heading)) {
+    if (posFilter.has(heading)) {
       state.pos = heading;
     } else {
       state.pos = null;
