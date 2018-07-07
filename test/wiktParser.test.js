@@ -55,5 +55,6 @@ test('extract only second part of link', t => {
         const info = parseArticle(article, 'счет');
 
         t.is(info.definitions.Noun[0], 'place');
+        t.is(info.definitions.Noun[1], 'region, area')
         t.is(info.definitions.Noun[2], 'site, scene')
 })
