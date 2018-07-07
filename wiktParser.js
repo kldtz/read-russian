@@ -13,7 +13,12 @@ export default function parseArticle(markup, title, posFilter) {
     if (state.russian) {
       addPronunciation(info, line);
       updatePos(state, line, posFilter);
-      addDefinition(state.pos, info, line);
+      if (state.pos) {
+        let hasInflection = addInflection(info, line, state.pos);
+        if (!hasInflection) {
+          addDefinition(info, line, state.pos);
+        }
+      }
     }
   }
   return info;
@@ -50,32 +55,41 @@ function updatePos(state, line, posFilter) {
   }
 }
 
-function addDefinition(pos, info, line) {
-  if (pos) {
-    const inflectionOf = /{{inflection of\|lang=ru\|([^|]+)\|.*?\|(.+?)}}/.exec(line);
-    if (inflectionOf) {
-      let lemma = inflectionOf[1];
-      let grammarInfo = inflectionOf[2];
-      if (!info.inflections) {
-        info.inflections = {};
-      }
-      if (!info.inflections[pos]) {
-        info.inflections[pos] = {};
-      }
-      if (!info.inflections[pos].lemma) {
-        info.inflections[pos].lemma = lemma;
-      }
-      if (!info.inflections[pos].grammarInfos) {
-        info.inflections[pos].grammarInfos = []
-      }
-      info.inflections[pos].grammarInfos.push(grammarInfo);
-      return;
-    }
-    const definition = extractDefinition(line);
-    if (definition) {
-      addValue(info.definitions, pos, definition);
-    }
+function addDefinition(info, line, pos) {
+  const definition = extractDefinition(line);
+  if (definition) {
+    addValue(info.definitions, pos, definition);
   }
+}
+
+function addInflection(info, line, pos) {
+  const inflectionOf = /{{inflection of\|lang=ru\|([^|]+)\|.*?\|(.+?)}}/.exec(line);
+  if (inflectionOf) {
+    let lemma = inflectionOf[1];
+    let grammarInfo = inflectionOf[2];
+    if (!info.inflections) {
+      info.inflections = {};
+    }
+    if (!info.inflections[pos]) {
+      info.inflections[pos] = {};
+    }
+    if (!info.inflections[pos].lemma) {
+      info.inflections[pos].lemma = lemma;
+    }
+    if (!info.inflections[pos].normalizedLemma) {
+      info.inflections[pos].normalizedLemma = normalize(lemma);
+    }
+    if (!info.inflections[pos].grammarInfos) {
+      info.inflections[pos].grammarInfos = []
+    }
+    info.inflections[pos].grammarInfos.push(grammarInfo);
+    return true;
+  }
+  return false;
+}
+
+function normalize(word) {
+  return word.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
 }
 
 function extractDefinition(line) {
