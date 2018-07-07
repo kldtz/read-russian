@@ -9,24 +9,40 @@ var selectionHandler = function (e) {
       if (parseInt(hits) > 0) {
         var title = json.query.search[0].title;
         httpGetAsync('https://en.wiktionary.org/wiki/' + title + '?action=raw', function (article) {
-          const info = parseArticle(article, title);
-          var infoString = 'Pronunciation: ' + info.pronunciation + '\n';
-          for (var key in info.definitions) {
-            infoString += key + ': ' + info.definitions[key] + '\n';
-          }
-          if (info.inflections) {
-            for (var key in info.inflections) {
-              infoString += key + ': ' + info.inflections[key].lemma + ' - ' + info.inflections[key].grammarInfos + '\n';
+          var info = parseArticle(article, title);
+          if (!info.definitions && info.inflections) {
+            for (var pos in info.inflections) {
+              var normalizedLemma = info.inflections[pos].normalizedLemma;
+              httpGetAsync('https://en.wiktionary.org/wiki/' + normalizedLemma + '?action=raw', function (lemmaArticle) {
+                const lemmaInfo = parseArticle(lemmaArticle, normalizedLemma, new Set([pos]));
+                mergeDefinitions(info, lemmaInfo);
+                sendMessage(info);
+              });
             }
+          } else {
+            sendMessage(info);
           }
-          alert(infoString);
-          chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            chrome.tabs.sendMessage(tabs[0].id, {data: info});
-          });
         });
       }
     });
   }
+}
+
+function mergeDefinitions(info, newInfo) {
+  if (!info.definitions) {
+    info.definitions = {};
+  }
+  for (var pos in newInfo.definitions) {
+    if (!(pos in info.definitions)) {
+      info.definitions[pos] = newInfo.definitions[pos]
+    }
+  }
+}
+
+function sendMessage(info) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, { data: info });
+  });
 }
 
 chrome.runtime.onInstalled.addListener(function () {

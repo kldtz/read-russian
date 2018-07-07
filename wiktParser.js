@@ -3,7 +3,7 @@ var POS_HEADERS = new Set(['Adjective', 'Adverb', 'Article', 'Classifier', 'Conj
   'Participle', 'Particle', 'Postposition', 'Preposition', 'Pronoun', 'Proper noun', 'Verb']);
 
 export default function parseArticle(markup, title, posFilter) {
-  var info = { definitions: {}, title: title };
+  var info = { title: title };
   var state = { russian: false, pos: null };
   if (!posFilter) {
     posFilter = POS_HEADERS;
@@ -58,6 +58,9 @@ function updatePos(state, line, posFilter) {
 function addDefinition(info, line, pos) {
   const definition = extractDefinition(line);
   if (definition) {
+    if (!info.definitions) {
+      info.definitions = {};
+    }
     addValue(info.definitions, pos, definition);
   }
 }
