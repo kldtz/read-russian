@@ -1,7 +1,7 @@
 import test from 'ava';
 import fs from 'fs';
 
-import parseArticle from '../wiktParser.js'
+import { parseArticle, normalize } from '../wiktParser.js'
 
 test('reads only Russian section', t => {
         const article = fs.readFileSync('test/data/число.wiki').toString();
@@ -28,6 +28,14 @@ test('extracts lemma and grammar infos from inflection-of template', t => {
         t.is(info.inflections.Noun.lemma, 'шко́ла');
         t.is(info.inflections.Noun.normalizedLemma, 'школа');
         t.deepEqual(info.inflections.Noun.grammarInfos, ['gen|s', 'nom|p', 'acc|p']);
+});
+
+test('extracts lemma from "ru-participle of" template', t => {
+        const article = fs.readFileSync('test/data/скачанный.wiki').toString();
+
+        const info = parseArticle(article, 'скачанный');
+
+        t.is(info.inflections.Verb.lemma, 'скача́ть')
 });
 
 test('reads only filtered pos', t => {
@@ -92,5 +100,14 @@ test('removes italics and bold markup', t => {
         const info = parseArticle(article, 'список');
 
         t.is(info.definitions.Noun[1], 'copy (especially of a picture or an icon)');
+})
+
+test('keeps combining characters unrelated to pronunciation', t => {
+        const words = ['слу́чай']
+
+        const normalizedWords = words.map(normalize);
+
+        const expectedNormalizedWords = ['случай'];
+        t.deepEqual(normalizedWords, expectedNormalizedWords);
 })
 

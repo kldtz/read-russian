@@ -1,0 +1,12 @@
+==Russian==
+
+===Pronunciation===
+* {{ru-IPA|ска́чанный}}
+
+===Participle===
+{{head|ru|participle|head=ска́чанный}}
+
+# {{ru-participle of|скача́ть||past|pass|pfv}}
+
+====Declension====
+{{ru-decl-adj|ска́чанный|a(2)}}

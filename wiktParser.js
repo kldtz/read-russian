@@ -50,7 +50,11 @@ function updatePos(state, line, posFilter) {
   if (headerMatch) {
     var heading = headerMatch[1];
     if (posFilter.has(heading)) {
-      state.pos = heading;
+      if (heading === 'Participle') {
+        state.pos = 'Verb'; // treat participle as verb
+      } else {
+        state.pos = heading;
+      }
     } else {
       state.pos = null;
     }
@@ -81,7 +85,10 @@ function addDefinition(info, line, pos) {
 }
 
 function addInflection(info, line, pos) {
-  const inflectionOf = /{{inflection of\|lang=ru\|([^|]+)\|.*?\|(.+?)}}/.exec(line);
+  var inflectionOf = /{{inflection of\|lang=ru\|([^|]+)\|.*?\|(.+?)}}/.exec(line);
+  if (!inflectionOf) {
+    inflectionOf = /{{ru-participle of\|([^|]+)\|.*?\|(.+?)}}/.exec(line);
+  }
   if (inflectionOf) {
     let lemma = inflectionOf[1];
     let grammarInfo = inflectionOf[2];
@@ -107,7 +114,7 @@ function addInflection(info, line, pos) {
 }
 
 function normalize(word) {
-  return word.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+  return word.normalize('NFD').replace(/[\u0300-\u0303]/g, '');
 }
 
 function extractDefinition(line) {
@@ -133,5 +140,5 @@ function addValue(definitions, pos, definition) {
 }
 
 
-export { parseArticle };
+export { parseArticle, normalize };
 
