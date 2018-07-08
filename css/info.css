@@ -1,0 +1,5 @@
+#wikt-info {
+    position: fixed;
+    z-index: 999;
+    background-color: #ffffff;
+}

@@ -29,6 +29,9 @@
             "js": [
                 "annotate.js"
             ],
+            "css": [
+                "css/info.css"
+            ],
             "run_at": "document_end"
         }
     ],
