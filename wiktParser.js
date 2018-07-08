@@ -9,6 +9,7 @@ export default function parseArticle(markup, title, posFilter) {
     posFilter = POS_HEADERS;
   }
   for (var line of markup.split(/\r?\n/)) {
+    line = line.trim();
     updateLanguage(state, line);
     if (state.russian) {
       addPronunciation(info, line);
@@ -110,7 +111,7 @@ function normalize(word) {
 }
 
 function extractDefinition(line) {
-  if (line.startsWith('#')) {
+  if (line.startsWith('#') && !line.startsWith('#:')) {
     var definition = line.substring(1).replace(/\[\[.+?\|/g, '');
     definition = definition.replace(/(\[\[|\]\])/g, '');
     definition = definition.replace(/{{.+?}}/g, '');

@@ -1,0 +1,51 @@
+==Russian==
+
+===Pronunciation===
+* {{ru-IPA}}
+* {{audio|Ru-суть.ogg|Audio|lang=ru}}
+
+===Etymology 1===
+
+====Noun====
+{{ru-noun+||f}}
+
+# [[essence]], [[core]], [[gist]], main [[point]]
+#: {{uxi|ru|''Во всём мне хочется дойти / До самой сути.''|Boris Pasternak (1956)}}
+#:: ''In everything, I want to reach / For the very essence.''
+
+=====Declension=====
+{{ru-noun-table||f}}
+
+=====Synonyms=====
+* {{l|ru|су́щность}}, {{l|ru|существо́}}, {{l|ru|сермяга}}
+
+=====Related terms=====
+* {{l|ru|сутевой}}
+* {{l|ru|по сути}}
+* {{l|ru|суть дела}}
+
+===Etymology 2===
+
+====Verb====
+{{head|ru|verb form}}
+
+# {{lb|ru|archaic}} {{inflection of|lang=ru|быть||3|p|pres|ind|impfv}}; ([[they]]) [[are]]
+
+----
+
+==Ukrainian==
+
+===Pronunciation===
+* {{uk-IPA|суть}}
+* {{audio|Uk-суть.ogg|Audio|lang=uk}}
+
+===Noun===
+{{uk-noun|суть|f|су́ті|-}}
+
+# {{lb|uk|uncountable}} [[essence]], [[core]], [[gist]], main [[point]]
+
+====Declension====
+{{uk-decl-noun-unc|суть|су́ті|су́ті|суть|су́ттю|су́ті|су́те}}
+
+===References===
+* {{R:uk:SUM-11}}

@@ -58,3 +58,11 @@ test('extract only second part of link', t => {
         t.is(info.definitions.Noun[1], 'region, area')
         t.is(info.definitions.Noun[2], 'site, scene')
 })
+
+test('ignore sub-items in definitions', t => {
+        const article = fs.readFileSync('test/data/суть.wiki').toString();
+
+        const info = parseArticle(article, 'суть');
+
+        t.is(info.definitions.Noun.length, 1);
+})
