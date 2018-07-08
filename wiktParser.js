@@ -112,7 +112,7 @@ function normalize(word) {
 
 function extractDefinition(line) {
   if (line.startsWith('#') && !line.startsWith('#:')) {
-    var definition = line.substring(1).replace(/\[\[.+?\|/g, '');
+    var definition = line.substring(1).replace(/\[\[[^\]]+?\|/g, '');
     definition = definition.replace(/(\[\[|\]\])/g, '');
     definition = definition.replace(/{{.+?}}/g, '');
     definition = definition.replace(/\(\s*\)/g, '');

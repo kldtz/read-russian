@@ -1,0 +1,18 @@
+==Russian==
+
+===Pronunciation===
+* {{ru-IPA|се́рия}}
+* {{audio|Ru-серия.ogg|Audio|lang=ru}}
+
+===Noun===
+{{ru-noun+|се́рия}}
+
+# [[series]]
+# [[episode]], [[part]] {{qualifier|TV}}
+
+====Declension====
+{{ru-noun-table|се́рия}}
+
+====Related terms====
+* {{l|ru|сериа́л}}, {{l|ru|серийность}}
+* {{l|ru|серийный}}

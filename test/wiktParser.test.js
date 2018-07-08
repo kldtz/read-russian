@@ -49,7 +49,7 @@ test('extracts alternative form', t => {
         t.is(info.inflections.Noun.alternative, 'счёт');
 })
 
-test('extract only second part of link', t => {
+test('extracts only second part of link', t => {
         const article = fs.readFileSync('test/data/место.wiki').toString();
 
         const info = parseArticle(article, 'счет');
@@ -59,10 +59,21 @@ test('extract only second part of link', t => {
         t.is(info.definitions.Noun[2], 'site, scene')
 })
 
-test('ignore sub-items in definitions', t => {
+test('ignores sub-items in definitions', t => {
         const article = fs.readFileSync('test/data/суть.wiki').toString();
 
         const info = parseArticle(article, 'суть');
 
         t.is(info.definitions.Noun.length, 1);
 })
+
+test('removes only first part inside link', t => {
+        const article = fs.readFileSync('test/data/серия.wiki').toString();
+
+        const info = parseArticle(article, 'серия');
+
+        t.is(info.definitions.Noun.length, 2);
+        t.is(info.definitions.Noun[0], 'series');
+        t.is(info.definitions.Noun[1], 'episode, part')
+})
+
