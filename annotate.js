@@ -1,36 +1,42 @@
 chrome.runtime.onMessage.addListener(function (message, sender) {
     clearInfoDiv();
-    var data = message.data;
-    addTitle(data.title);
-    if (data.definitions) {
-        addDefinitions(data.definitions);
-    }
+    var infoString = generateInfoDiv(message.data);
+    info.innerHTML = infoString;
 });
+
+function generateInfoDiv(data) {
+    var div = [];
+    div.push(data.title);
+    div.push(data.pronunciation ? ' (' + data.pronunciation + ')' : '');
+    div.push(': ');
+    for (let pos of collectPos(data)) {
+        div.push(pos);
+        if (data.inflections && data.inflections[pos]) {
+            div.push(' (' + data.inflections[pos].lemma + ', ' + data.inflections[pos].grammarInfos.join(', ') + ')');
+        }
+        div.push(': ')
+        if (data.definitions && data.definitions[pos]) {
+            div.push(data.definitions[pos].map((el, i) => (i+1) + '. ' + el).join('; '));
+        }
+        div.push('. ');
+    }
+    return div.join('');
+}
+
+function collectPos(data) {
+    var posList = [];
+    if (data.inflections) {
+        posList.push(...Object.keys(data.inflections));
+    }
+    if (data.definitions) {
+        posList.push(...Object.keys(data.definitions));
+    }
+    return new Set(posList);
+}
 
 function clearInfoDiv() {
     while (info.lastChild) {
         info.removeChild(info.lastChild);
-    }
-}
-
-function addTitle(title) {
-    var h1 = document.createElement('h1');
-    h1.textContent = title;
-    info.appendChild(h1);
-}
-
-function addDefinitions(definitions) {
-    for (let pos in definitions) {
-        var posH2 = document.createElement('h2');
-        posH2.textContent = pos
-        info.appendChild(posH2);
-        var ol = document.createElement('ol');
-        for (let def of definitions[pos]) {
-            var li = document.createElement('li');
-            li.textContent = def;
-            ol.appendChild(li)
-        }
-        info.appendChild(ol);
     }
 }
 

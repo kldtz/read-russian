@@ -10,7 +10,7 @@ var selectionHandler = function (e) {
         var title = json.query.search[0].title;
         httpGetAsync('https://en.wiktionary.org/wiki/' + title + '?action=raw', function (article) {
           var info = parseArticle(article, title);
-          if (!info.definitions && info.inflections) {
+          if (info.inflections) {
             for (var pos in info.inflections) {
               var link = info.inflections[pos].normalizedLemma;
               if (!link) {
