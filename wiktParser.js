@@ -116,6 +116,7 @@ function extractDefinition(line) {
     definition = definition.replace(/(\[\[|\]\])/g, '');
     definition = definition.replace(/{{.+?}}/g, '');
     definition = definition.replace(/\(\s*\)/g, '');
+    definition = definition.replace(/''+/g, '');
     if (definition && !definition.match(/^[\s\W]+$/)) {
       definition = definition.replace(/[\s]+/g, ' ');
       return definition.trim();

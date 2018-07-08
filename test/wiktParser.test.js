@@ -77,3 +77,20 @@ test('removes only first part inside link', t => {
         t.is(info.definitions.Noun[1], 'episode, part')
 })
 
+test('extracts definition "to be"', t => {
+        const article = fs.readFileSync('test/data/быть.wiki').toString();
+
+        const info = parseArticle(article, 'быть', new Set(['Verb']));
+
+        t.is(info.definitions.Verb.length, 1);
+        t.is(info.definitions.Verb[0], 'to be');
+})
+
+test('removes italics and bold markup', t => {
+        const article = fs.readFileSync('test/data/список.wiki').toString();
+
+        const info = parseArticle(article, 'список');
+
+        t.is(info.definitions.Noun[1], 'copy (especially of a picture or an icon)');
+})
+

@@ -1,0 +1,103 @@
+
+==Russian==
+
+===Etymology===
+{{PIE root|ru|bʰuH}}
+From {{inh|ru|orv|бꙑти}}, from {{inh|ru|sla-pro|*byti}}.
+
+===Pronunciation===
+* {{ru-IPA}}
+* {{audio|Ru-быть.ogg|Audio|lang=ru}}
+
+===Verb===
+{{ru-verb|быть|impf}}
+
+# to [[be]]
+#: {{ux|ru|[[так|Так]] '''бы́ло''', [[так]] '''есть''' [[и]] [[так]] '''бу́дет''' [[всегда́]]!|So it was, so it is, and so it will always be! [from the [[w:National Anthem of Russia|Hymn of the Russian Federation]]]}}
+#: {{uxi|ru|'''быть''' [[под]] [[башмак|башмако́м]]|to be [[henpecked]]}}
+
+====Usage notes====
+* Omitted in the present tense except in the third-person singular "есть", which is used occasionally to express possession or definition or for emphasis. "есть" is originally 3rd person singular but is now used for all persons, e.g. "я и '''есть''' тот челове́к" - "I ''am'' that person". See also [[—#Russian|—]].
+* Negative forms with {{m|ru|не}} feature stress on the particle in standard Russian for masculine, neuter and plural forms past tense: "не́ был", "не́ было", "не́ были".
+
+====Conjugation====
+Notes on present tense forms:
+* {{m|ru|есть}} has a limited usage in modern Russian but when used, it can refer to any person or number
+* {{m|ru|есмь}}, {{m|ru|еси́}}, {{m|ru|есмы́}}, {{m|ru|е́сте}} are archaic
+* {{m|ru|суть}} is dated and used seldom
+{{ru-conj|impf-intr|irreg-быть|pres_1sg_tail=1|pres_2sg_tail=1|pres_1pl_tail=1|pres_2pl_tail=1|pres_3sg_tail=2|pres_3pl_tail=3|notes=1 Archaic.|notes2=2 See usage notes.|notes3=3 Dated.}}
+{{ru-conj-old|impf-intr|irreg-быть|pres_1sg_tail=1|pres_2sg_tail=1|pres_1pl_tail=1|pres_2pl_tail=1|pres_3sg_tail=2|pres_3pl_tail=3|notes=1 Archaic.|notes2=2 See usage notes.|notes3=3 Dated.}}
+
+====Derived terms====
+{{top2}}
+''imperfective''
+* {{l|ru|быва́ть}}
+* {{l|ru|выбыва́ть}}
+* {{l|ru|добыва́ть}}
+* {{l|ru|забыва́ть}}
+* {{l|ru|забыва́ться}}
+* {{l|ru|избыва́ть}}
+* {{l|ru|избыва́ться}}
+* {{l|ru|отбыва́ть}}
+* (no equivalent)
+* {{l|ru|перезабыва́ть}}
+* (no equivalent)
+* {{l|ru|подзабыва́ть}}
+* (no equivalent)
+* {{l|ru|позабыва́ть|g=impf}}
+* {{l|ru|позабыва́ться}}
+* {{l|ru|пребыва́ть}}
+* {{l|ru|прибыва́ть}}
+* {{l|ru|призабыва́ть}}
+* {{l|ru|пробыва́ть}}
+* {{l|ru|раздобыва́ть}}
+* {{l|ru|сбыва́ть}}
+* {{l|ru|сбыва́ться}}
+* {{l|ru|убыва́ть}}
+{{mid2}}
+''perfective''
+* {{l|ru|побыва́ть}}
+* {{l|ru|вы́быть}}
+* {{l|ru|добы́ть}}
+* {{l|ru|забы́ть}}
+* {{l|ru|забы́ться}}
+* {{l|ru|избы́ть}}
+* {{l|ru|избы́ться}}
+* {{l|ru|отбы́ть}}
+* {{l|ru|перезабы́ть}}
+* {{l|ru|перезабы́ться}}
+* {{l|ru|побы́ть}}
+* {{l|ru|подзабы́ть}}
+* {{l|ru|позабыва́ть|g=pf}}
+* {{l|ru|позабы́ть}}
+* {{l|ru|позабы́ться}}
+* {{l|ru|пребы́ть}}
+* {{l|ru|прибы́ть}}
+* {{l|ru|призабы́ть}}
+* {{l|ru|пробы́ть}}
+* {{l|ru|раздобы́ть}}
+* {{l|ru|сбы́ть}}
+* {{l|ru|сбы́ться}}
+* {{l|ru|убы́ть}}
+{{bottom2}}
+
+====See also====
+* {{l|ru|есть}}
+* {{l|ru|суть}}
+* {{l|ru|бытие́}}
+* {{l|ru|существова́ние}}
+* {{l|ru|быва́ть}} ''[[iterative aspect]]''
+* {{lang|ru|[[—]]}} ({{m|ru|тире́|tr=tirɛ́}}, used as a verb for noun pairs)
+* '''3rd person negative (there is/are no):'''
+*: {{l|ru|нет}}, {{l|ru|не́ту}} (''non-standard'')
+
+* '''past negative:''' (''note the stress'')
+*: {{l|ru|[[не́]] [[был]]}}, {{l|ru|[[не]] [[была́]]}}, {{l|ru|[[не́]] [[было]]}}, {{l|ru|[[не́]] [[были]]}}
+
+* '''future active participle:'''
+*: {{l|ru|бу́дущий}}
+
+* '''conditional/subjunctive particle:'''
+*: {{l|ru|бы}}, {{l|ru|б}}
+
+[[Category:Russian suppletive verbs]]

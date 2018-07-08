@@ -1,0 +1,59 @@
+
+==Macedonian==
+
+===Noun===
+{{mk-noun|m}}
+
+# [[list]]
+
+====Inflection====
+{{mk-decl-noun-m||списоц}}
+
+----
+
+==Russian==
+
+===Etymology===
+{{prefix|ru|с-|писать|alt2=пис-|t2=to [[write]]}} {{suffix|ru||ок|t2=an object that remains after process is done}}.
+
+===Pronunciation===
+* {{ru-IPA|спи́сок}}
+* {{audio|Ru-список.ogg|Audio|lang=ru}}
+
+===Noun===
+{{ru-noun+|спи́сок|*}}
+
+# [[list]], [[register]], [[roll]] {{gloss|register or roll of paper consisting of an enumeration or compilation of a set of possible items}}
+#: {{uxi|ru|[[вычёркивать]]/[[вы́черкнуть]] [[кто-нибудь|кого́-нибудь]] [[из]] '''спи́ска'''|to strike someone off the list}}
+# [[copy]] ''(especially of a picture or an icon)''
+
+====Declension====
+{{ru-noun-table|спи́сок|*}}
+
+====Synonyms====
+* {{l|ru|о́пись}}, {{l|ru|пе́речень}}, {{l|ru|пе́репись}}
+
+====Related terms====
+* {{l|ru|списочек}}, {{l|ru|пи́сарь}}, {{l|ru|писа́ние}}, {{l|ru|списывание}}
+* {{l|ru|списочный}}
+* {{l|ru|спи́сывать}}, {{l|ru|писать}}, {{l|ru|выписать}}, {{l|ru|записа́ть}}, {{l|ru|прописать}}
+* {{l|ru|списком}}
+
+----
+
+==Ukrainian==
+
+===Pronunciation===
+* {{audio|Uk-список.ogg|Audio|lang=uk}}
+
+===Noun===
+{{uk-noun|спи́сок|m-in|спи́ску|спи́ски}}
+
+# [[list]], [[register]], [[roll]]
+# [[manuscript]] [[copy]], [[script]]
+
+====Declension====
+{{uk-decl-noun|спи́сок|спи́ски|спи́ску|спи́сків|спи́ску, спи́скові|спи́скам|спи́сок|спи́ски|спи́ском|спи́сками|спи́ску, спи́скові|спи́сках|спи́ску|спи́ски}}
+
+===References===
+* {{R:uk:SUM-11}}
