@@ -1,13 +1,14 @@
 import parseArticle from './wiktParser.js'
+import { findBestResult } from './utils.js'
 
 var selectionHandler = function (e) {
   if (e.selectionText) {
     const url = 'https://en.wiktionary.org/w/api.php?action=query&format=json&list=search&utf8=1&srwhat=text&srsearch=' + e.selectionText;
     httpGetAsync(url, function (text) {
       const json = JSON.parse(text);
-      const hits = json.query.searchinfo.totalhits;
-      if (parseInt(hits) > 0) {
-        var title = json.query.search[0].title;
+      const hits = parseInt(json.query.searchinfo.totalhits);
+      if (hits > 0) {
+        var title = findBestResult(e.selectionText, json.query.search.map(el => el.title));
         httpGetAsync('https://en.wiktionary.org/wiki/' + title + '?action=raw', function (article) {
           var info = parseArticle(article, title);
           if (info.inflections) {
