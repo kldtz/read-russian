@@ -121,6 +121,7 @@ function extractDefinition(line) {
   if (line.startsWith('#') && !line.startsWith('#:')) {
     var definition = line.substring(1).replace(/\[\[[^\]]+?\|/g, '');
     definition = definition.replace(/(\[\[|\]\])/g, '');
+    definition = processTemplateW(definition);
     definition = removeTemplates(definition);
     definition = definition.replace(/\(\s*\)/g, '');
     definition = definition.replace(/''+/g, '');
@@ -130,6 +131,20 @@ function extractDefinition(line) {
     }
   }
   return null;
+}
+
+function processTemplateW(line) {
+  var processed = [];
+  var pattern = /{{w\|([^|}]+).*?}}/g;
+  var match;
+  var start = 0;
+  while (match = pattern.exec(line)) {
+    processed.push(line.substring(start, match.index));
+    processed.push(match[1]);
+    start = match.index + match[0].length;
+  }
+  processed.push(line.substring(start, line.length));
+  return processed.join('');
 }
 
 function removeTemplates(line) {

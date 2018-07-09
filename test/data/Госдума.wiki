@@ -1,0 +1,17 @@
+
+==Russian==
+{{wikipedia|lang=ru}}
+
+===Etymology===
+{{ru-etym acronym of|[[государственный|Госуда́рственная]] [[ду́ма]]}}.
+
+===Pronunciation===
+* {{ru-IPA|Го̀сду́ма}}
+
+===Proper noun===
+{{ru-noun+|Госду́ма|n=sg}}
+
+# {{w|State Duma}} {{gloss|lower house of Russian national parliament}}
+
+====Declension====
+{{ru-noun-table|Госду́ма|n=sg}}

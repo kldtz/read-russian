@@ -85,6 +85,14 @@ test('removes only first part inside link', t => {
         t.is(info.definitions.Noun[1], 'episode, part')
 })
 
+test('parses template w (shorter links to English Wikipedia)', t => {
+        const article = fs.readFileSync('test/data/Госдума.wiki').toString();
+
+        const info = parseArticle(article, 'Госдума');
+
+        t.is(info.definitions['Proper noun'][0], 'State Duma');
+})
+
 test('extracts definition "to be"', t => {
         const article = fs.readFileSync('test/data/быть.wiki').toString();
 
