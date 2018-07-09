@@ -102,6 +102,14 @@ test('removes italics and bold markup', t => {
         t.is(info.definitions.Noun[1], 'copy (especially of a picture or an icon)');
 })
 
+test('removes nested templates', t => {
+        const article = fs.readFileSync('test/data/готовый.wiki').toString();
+
+        const info = parseArticle(article, 'готовый');
+
+        t.is(info.definitions.Adjective[0], 'ready, prepared');
+})
+
 test('keeps combining characters unrelated to pronunciation', t => {
         const words = ['слу́чай']
 

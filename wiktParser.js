@@ -121,7 +121,7 @@ function extractDefinition(line) {
   if (line.startsWith('#') && !line.startsWith('#:')) {
     var definition = line.substring(1).replace(/\[\[[^\]]+?\|/g, '');
     definition = definition.replace(/(\[\[|\]\])/g, '');
-    definition = definition.replace(/{{.+?}}/g, '');
+    definition = removeTemplates(definition);
     definition = definition.replace(/\(\s*\)/g, '');
     definition = definition.replace(/''+/g, '');
     if (definition && !definition.match(/^[\s\W]+$/)) {
@@ -130,6 +130,23 @@ function extractDefinition(line) {
     }
   }
   return null;
+}
+
+function removeTemplates(line) {
+  var numOpenBrackets = 0;
+  var cleanLetters = [];
+  for (let c of line) {
+    if (c === '{') {
+      numOpenBrackets++;
+    }
+    if (!numOpenBrackets) {
+      cleanLetters.push(c);
+    }
+    if (c === '}') {
+      numOpenBrackets--;
+    }
+  }
+  return cleanLetters.join('');
 }
 
 function addValue(definitions, pos, definition) {

@@ -1,0 +1,31 @@
+
+==Russian==
+
+===Etymology===
+From {{inh|ru|sla-pro|*gotovъ}}. Cognate with {{cog|be|гато́вы}}.
+
+===Pronunciation===
+* {{ru-IPA|гото́вый}}
+* {{audio|Ru-готовый.ogg|Audio|lang=ru}}
+
+===Adjective===
+{{ru-adj|гото́вый|+}}
+
+# [[ready]], [[prepared]] {{i|{{m|ru|к}} + {{glossary|dative}}}}
+# [[ready]], [[inclined]], [[willing]] {{i|{{m|ru|на}} + {{glossary|accusative}}}}
+# [[finished]], [[ready-made]]
+
+====Declension====
+{{ru-decl-adj|гото́вый|a}}
+
+====Antonyms====
+* {{l|ru|негото́вый}}
+
+====Derived terms====
+* {{l|ru|гото́вность}}
+
+====Related terms====
+* {{l|ru|гото́вить|g=impf}}
+
+===References===
+* {{R:ru:Vasmer}}
