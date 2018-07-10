@@ -8,12 +8,12 @@ var selectionHandler = function (e) {
       const json = JSON.parse(text);
       const hits = parseInt(json.query.searchinfo.totalhits);
       if (hits > 0) {
-        var title = findBestResult(e.selectionText, json.query.search.map(el => el.title));
+        const title = findBestResult(e.selectionText, json.query.search.map(el => el.title));
         httpGetAsync('https://en.wiktionary.org/wiki/' + title + '?action=raw', function (article) {
           var info = parseArticle(article, title);
           if (info.inflections) {
             for (let pos in info.inflections) {
-              var link = info.inflections[pos].normalizedLemma;
+              let link = info.inflections[pos].normalizedLemma;
               if (!link) {
                 link = info.inflections[pos].alternative;
               }
