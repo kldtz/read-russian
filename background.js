@@ -11,7 +11,6 @@ var selectionHandler = function (e) {
         var title = findBestResult(e.selectionText, json.query.search.map(el => el.title));
         httpGetAsync('https://en.wiktionary.org/wiki/' + title + '?action=raw', function (article) {
           var info = parseArticle(article, title);
-          alert(JSON.stringify(info));
           if (info.inflections) {
             for (let pos in info.inflections) {
               var link = info.inflections[pos].normalizedLemma;
