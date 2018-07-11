@@ -1,3 +1,5 @@
+import { normalize } from './utils.js'
+
 var POS_HEADERS = new Set(['Adjective', 'Adverb', 'Article', 'Classifier', 'Conjunction',
   'Contraction', 'Counter', 'Determiner', 'Interjection', 'Noun', 'Numeral',
   'Participle', 'Particle', 'Postposition', 'Preposition', 'Pronoun', 'Proper noun', 'Verb']);
@@ -113,10 +115,6 @@ function addInflection(info, line, pos) {
   return false;
 }
 
-function normalize(word) {
-  return word.normalize('NFD').replace(/[\u0300-\u0303]/g, '');
-}
-
 function extractDefinition(line) {
   if (line.startsWith('#') && !line.startsWith('#:')) {
     var definition = line.substring(1).replace(/\[\[[^\]]+?\|/g, '');
@@ -172,5 +170,5 @@ function addValue(definitions, pos, definition) {
 }
 
 
-export { parseArticle, normalize };
+export { parseArticle };
 

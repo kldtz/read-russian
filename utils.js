@@ -18,4 +18,8 @@ function commonPrefixLength(a, b) {
     return cpl;
 }
 
-export { findBestResult };
+function normalize(word) {
+    return word.normalize('NFD').replace(/[\u0300-\u0303]/g, '');
+  }
+
+export { findBestResult, normalize };

@@ -118,12 +118,3 @@ test('removes nested templates', t => {
         t.is(info.definitions.Adjective[0], 'ready, prepared');
 })
 
-test('keeps combining characters unrelated to pronunciation', t => {
-        const words = ['слу́чай']
-
-        const normalizedWords = words.map(normalize);
-
-        const expectedNormalizedWords = ['случай'];
-        t.deepEqual(normalizedWords, expectedNormalizedWords);
-})
-
