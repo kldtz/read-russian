@@ -1,29 +1,30 @@
 chrome.runtime.onMessage.addListener(function (message, sender) {
-    clearInfoDiv();
+    clearInfoSpan();
+    info.style.display = 'block';
     if (message.hits === 0) {
-        info.innerHTML = "No English Wiktionary article found for '" + message.selection + "'.";
+        span.innerHTML = "No English Wiktionary article found for '" + message.selection + "'.";
         return;
     } 
-    info.innerHTML = generateInfoDiv(message.info);
+    span.innerHTML = generateInfoString(message.info);
 });
 
-function generateInfoDiv(data) {
-    var div = [];
-    div.push(data.title);
-    div.push(data.pronunciation ? ' (' + data.pronunciation + ')' : '');
-    div.push(': ');
+function generateInfoString(data) {
+    var parts = [];
+    parts.push(data.title);
+    parts.push(data.pronunciation ? ' (' + data.pronunciation + ')' : '');
+    parts.push(': ');
     for (let pos of collectPos(data)) {
-        div.push(pos);
+        parts.push(pos);
         if (data.inflections && data.inflections[pos]) {
-            div.push(' (' + data.inflections[pos].lemma + ', ' + data.inflections[pos].grammarInfos.join(', ') + ')');
+            parts.push(' (' + data.inflections[pos].lemma + ', ' + data.inflections[pos].grammarInfos.join(', ') + ')');
         }
-        div.push(': ')
+        parts.push(': ')
         if (data.definitions && data.definitions[pos]) {
-            div.push(data.definitions[pos].map((el, i) => (i + 1) + '. ' + el).join('; '));
+            parts.push(data.definitions[pos].map((el, i) => (i + 1) + '. ' + el).join('; '));
         }
-        div.push('. ');
+        parts.push('. ');
     }
-    return div.join('');
+    return parts.join('');
 }
 
 function collectPos(data) {
@@ -37,12 +38,23 @@ function collectPos(data) {
     return new Set(posList);
 }
 
-function clearInfoDiv() {
-    while (info.lastChild) {
-        info.removeChild(info.lastChild);
+function clearInfoSpan() {
+    while (span.lastChild) {
+        span.removeChild(span.lastChild);
     }
 }
 
-var info = document.createElement("div");
+var info = document.createElement('div');
 info.id = 'wikt-info';
+info.style.display = 'none';
 document.body.insertBefore(info, document.body.firstChild);
+
+var span = document.createElement('span');
+info.appendChild(span);
+
+var close = document.createElement('button');
+close.innerHTML = '&#10060;';
+close.addEventListener('click', function() {
+    document.getElementById('wikt-info').style.display = 'none';
+});
+info.appendChild(close);
