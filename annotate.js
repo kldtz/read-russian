@@ -1,7 +1,10 @@
 chrome.runtime.onMessage.addListener(function (message, sender) {
     clearInfoDiv();
-    var infoString = generateInfoDiv(message.data);
-    info.innerHTML = infoString;
+    if (message.hits === 0) {
+        info.innerHTML = "No English Wiktionary article found for '" + message.selection + "'.";
+        return;
+    } 
+    info.innerHTML = generateInfoDiv(message.info);
 });
 
 function generateInfoDiv(data) {
@@ -16,7 +19,7 @@ function generateInfoDiv(data) {
         }
         div.push(': ')
         if (data.definitions && data.definitions[pos]) {
-            div.push(data.definitions[pos].map((el, i) => (i+1) + '. ' + el).join('; '));
+            div.push(data.definitions[pos].map((el, i) => (i + 1) + '. ' + el).join('; '));
         }
         div.push('. ');
     }
