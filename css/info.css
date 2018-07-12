@@ -6,12 +6,12 @@
     border-width: 1px;
 }
 
-button {
+#wikt-info-close {
     background-color: #ffffff;
     border: none;
     cursor: pointer;
 }
 
-button:hover {
+#wikt-info-close:hover {
     opacity: 0.5;
 }

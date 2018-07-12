@@ -53,6 +53,7 @@ var span = document.createElement('span');
 info.appendChild(span);
 
 var close = document.createElement('button');
+close.id = 'wikt-info-close';
 close.innerHTML = '&#10060;';
 close.addEventListener('click', function() {
     document.getElementById('wikt-info').style.display = 'none';
