@@ -1,8 +1,8 @@
 import { normalize } from './utils.js'
 
 var POS_HEADERS = new Set(['Adjective', 'Adverb', 'Article', 'Classifier', 'Conjunction',
-  'Contraction', 'Counter', 'Determiner', 'Interjection', 'Noun', 'Numeral',
-  'Participle', 'Particle', 'Postposition', 'Preposition', 'Pronoun', 'Proper noun', 'Verb']);
+  'Contraction', 'Counter', 'Determiner', 'Interjection', 'Noun', 'Numeral', 'Participle', 
+  'Particle', 'Postposition', 'Predicative', 'Preposition', 'Pronoun', 'Proper noun', 'Verb']);
 
 export default function parseArticle(markup, title, posFilter) {
   var info = { title: title };

@@ -1,0 +1,30 @@
+==Russian==
+
+===Etymology===
+From {{inh|ru|orv|нельзѣ}}, {{m|orv|нельзѧ}}, {{m|orv|нельза}}, from {{der|ru|sla-pro|*ne}} / {{m|sla-pro|*ně}} + {{m|sla-pro|*lьga||possibility}} (possibly influenced by its dative {{m|sla-pro|*lьdzě}}), likely related to {{m|sla-pro|*lьgъkъ}} (whence {{m|ru|лёгкий||light, easy}}).
+
+Compare {{cog|uk|не́льга}}, {{m|uk|нiльга́}}, {{m|uk|нельзя́}}, {{cog|be|няльга́}}, {{m|be|нільга́}}, {{m|be|не́льга}}, {{cog|cu|льзѣ||possible, possibly}}, {{cog|sk|nelza}}, {{m|sk|nelzä}}, {{m|sk|neľzä}}, {{cog|zlw-opl|nielza}}.
+
+===Pronunciation===
+* {{ru-IPA|нельзя́}}
+* {{audio|Ru-нельзя.ogg|Audio|lang=ru}}
+
+===Predicative===
+{{head|ru|predicative|head=нельзя́}} ''(impersonal, invariable)''
+
+# it is [[impossible]] {{i|perfective aspect}}, one [[cannot]], you [[can't]]
+#: {{uxi|ru|'''нельзя́''' [[он|ему́]] + ''perfective infinitive''|'''it is impossible''' for him to (perfective infinitive)}}
+# it is [[prohibited]], it is [[forbidden]], it is not [[allowed]], one [[must]] [[not]]
+#: {{uxi|ru|[[здесь]] '''нельзя́''' [[кури́ть]]|'''it is not allowed''' to smoke here}}
+
+====Usage notes====
+'''Нельзя́''' is the negative of {{m|ru|мо́жно}}. Instead of saying '''не мо́жно''', '''нельзя́''' should be always used.
+
+====Synonyms====
+* {{l|ru|невозмо́жно}}
+* {{l|ru|запрещено́}}
+
+====Antonyms====
+* {{l|ru|мо́жно}}
+
+[[Category:Russian idioms]]

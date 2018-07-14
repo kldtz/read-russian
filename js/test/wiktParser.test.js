@@ -118,3 +118,10 @@ test('removes nested templates', t => {
         t.is(info.definitions.Adjective[0], 'ready, prepared');
 })
 
+test('recognizes predicative', t => {
+        const article = fs.readFileSync('test/data/нельзя.wiki').toString();
+
+        const info = parseArticle(article, 'нельзя');
+
+        t.is(info.definitions.Predicative.length, 2);
+})
