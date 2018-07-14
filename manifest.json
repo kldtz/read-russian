@@ -27,7 +27,7 @@
                 "https://*/*"
             ],
             "js": [
-                "annotate.js"
+                "js/annotate.js"
             ],
             "css": [
                 "css/info.css"
