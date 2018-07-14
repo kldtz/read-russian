@@ -26,11 +26,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kldtz/chrome-exts.git"
+    "url": "git+https://github.com/kldtz/read-russian.git"
   },
   "author": "Tobias Kolditz",
   "bugs": {
-    "url": "https://github.com/kldtz/chrome-exts/issues"
+    "url": "https://github.com/kldtz/read-russian/issues"
   },
-  "homepage": "https://github.com/kldtz/chrome-exts#readme"
+  "homepage": "https://github.com/kldtz/read-russian#readme"
 }
