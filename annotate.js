@@ -1,19 +1,27 @@
 var info;
 var content;
+var titles;
 
 
 chrome.runtime.onMessage.addListener(function (message, sender) {
     if (!info) {
         createInfo();
     }
-    clearContent();
     info.style.display = 'block';
     if (message.hits === 0) {
         content.innerHTML = "No English Wiktionary article found for '" + message.selection + "'.";
         return;
     }
     content.innerHTML = generateInfoString(message.info);
+    var titlesString = message.info.titles.map(convertToLink).join(', ');
+    if (titlesString) {
+        titles.innerHTML = ' (' + titlesString + ')';
+    }
 });
+
+function convertToLink(title) {
+    return '<a href="https://en.wiktionary.org/wiki/' + title + '">' + title + '</a>';
+}
 
 function createInfo() {
     info = document.createElement('div');
@@ -37,12 +45,27 @@ function createInfo() {
     content.id = 'wikt-info-content';
     align.appendChild(content);
 
+    align.appendChild(createFooter());
+}
+
+function createFooter() {
     var footer = document.createElement('div');
     footer.id = 'wikt-info-footer';
-    const wiktionaryLink = '<a href="https://www.wiktionary.org/">Wiktionary</a>';
-    const licenseLink = '<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.'
-    footer.innerHTML = 'This information is aggregated from ' + wiktionaryLink + ' under a ' + licenseLink;
-    align.appendChild(footer);
+    var wiktionaryLink = document.createElement('a');
+    wiktionaryLink.href = 'https://www.wiktionary.org/';
+    wiktionaryLink.innerText = 'Wiktionary';
+    var licenseLink = document.createElement('a');
+    licenseLink.href = 'http://creativecommons.org/licenses/by-sa/3.0/';
+    licenseLink.innerText = 'Creative Commons Attribution-ShareAlike 3.0 Unported License';
+    titles = document.createElement('span')
+    titles.id = 'wikt-info-titles';
+    footer.appendChild(document.createTextNode('This information was aggregated from '));
+    footer.appendChild(wiktionaryLink);
+    footer.appendChild(titles);
+    footer.appendChild(document.createTextNode(' under a '));
+    footer.appendChild(licenseLink);
+    footer.appendChild(document.createTextNode('.'));
+    return footer;
 }
 
 function generateInfoString(data) {
@@ -73,10 +96,4 @@ function collectPos(data) {
         posList.push(...Object.keys(data.definitions));
     }
     return new Set(posList);
-}
-
-function clearContent() {
-    while (content.lastChild) {
-        content.removeChild(content.lastChild);
-    }
 }

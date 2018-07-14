@@ -15,6 +15,7 @@ var selectionHandler = function (e) {
       const title = findBestResult(e.selectionText, json.query.search.map(el => el.title));
       httpGetAsync('https://en.wiktionary.org/wiki/' + title + '?action=raw', function (article) {
         var info = parseArticle(article, title);
+        info.titles = [title];
         data.info = info;
         if (info.inflections) {
           for (let pos in info.inflections) {
@@ -37,6 +38,9 @@ var selectionHandler = function (e) {
 }
 
 function mergeDefinitions(info, newInfo) {
+  if (!newInfo.definitions) {
+    return;
+  }
   if (!info.definitions) {
     info.definitions = {};
   }
@@ -45,6 +49,7 @@ function mergeDefinitions(info, newInfo) {
       info.definitions[pos] = newInfo.definitions[pos]
     }
   }
+  info.titles.push(newInfo.title);
 }
 
 function sendMessage(data) {

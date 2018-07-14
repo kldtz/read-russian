@@ -35,3 +35,7 @@
 #wikt-info-footer > a:hover {
     opacity: 0.5;
 }
+
+#wikt-info-titles > a:hover {
+    opacity: 0.5;
+}
