@@ -21,9 +21,6 @@ function createInfo() {
     info.style.display = 'none';
     document.body.insertBefore(info, document.body.firstChild);
 
-    content = document.createElement('span');
-    info.appendChild(content);
-
     var close = document.createElement('button');
     close.id = 'wikt-info-close';
     close.innerHTML = '&#10060;';
@@ -31,6 +28,21 @@ function createInfo() {
         document.getElementById('wikt-info').style.display = 'none';
     });
     info.appendChild(close);
+
+    var align = document.createElement('div')
+    align.id = 'wikt-info-align'
+    info.appendChild(align);
+
+    content = document.createElement('div');
+    content.id = 'wikt-info-content';
+    align.appendChild(content);
+
+    var footer = document.createElement('div');
+    footer.id = 'wikt-info-footer';
+    const wiktionaryLink = '<a href="https://www.wiktionary.org/">Wiktionary</a>';
+    const licenseLink = '<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.'
+    footer.innerHTML = 'This information is aggregated from ' + wiktionaryLink + ' under a ' + licenseLink;
+    align.appendChild(footer);
 }
 
 function generateInfoString(data) {
