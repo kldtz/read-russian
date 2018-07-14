@@ -25,6 +25,10 @@
     font-size: 16px;
 }
 
+#wikt-info-close:hover {
+    opacity: 0.5;
+}
+
 #wikt-info-footer {
     font-size: 10px;
     padding-top: 5px;
