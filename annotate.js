@@ -1,12 +1,37 @@
+var info;
+var content;
+
+
 chrome.runtime.onMessage.addListener(function (message, sender) {
-    clearInfoSpan();
+    if (!info) {
+        createInfo();
+    }
+    clearContent();
     info.style.display = 'block';
     if (message.hits === 0) {
-        span.innerHTML = "No English Wiktionary article found for '" + message.selection + "'.";
+        content.innerHTML = "No English Wiktionary article found for '" + message.selection + "'.";
         return;
-    } 
-    span.innerHTML = generateInfoString(message.info);
+    }
+    content.innerHTML = generateInfoString(message.info);
 });
+
+function createInfo() {
+    info = document.createElement('div');
+    info.id = 'wikt-info';
+    info.style.display = 'none';
+    document.body.insertBefore(info, document.body.firstChild);
+
+    content = document.createElement('span');
+    info.appendChild(content);
+
+    var close = document.createElement('button');
+    close.id = 'wikt-info-close';
+    close.innerHTML = '&#10060;';
+    close.addEventListener('click', function () {
+        document.getElementById('wikt-info').style.display = 'none';
+    });
+    info.appendChild(close);
+}
 
 function generateInfoString(data) {
     var parts = [];
@@ -38,24 +63,8 @@ function collectPos(data) {
     return new Set(posList);
 }
 
-function clearInfoSpan() {
-    while (span.lastChild) {
-        span.removeChild(span.lastChild);
+function clearContent() {
+    while (content.lastChild) {
+        content.removeChild(content.lastChild);
     }
 }
-
-var info = document.createElement('div');
-info.id = 'wikt-info';
-info.style.display = 'none';
-document.body.insertBefore(info, document.body.firstChild);
-
-var span = document.createElement('span');
-info.appendChild(span);
-
-var close = document.createElement('button');
-close.id = 'wikt-info-close';
-close.innerHTML = '&#10060;';
-close.addEventListener('click', function() {
-    document.getElementById('wikt-info').style.display = 'none';
-});
-info.appendChild(close);
