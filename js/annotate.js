@@ -27,11 +27,13 @@ function convertToLink(title) {
 function createInfo() {
     info = document.createElement('div');
     info.id = 'wikt-info';
+    info.className = 'wikt-info-class';
     info.style.display = 'none';
     document.body.insertBefore(info, document.body.firstChild);
 
     var close = document.createElement('button');
     close.id = 'wikt-info-close';
+    close.className = 'wikt-info-class';
     close.innerHTML = '&#10060;';
     close.addEventListener('click', function () {
         document.getElementById('wikt-info').style.display = 'none';
@@ -39,11 +41,13 @@ function createInfo() {
     info.appendChild(close);
 
     var align = document.createElement('div')
-    align.id = 'wikt-info-align'
+    align.id = 'wikt-info-align';
+    align.className = 'wikt-info-class';
     info.appendChild(align);
 
     content = document.createElement('div');
     content.id = 'wikt-info-content';
+    content.className = 'wikt-info-class';
     align.appendChild(content);
 
     align.appendChild(createFooter());
@@ -52,6 +56,7 @@ function createInfo() {
 function createFooter() {
     var footer = document.createElement('div');
     footer.id = 'wikt-info-footer';
+    footer.className = 'wikt-info-class';
     var wiktionaryLink = document.createElement('a');
     wiktionaryLink.href = 'https://www.wiktionary.org/';
     wiktionaryLink.innerText = 'Wiktionary';
@@ -60,6 +65,7 @@ function createFooter() {
     licenseLink.innerText = 'Creative Commons Attribution-ShareAlike 3.0 Unported License';
     titles = document.createElement('span')
     titles.id = 'wikt-info-titles';
+    titles.className = 'wikt-info-class';
     footer.appendChild(document.createTextNode('This information was aggregated from '));
     footer.appendChild(wiktionaryLink);
     footer.appendChild(titles);
