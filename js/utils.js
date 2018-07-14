@@ -6,7 +6,7 @@ function findBestResult(searchTerm, titles) {
     searchTerm = searchTerm.toLowerCase();
     searchTerm = normalize(searchTerm);
     // return element that has maximal common prefix length with search term
-    const maxCplIndex = swTitles.map(title => title.toLowerCase)
+    const maxCplIndex = swTitles.map(title => title.toLowerCase())
         .map(title => commonPrefixLength(title, searchTerm))
         .reduce((maxIndex, cpl, i, cpls) => {
             return cpl > cpls[maxIndex] ? i : maxIndex;
