@@ -10,6 +10,7 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
     info.style.display = 'block';
     if (message.hits === 0) {
         content.innerHTML = "No English Wiktionary article found for '" + message.selection + "'.";
+        titles.innerHTML = '';
         return;
     }
     content.innerHTML = generateInfoString(message.info);
