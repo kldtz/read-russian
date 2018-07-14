@@ -3,8 +3,11 @@ function findBestResult(searchTerm, titles) {
     if (!swTitles) {
         return titles[0]; // default: first result 
     }
+    searchTerm = searchTerm.toLowerCase();
+    searchTerm = normalize(searchTerm);
     // return element that has maximal common prefix length with search term
-    const maxCplIndex = swTitles.map(title => commonPrefixLength(title, searchTerm))
+    const maxCplIndex = swTitles.map(title => title.toLowerCase)
+        .map(title => commonPrefixLength(title, searchTerm))
         .reduce((maxIndex, cpl, i, cpls) => {
             return cpl > cpls[maxIndex] ? i : maxIndex;
         }, 0);
