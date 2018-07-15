@@ -1,3 +1,5 @@
+const CYRILLIC = /^[\u0300-\u036F\u0410-\u045F\-]+$/;
+
 function findBestResult(searchTerm, titles) {
     var swTitles = titles.filter(title => title.split(/\s+/).length === 1);
     if (!swTitles) {
@@ -23,6 +25,10 @@ function commonPrefixLength(a, b) {
 
 function normalize(word) {
     return word.normalize('NFD').replace(/[\u0300-\u0303]/g, '');
-  }
+}
 
-export { findBestResult, normalize };
+function isCyrillic(word) {
+    return CYRILLIC.test(word);
+}
+
+export { findBestResult, normalize, isCyrillic };

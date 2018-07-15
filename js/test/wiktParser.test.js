@@ -44,7 +44,7 @@ test('extracts lemma from "superlative of" template', t => {
         const info = parseArticle(article, 'старейший');
 
         t.is(info.inflections.Adjective.lemma, 'ста́рый');
-})
+});
 
 test('reads only filtered pos', t => {
         const article = fs.readFileSync('test/data/знать.wiki').toString();
@@ -55,7 +55,7 @@ test('reads only filtered pos', t => {
         t.truthy(info.definitions.Noun)
         t.truthy(info.definitions.Verb)
         t.falsy(info.definitions.Adverb)
-})
+});
 
 test('extracts alternative form', t => {
         const article = fs.readFileSync('test/data/счет.wiki').toString();
@@ -63,7 +63,7 @@ test('extracts alternative form', t => {
         const info = parseArticle(article, 'счет');
 
         t.is(info.inflections.Noun.alternative, 'счёт');
-})
+});
 
 test('extracts only second part of link', t => {
         const article = fs.readFileSync('test/data/место.wiki').toString();
@@ -73,7 +73,7 @@ test('extracts only second part of link', t => {
         t.is(info.definitions.Noun[0], 'place');
         t.is(info.definitions.Noun[1], 'region, area')
         t.is(info.definitions.Noun[2], 'site, scene')
-})
+});
 
 test('ignores sub-items in definitions', t => {
         const article = fs.readFileSync('test/data/суть.wiki').toString();
@@ -81,7 +81,7 @@ test('ignores sub-items in definitions', t => {
         const info = parseArticle(article, 'суть');
 
         t.is(info.definitions.Noun.length, 1);
-})
+});
 
 test('removes only first part inside link', t => {
         const article = fs.readFileSync('test/data/серия.wiki').toString();
@@ -91,7 +91,7 @@ test('removes only first part inside link', t => {
         t.is(info.definitions.Noun.length, 2);
         t.is(info.definitions.Noun[0], 'series');
         t.is(info.definitions.Noun[1], 'episode, part')
-})
+});
 
 test('parses template w (shorter links to English Wikipedia)', t => {
         const article = fs.readFileSync('test/data/Госдума.wiki').toString();
@@ -99,7 +99,7 @@ test('parses template w (shorter links to English Wikipedia)', t => {
         const info = parseArticle(article, 'Госдума');
 
         t.is(info.definitions['Proper noun'][0], 'State Duma');
-})
+});
 
 test('extracts definition "to be"', t => {
         const article = fs.readFileSync('test/data/быть.wiki').toString();
@@ -108,7 +108,7 @@ test('extracts definition "to be"', t => {
 
         t.is(info.definitions.Verb.length, 1);
         t.is(info.definitions.Verb[0], 'to be');
-})
+});
 
 test('removes italics and bold markup', t => {
         const article = fs.readFileSync('test/data/список.wiki').toString();
@@ -116,7 +116,7 @@ test('removes italics and bold markup', t => {
         const info = parseArticle(article, 'список');
 
         t.is(info.definitions.Noun[1], 'copy (especially of a picture or an icon)');
-})
+});
 
 test('removes nested templates', t => {
         const article = fs.readFileSync('test/data/готовый.wiki').toString();
@@ -124,7 +124,7 @@ test('removes nested templates', t => {
         const info = parseArticle(article, 'готовый');
 
         t.is(info.definitions.Adjective[0], 'ready, prepared');
-})
+});
 
 test('recognizes predicative', t => {
         const article = fs.readFileSync('test/data/нельзя.wiki').toString();
@@ -132,4 +132,4 @@ test('recognizes predicative', t => {
         const info = parseArticle(article, 'нельзя');
 
         t.is(info.definitions.Predicative.length, 2);
-})
+});
