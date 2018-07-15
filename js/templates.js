@@ -1,6 +1,6 @@
 import { isCyrillic } from './utils.js'
 
-const FORM_OF = ['abbreviation of', 'comparative of', 'superlative of'];
+const FORM_OF = ['form of', 'abbreviation of', 'comparative of', 'superlative of', 'alternative spelling of', 'misspelling of'];
 const FORM_OF_PATTERN = new RegExp('{{((' + FORM_OF.join('|') + ').+?)}}');
 
 function parseFormOf(line) {
