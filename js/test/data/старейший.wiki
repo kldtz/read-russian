@@ -1,0 +1,12 @@
+==Russian==
+
+===Pronunciation===
+* {{ru-IPA|старе́йший}}
+
+===Adjective===
+{{head|ru|adjective form|head=старе́йший}}
+
+# {{superlative of|ста́рый|lang=ru}}
+
+====Declension====
+{{ru-decl-adj|старе́йший}}

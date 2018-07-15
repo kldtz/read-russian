@@ -38,6 +38,14 @@ test('extracts lemma from "ru-participle of" template', t => {
         t.is(info.inflections.Verb.lemma, 'скача́ть')
 });
 
+test('extracts lemma from "superlative of" template', t => {
+        const article = fs.readFileSync('test/data/старейший.wiki').toString();
+
+        const info = parseArticle(article, 'старейший');
+
+        t.is(info.inflections.Adjective.lemma, 'ста́рый');
+})
+
 test('reads only filtered pos', t => {
         const article = fs.readFileSync('test/data/знать.wiki').toString();
 
