@@ -1,0 +1,11 @@
+==Russian==
+
+===Pronunciation===
+* {{ru-IPA}}
+
+===Pronoun===
+{{head|ru|pronoun form}}
+
+# {{inflection of|весь||gen|s|f|lang=ru}}
+# {{inflection of|весь||dat|s|f|lang=ru}}
+# {{inflection of|весь||ins|s|f|lang=ru}}

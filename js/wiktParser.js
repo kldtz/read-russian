@@ -1,5 +1,5 @@
 import { normalize } from './utils.js'
-import { parseFormOf } from './templates.js'
+import { parseFormOf, parseInflectionOf } from './templates.js'
 
 var POS_HEADERS = new Set(['Adjective', 'Adverb', 'Article', 'Classifier', 'Conjunction',
   'Contraction', 'Counter', 'Determiner', 'Interjection', 'Noun', 'Numeral', 'Participle',
@@ -98,12 +98,9 @@ function extractInflection(line) {
   if (formOf) {
     return formOf;
   }
-  var inflectionOf = /{{inflection of\|lang=ru\|([^|]+)\|.*?\|(.+?)}}/.exec(line);
-  if (!inflectionOf) {
-    inflectionOf = /{{ru-participle of\|([^|]+)\|.*?\|(.+?)}}/.exec(line);
-  }
+  const inflectionOf = parseInflectionOf(line);
   if (inflectionOf) {
-    return { lemma: inflectionOf[1], grammarInfo: inflectionOf[2] };
+    return inflectionOf;
   }
   return null;
 }
