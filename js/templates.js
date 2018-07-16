@@ -1,4 +1,4 @@
-import { isCyrillic } from './utils.js'
+import { isCyrillic, titleCase } from './utils.js'
 
 const FORM_OF = ['form of', 'abbreviation of', 'comparative of', 'superlative of', 'alternative spelling of', 'misspelling of'];
 const FORM_OF_PATTERN = new RegExp('{{(' + FORM_OF.join('|') + ')\\|(.+?)}}');
@@ -9,23 +9,34 @@ function parseFormOf(line) {
     if (!formOf) {
         return null;
     }
-    const grammarInfo = formOf[1].substring(0, formOf[1].length - 3);
-    const fields = formOf[2].split('|');
-    const lemma = extractLemma(fields);
-    return {lemma: lemma, grammarInfo: grammarInfo};
+    var info = {};
+    info.grammarInfo = formOf[1].substring(0, formOf[1].length - 3);
+    parseFields(info, formOf[2].split('|'));
+    return info;
 }
 
-function extractLemma(fields) {
+function parseFields(info, fields) {
     for (let field of fields) {
-        if (field.includes('=')) {
-            // named parameter
+        field = field.trim();
+        if (!field) {
+            // empty
             continue;
         }
-        if (isCyrillic(field)) {
-            return field;
+        if (field.includes('=')) {
+            // named parameter
+            let keyVal = field.split('=');
+            if (keyVal[0].toLowerCase() === 'pos') {
+                info.pos = titleCase(keyVal[1]);
+            }
+            continue;
+        }
+        if (!info.lemma && isCyrillic(field)) {
+            info.lemma = field;
         }
     }
-    return fields[1];
+    if (!info.lemma) {
+        info.lemma = fields[0];
+    }
 }
 
 function parseInflectionOf(line) {
@@ -33,7 +44,7 @@ function parseInflectionOf(line) {
     if (!inflectionOf) {
         return null;
     }
-    var lemma;
+    var info = {};
     var features = []
     for (let field of inflectionOf[2].split('|')) {
         field = field.trim();
@@ -43,17 +54,22 @@ function parseInflectionOf(line) {
         }
         if (field.includes('=')) {
             // named parameter
+            let keyVal = field.split('=');
+            if (keyVal[0].toLowerCase() === 'pos') {
+                info.pos = titleCase(keyVal[1]);
+            }
             continue;
         }
         if (isCyrillic(field)) {
-            if (!lemma) {
-                lemma = field;
+            if (!info.lemma) {
+                info.lemma = field;
             }
             continue;
         }
         features.push(field);
     }
-    return {lemma: lemma, grammarInfo: features.join('|')};
+    info.grammarInfo = features.join('|');
+    return info;
 }
 
 export { parseFormOf, parseInflectionOf };

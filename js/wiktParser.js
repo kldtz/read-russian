@@ -1,7 +1,7 @@
 import { normalize } from './utils.js'
 import { parseFormOf, parseInflectionOf } from './templates.js'
 
-var POS_HEADERS = new Set(['Adjective', 'Adverb', 'Article', 'Classifier', 'Conjunction',
+const POS_HEADERS = new Set(['Adjective', 'Adverb', 'Article', 'Classifier', 'Conjunction',
   'Contraction', 'Counter', 'Determiner', 'Interjection', 'Noun', 'Numeral', 'Participle',
   'Particle', 'Postposition', 'Predicative', 'Preposition', 'Pronoun', 'Proper noun', 'Verb']);
 
@@ -27,7 +27,8 @@ function processLine(info, state, posFilter, line) {
       addAlternativeForm(info, line, state.pos);
       let inflection = extractInflection(line);
       if (inflection) {
-        addInflection(info, state.pos, inflection.lemma, inflection.grammarInfo);
+        let pos = inflection.pos ? inflection.pos : state.pos;
+        addInflection(info, pos, inflection.lemma, inflection.grammarInfo);
       } else {
         addDefinition(info, line, state.pos);
       }

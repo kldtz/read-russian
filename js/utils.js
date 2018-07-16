@@ -31,4 +31,8 @@ function isCyrillic(word) {
     return CYRILLIC.test(word);
 }
 
-export { findBestResult, normalize, isCyrillic };
+function titleCase(word) {
+    return word.charAt(0).toUpperCase() + word.substring(1).toLowerCase();
+}
+
+export { findBestResult, normalize, isCyrillic, titleCase };
