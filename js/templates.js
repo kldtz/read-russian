@@ -72,5 +72,36 @@ function parseInflectionOf(line) {
     return info;
 }
 
-export { parseFormOf, parseInflectionOf };
+function processTemplateW(line) {
+    var processed = [];
+    var pattern = /{{w\|([^|}]+).*?}}/g;
+    var match;
+    var start = 0;
+    while (match = pattern.exec(line)) {
+        processed.push(line.substring(start, match.index));
+        processed.push(match[1]);
+        start = match.index + match[0].length;
+    }
+    processed.push(line.substring(start, line.length));
+    return processed.join('');
+}
+
+function removeTemplates(line) {
+    var numOpenBrackets = 0;
+    var cleanLetters = [];
+    for (let c of line) {
+        if (c === '{') {
+            numOpenBrackets++;
+        }
+        if (!numOpenBrackets) {
+            cleanLetters.push(c);
+        }
+        if (c === '}') {
+            numOpenBrackets--;
+        }
+    }
+    return cleanLetters.join('');
+}
+
+export { parseFormOf, parseInflectionOf, processTemplateW, removeTemplates };
 
