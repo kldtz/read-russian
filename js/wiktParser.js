@@ -27,7 +27,7 @@ function processLine(info, state, posFilter, line) {
       addAlternativeForm(info, line, state.pos);
       let inflection = extractInflection(line);
       if (inflection) {
-        let pos = inflection.pos ? inflection.pos : state.pos;
+        let pos = inflection.pos && POS_HEADERS.has(inflection.pos) ? inflection.pos : state.pos;
         addInflection(info, pos, inflection.lemma, inflection.grammarInfo);
       } else {
         addDefinition(info, line, state.pos);
@@ -145,7 +145,7 @@ function addValue(definitions, pos, definition) {
   if (!definitions[pos]) {
     definitions[pos] = [];
   }
-  definitions[pos].push(definition.trim());
+  definitions[pos].push(definition);
 }
 
 export { parseArticle };

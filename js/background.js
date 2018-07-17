@@ -23,6 +23,9 @@ var selectionHandler = function (e) {
             if (!link) {
               link = info.inflections[pos].alternative;
             }
+            if (info.definitions && info.definitions.pos) {
+              continue;
+            }
             httpGetAsync('https://en.wiktionary.org/wiki/' + link + '?action=raw', function (lemmaArticle) {
               const lemmaInfo = parseArticle(lemmaArticle, link, new Set([pos]));
               mergeDefinitions(info, lemmaInfo);

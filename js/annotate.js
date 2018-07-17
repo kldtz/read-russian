@@ -85,9 +85,13 @@ function generateInfoString(data) {
         if (data.inflections && data.inflections[pos]) {
             parts.push(' (' + data.inflections[pos].lemma + ', ' + data.inflections[pos].grammarInfos.join(', ') + ')');
         }
-        parts.push(': ')
         if (data.definitions && data.definitions[pos]) {
-            parts.push(data.definitions[pos].map((el, i) => (i + 1) + '. ' + el).join('; '));
+            parts.push(': ')
+            if (data.definitions[pos].length === 1) {
+                parts.push(data.definitions[pos][0]);
+            } else {
+                parts.push(data.definitions[pos].map((el, i) => (i + 1) + '. ' + el).join('; '));
+            }
         }
         parts.push('. ');
     }
