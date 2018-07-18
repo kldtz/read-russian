@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import { parseFormOf, parseInflectionOf } from '../templates.js'
+import { parseFormOf, parseInflectionOf, buildTemplateTrees } from '../templates.js'
 
 test('extracts lemma and grammarInfo from "superlative of" template', t => {
     const line  = '# {{superlative of|ста́рый|lang=ru}}';
@@ -37,4 +37,25 @@ test('parses "form of" template, extracts pos', t => {
 
     t.is(results[0].pos, 'Adjective');
     t.is(results[1].pos, 'Adverb');
+});
+
+
+test('builds parse trees', t => {
+    const line  = '{{i|{{m|ru|на}} + {{glossary|accusative}}}}';
+
+    const roots = buildTemplateTrees(line);
+
+    t.is(roots.length, 1);
+    t.is(roots[0].name, 'i');
+    t.is(roots[0].start, 0);
+    t.is(roots[0].end, line.length);
+    t.is(roots[0].children.length, 2);
+    
+    t.is(roots[0].children[0].name, 'm');
+    t.is(roots[0].children[0].start, 4);
+    t.is(roots[0].children[0].end, 15);
+
+    t.is(roots[0].children[1].name, 'glossary');
+    t.is(roots[0].children[1].start, 18);
+    t.is(roots[0].children[1].end, 41);
 });

@@ -103,5 +103,32 @@ function removeTemplates(line) {
     return cleanLetters.join('');
 }
 
-export { parseFormOf, parseInflectionOf, processTemplateW, removeTemplates };
+function buildTemplateTrees(line) {
+    var roots = [];
+    var stack = [];
+    const pattern = /{{([^|]+)|}}|\|/g;
+    var match;
+    while (match = pattern.exec(line)) {
+        if (match[0].startsWith('{{')) {
+            let elem = {start: match.index, name: match[1], children: [], seps: []};
+            if (stack.length > 0) {
+                stack[stack.length-1].children.push(elem);
+            }
+            stack.push(elem);
+        } else if (match[0] === '}}') {
+            let elem = stack.pop();
+            elem.end = match.index + 2;
+            if (stack.length === 0) {
+                roots.push(elem);
+            }
+        } else {
+            if (stack.length > 0) {
+                stack[stack.length - 1].seps.push(match.index);
+            }
+        }
+    }
+    return roots;
+}
+
+export { parseFormOf, parseInflectionOf, processTemplateW, removeTemplates, buildTemplateTrees };
 
