@@ -121,6 +121,9 @@ function replaceTemplates(roots, line, start, end) {
 }
 
 function replaceTemplate(root, line) {
+    if (!(root.name in TEMPLATE_FUNCTION_MAPPING)) {
+        return ''; // unknown templates are removed
+    }
     let paramStrings = [];
     for (let param of root.params) {
         if (param.templates.length > 0) {
