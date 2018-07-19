@@ -106,28 +106,40 @@ function removeTemplates(line) {
 function buildTemplateTrees(line) {
     var roots = [];
     var stack = [];
-    const pattern = /{{([^|]+)|}}|\|/g;
+    const pattern = /{{(.+?)\||}}|\|/g;
     var match;
     while (match = pattern.exec(line)) {
+        let i = match.index;
         if (match[0].startsWith('{{')) {
-            let elem = {start: match.index, name: match[1], children: [], seps: []};
+            let template = {start: i, name: match[1], params: []};
+            template.params.push({start: i + match[0].length, templates: []});
             if (stack.length > 0) {
-                stack[stack.length-1].children.push(elem);
+                let curTemplate = peek(stack);
+                if (curTemplate.params.length > 0) {
+                    peek(curTemplate.params).templates.push(template);
+                }
             }
-            stack.push(elem);
+            stack.push(template);
         } else if (match[0] === '}}') {
             let elem = stack.pop();
-            elem.end = match.index + 2;
+            peek(elem.params).end = i;
+            elem.end = i + 2;
             if (stack.length === 0) {
                 roots.push(elem);
             }
         } else {
             if (stack.length > 0) {
-                stack[stack.length - 1].seps.push(match.index);
+                let curTemplate = peek(stack);
+                peek(curTemplate.params).end = i;
+                curTemplate.params.push({start: i+1, templates: []});
             }
         }
     }
     return roots;
+}
+
+function peek(stack) {
+    return stack[stack.length - 1];
 }
 
 export { parseFormOf, parseInflectionOf, processTemplateW, removeTemplates, buildTemplateTrees };

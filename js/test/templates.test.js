@@ -46,16 +46,32 @@ test('builds parse trees', t => {
     const roots = buildTemplateTrees(line);
 
     t.is(roots.length, 1);
-    t.is(roots[0].name, 'i');
-    t.is(roots[0].start, 0);
-    t.is(roots[0].end, line.length);
-    t.is(roots[0].children.length, 2);
-    
-    t.is(roots[0].children[0].name, 'm');
-    t.is(roots[0].children[0].start, 4);
-    t.is(roots[0].children[0].end, 15);
+    let n = roots[0];
+    t.is(n.name, 'i');
+    t.is(n.start, 0);
+    t.is(n.end, line.length);
 
-    t.is(roots[0].children[1].name, 'glossary');
-    t.is(roots[0].children[1].start, 18);
-    t.is(roots[0].children[1].end, 41);
+    t.is(n.params.length, 1);
+    let p = n.params[0];
+    t.is(line.substring(p.start, p.end), '{{m|ru|на}} + {{glossary|accusative}}');
+
+    t.is(p.templates.length, 2);
+    let n1 = p.templates[0];
+    t.is(n1.name, 'm');
+    t.is(line.substring(n1.start, n1.end), '{{m|ru|на}}');
+
+    t.is(n1.params.length, 2);
+    let p1 = n1.params[0];
+    t.is(line.substring(p1.start, p1.end), 'ru');
+
+    let p2 = n1.params[1];
+    t.is(line.substring(p2.start, p2.end), 'на');
+
+    let n2 = p.templates[1];
+    t.is(n2.name, 'glossary');
+    t.is(line.substring(n2.start, n2.end), '{{glossary|accusative}}');
+
+    t.is(n2.params.length, 1);
+    let p1n2 = n2.params[0];
+    t.is(line.substring(p1n2.start, p1n2.end), 'accusative')
 });
