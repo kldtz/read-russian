@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import { parseFormOf, parseInflectionOf, buildTemplateTrees } from '../templates.js'
+import { parseFormOf, parseInflectionOf, buildTemplateTrees, replaceTemplates } from '../templates.js'
 
 test('extracts lemma and grammarInfo from "superlative of" template', t => {
     const line  = '# {{superlative of|ста́рый|lang=ru}}';
@@ -74,4 +74,13 @@ test('builds parse trees', t => {
     t.is(n2.params.length, 1);
     let p1n2 = n2.params[0];
     t.is(line.substring(p1n2.start, p1n2.end), 'accusative')
+});
+
+test('replaces glossary template', t => {
+    const line  = '{{i|{{m|ru|на}} + {{glossary|accusative}}}}';
+    const roots = buildTemplateTrees(line);
+    
+    const replacement = replaceTemplates(roots, line);
+
+    t.is(replacement, '<i>на + accusative</i>');
 });
