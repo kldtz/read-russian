@@ -1,12 +1,18 @@
-import { isCyrillic, titleCase } from './utils.js'
+import { isCyrillic, titleCase, peek } from './utils.js'
 
 const FORM_OF = ['form of', 'abbreviation of', 'comparative of', 'superlative of', 'alternative spelling of', 'misspelling of'];
 const FORM_OF_PATTERN = new RegExp('{{(' + FORM_OF.join('|') + ')\\|(.+?)}}');
 const INFLECTION_OF_PATTERN = /{{(inflection of|ru-participle of)\|(.+?)}}/;
+const NAMED_PARAMETER = /^\w+=[^=]+$/;
 const TEMPLATE_FUNCTION_MAPPING = {
     glossary: replaceGlossary,
-    i: replaceItalics,
-    m: replaceMention
+    i: replaceI,
+    lb: replaceLabel,
+    lbl: replaceLabel,
+    label: replaceLabel,
+    m: replaceMention,
+    mention: replaceMention,
+    w: replaceWikipediaLink
 };
 
 function parseFormOf(line) {
@@ -77,35 +83,42 @@ function parseInflectionOf(line) {
     return info;
 }
 
-function processTemplateW(line) {
-    var processed = [];
-    var pattern = /{{w\|([^|}]+).*?}}/g;
-    var match;
-    var start = 0;
-    while (match = pattern.exec(line)) {
-        processed.push(line.substring(start, match.index));
-        processed.push(match[1]);
-        start = match.index + match[0].length;
-    }
-    processed.push(line.substring(start, line.length));
-    return processed.join('');
+function processTemplates(line) {
+    const roots = buildTemplateTrees(line);
+    return replaceTemplates(roots, line);
 }
 
-function removeTemplates(line) {
-    var numOpenBrackets = 0;
-    var cleanLetters = [];
-    for (let c of line) {
-        if (c === '{') {
-            numOpenBrackets++;
-        }
-        if (!numOpenBrackets) {
-            cleanLetters.push(c);
-        }
-        if (c === '}') {
-            numOpenBrackets--;
+function buildTemplateTrees(line) {
+    var roots = [];
+    var stack = [];
+    const pattern = /{{(.+?)\||}}|\|/g;
+    var match;
+    while (match = pattern.exec(line)) {
+        let i = match.index;
+        if (match[0].startsWith('{{')) {
+            let template = { start: i, name: match[1], params: [] };
+            template.params.push({ start: i + match[0].length, templates: [] });
+            if (stack.length > 0) {
+                let curTemplate = peek(stack);
+                if (curTemplate.params.length > 0) {
+                    peek(curTemplate.params).templates.push(template);
+                }
+            }
+            stack.push(template);
+        } else if (match[0] === '}}') {
+            let elem = stack.pop();
+            peek(elem.params).end = i;
+            elem.end = i + 2;
+            if (stack.length === 0) {
+                roots.push(elem);
+            }
+        } else if (stack.length > 0) {
+            let curTemplate = peek(stack);
+            peek(curTemplate.params).end = i;
+            curTemplate.params.push({ start: i + 1, templates: [] });
         }
     }
-    return cleanLetters.join('');
+    return roots;
 }
 
 function replaceTemplates(roots, line, start, end) {
@@ -144,53 +157,63 @@ function extractInfoFromTemplate(name, params) {
 }
 
 function replaceGlossary(params) {
-    return params[0];
+    return extractParamAt(params, 2, 1);
 }
 
-function replaceItalics(params) {
-    return '<i>' + params[0] + '</i>';
+function replaceI(params) {
+    return '(' + params[0] + ')';
+}
+
+function replaceWikipediaLink(params) {
+    return extractParamAt(params, 2, 1);
 }
 
 function replaceMention(params) {
-    return params[1];
+    return extractParamAt(params, 3, 2);
 }
 
-function buildTemplateTrees(line) {
-    var roots = [];
-    var stack = [];
-    const pattern = /{{(.+?)\||}}|\|/g;
-    var match;
-    while (match = pattern.exec(line)) {
-        let i = match.index;
-        if (match[0].startsWith('{{')) {
-            let template = { start: i, name: match[1], params: [] };
-            template.params.push({ start: i + match[0].length, templates: [] });
-            if (stack.length > 0) {
-                let curTemplate = peek(stack);
-                if (curTemplate.params.length > 0) {
-                    peek(curTemplate.params).templates.push(template);
-                }
-            }
-            stack.push(template);
-        } else if (match[0] === '}}') {
-            let elem = stack.pop();
-            peek(elem.params).end = i;
-            elem.end = i + 2;
-            if (stack.length === 0) {
-                roots.push(elem);
-            }
-        } else if (stack.length > 0) {
-            let curTemplate = peek(stack);
-            peek(curTemplate.params).end = i;
-            curTemplate.params.push({ start: i + 1, templates: [] });
+function replaceLabel(params) {
+    if (params.length < 2) {
+        return '';
+    }
+    var cleanList = [params[1]];
+    var i;
+    for (i = 2; i < params.length; i++) {
+        let param = params[i];
+        if (param === '_' && params.length > ++i) {
+            cleanList.push(cleanList.pop() + ' ' + params[i]);
+        } else if ((param === 'or' || param === 'and') && params.length > ++i) {
+            cleanList.push(cleanList.pop() + ' ' + param + ' ' + params[i])
+        } else {
+            cleanList.push(param);
         }
     }
-    return roots;
+    return '(<i>' + cleanList.join(', ') + '</i>)';
 }
 
-function peek(stack) {
-    return stack[stack.length - 1];
+/**
+ * Extract an unnamed parameter at a prefered or alternative position. 
+ * Positions are counted starting from 1!
+ */
+function extractParamAt(params, preferred, alternative) {
+    var plainParams = [];
+    for (let param of params) {
+        if (!isNamedParameter(param)) {
+            plainParams.push(param);
+            if (plainParams.length === preferred) {
+                return param;
+            }
+        }
+    }
+    if (alternative && plainParams.length >= alternative) {
+        return plainParams[alternative - 1];
+    }
+    return null;
 }
 
-export { parseFormOf, parseInflectionOf, processTemplateW, removeTemplates, buildTemplateTrees, replaceTemplates };
+function isNamedParameter(param) {
+    return NAMED_PARAMETER.test(param);
+}
+
+export { parseFormOf, parseInflectionOf, buildTemplateTrees, processTemplates };
 

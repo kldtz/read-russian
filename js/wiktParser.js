@@ -1,5 +1,5 @@
 import { normalize } from './utils.js'
-import { parseFormOf, parseInflectionOf, processTemplateW, removeTemplates } from './templates.js'
+import { parseFormOf, parseInflectionOf, processTemplates } from './templates.js'
 
 const POS_HEADERS = new Set(['Adjective', 'Adverb', 'Article', 'Classifier', 'Conjunction',
   'Contraction', 'Counter', 'Determiner', 'Interjection', 'Noun', 'Numeral', 'Participle',
@@ -129,8 +129,7 @@ function extractDefinition(line) {
   if (line.startsWith('#') && !line.startsWith('#:')) {
     var definition = line.substring(1).replace(/\[\[[^\]]+?\|/g, '');
     definition = definition.replace(/(\[\[|\]\])/g, '');
-    definition = processTemplateW(definition);
-    definition = removeTemplates(definition);
+    definition = processTemplates(definition);
     definition = definition.replace(/\(\s*\)/g, '');
     definition = definition.replace(/''+/g, '');
     if (definition && !definition.match(/^[\s\W]+$/)) {

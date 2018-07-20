@@ -123,7 +123,7 @@ test('removes nested templates', t => {
 
         const info = parseArticle(article, 'готовый');
 
-        t.is(info.definitions.Adjective[0], 'ready, prepared');
+        t.is(info.definitions.Adjective[0], 'ready, prepared (к + dative)');
 });
 
 test('recognizes predicative', t => {

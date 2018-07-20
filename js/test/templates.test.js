@@ -1,9 +1,9 @@
 import test from 'ava';
 
-import { parseFormOf, parseInflectionOf, buildTemplateTrees, replaceTemplates } from '../templates.js'
+import { parseFormOf, parseInflectionOf, buildTemplateTrees, processTemplates } from '../templates.js'
 
 test('extracts lemma and grammarInfo from "superlative of" template', t => {
-    const line  = '# {{superlative of|ста́рый|lang=ru}}';
+    const line = '# {{superlative of|ста́рый|lang=ru}}';
 
     const result = parseFormOf(line)
 
@@ -12,7 +12,7 @@ test('extracts lemma and grammarInfo from "superlative of" template', t => {
 });
 
 test('extracts lemma and grammarInfo from "comparative of" template', t => {
-    const line  = '# {{comparative of|POS=adjective|ста́рый|lang=ru}}';
+    const line = '# {{comparative of|POS=adjective|ста́рый|lang=ru}}';
 
     const result = parseFormOf(line)
 
@@ -21,17 +21,17 @@ test('extracts lemma and grammarInfo from "comparative of" template', t => {
 });
 
 test('parses "inflection of" template, ignores order, lang parameter and empty field', t => {
-    const lines  = ['# {{inflection of|весь||gen|s|f|lang=ru}}', '# {{inflection of|lang=ru|весь||gen|s|f}}'];
+    const lines = ['# {{inflection of|весь||gen|s|f|lang=ru}}', '# {{inflection of|lang=ru|весь||gen|s|f}}'];
 
     const results = lines.map(parseInflectionOf);
 
-    const expectedResult = {lemma: 'весь', grammarInfo: 'gen|s|f'};
+    const expectedResult = { lemma: 'весь', grammarInfo: 'gen|s|f' };
     t.deepEqual(results[0], expectedResult);
     t.deepEqual(results[1], expectedResult);
 });
 
 test('parses "form of" template, extracts pos', t => {
-    const lines  = ['# {{comparative of|POS=adjective|ста́рый|lang=ru}}', '# {{comparative of|POS=adverb|старо́|lang=ru}}'];
+    const lines = ['# {{comparative of|POS=adjective|ста́рый|lang=ru}}', '# {{comparative of|POS=adverb|старо́|lang=ru}}'];
 
     const results = lines.map(parseFormOf);
 
@@ -41,7 +41,7 @@ test('parses "form of" template, extracts pos', t => {
 
 
 test('builds parse trees', t => {
-    const line  = '{{i|{{m|ru|на}} + {{glossary|accusative}}}}';
+    const line = '{{i|{{m|ru|на}} + {{glossary|accusative}}}}';
 
     const roots = buildTemplateTrees(line);
 
@@ -77,10 +77,45 @@ test('builds parse trees', t => {
 });
 
 test('replaces glossary template', t => {
-    const line  = '{{i|{{m|ru|на}} + {{glossary|accusative}}}}';
-    const roots = buildTemplateTrees(line);
-    
-    const replacement = replaceTemplates(roots, line);
+    const line = '{{i|{{m|ru|на}} + {{glossary|accusative}}}}';
 
-    t.is(replacement, '<i>на + accusative</i>');
+    const replacement = processTemplates(line);
+
+    t.is(replacement, '(на + accusative)');
 });
+
+test('replaces Wikipedia link templates', t => {
+    const line = '{{w|Long|Short}} {{w|Single}} {{w|lang=ru|Single}}' +
+        ' {{w|Long|lang=ru|Short}} {{w|Long|Short|lang=ru}}';
+
+    const replacement = processTemplates(line);
+
+    t.is(replacement, 'Short Single Single Short Short');
+});
+
+test('replaces single label', t => {
+    const line = '{{lb|en|blubb}}';
+
+    const replacement = processTemplates(line);
+
+    t.is(replacement, '(<i>blubb</i>)');
+});
+
+test('replaces multiple labels', t => {
+    const line = '{{lb|en|blubb1|blubb2|blubb3}}';
+
+    const replacement = processTemplates(line);
+
+    t.is(replacement, '(<i>blubb1, blubb2, blubb3</i>)');
+});
+
+test('replaces special labels', t => {
+    const line = '{{lb|en|blubb1|and|blubb2}} {{lb|en|blubb1|_|blubb2}}';
+
+    const replacement = processTemplates(line);
+
+    t.is(replacement, '(<i>blubb1 and blubb2</i>) (<i>blubb1 blubb2</i>)');
+});
+
+
+

@@ -35,4 +35,8 @@ function titleCase(word) {
     return word.charAt(0).toUpperCase() + word.substring(1).toLowerCase();
 }
 
-export { findBestResult, normalize, isCyrillic, titleCase };
+function peek(stack) {
+    return stack[stack.length - 1];
+}
+
+export { findBestResult, normalize, isCyrillic, titleCase, peek };
