@@ -98,7 +98,7 @@ test('parses template w (shorter links to English Wikipedia)', t => {
 
         const info = parseArticle(article, 'Госдума');
 
-        t.is(info.definitions['Proper noun'][0], 'State Duma');
+        t.is(info.definitions['Proper noun'][0], 'State Duma (lower house of Russian national parliament)');
 });
 
 test('extracts definition "to be"', t => {

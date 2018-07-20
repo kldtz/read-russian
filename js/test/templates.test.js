@@ -117,5 +117,13 @@ test('replaces special labels', t => {
     t.is(replacement, '(<i>blubb1 and blubb2</i>) (<i>blubb1 blubb2</i>)');
 });
 
+test('replaces gloss', t => {
+    const line = '{{gloss|some text}}';
+
+    const replacement = processTemplates(line);
+
+    t.is(replacement, '(some text)');
+});
+
 
 

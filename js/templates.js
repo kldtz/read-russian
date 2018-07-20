@@ -5,6 +5,7 @@ const FORM_OF_PATTERN = new RegExp('{{(' + FORM_OF.join('|') + ')\\|(.+?)}}');
 const INFLECTION_OF_PATTERN = /{{(inflection of|ru-participle of)\|(.+?)}}/;
 const NAMED_PARAMETER = /^\w+=[^=]+$/;
 const TEMPLATE_FUNCTION_MAPPING = {
+    gloss: replaceGloss,
     glossary: replaceGlossary,
     i: replaceI,
     lb: replaceLabel,
@@ -191,6 +192,10 @@ function replaceLabel(params) {
     return '(<i>' + cleanList.join(', ') + '</i>)';
 }
 
+function replaceGloss(params) {
+    return params.length === 1 ? '(' + params[0] + ')' : '';
+}
+
 /**
  * Extract an unnamed parameter at a prefered or alternative position. 
  * Positions are counted starting from 1!
@@ -208,7 +213,7 @@ function extractParamAt(params, preferred, alternative) {
     if (alternative && plainParams.length >= alternative) {
         return plainParams[alternative - 1];
     }
-    return null;
+    return '';
 }
 
 function isNamedParameter(param) {
