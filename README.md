@@ -4,7 +4,7 @@ This Chrome extension retrieves definitions and additional linguistic informatio
 
 ## Installation
 
-The extension is not released yet. To try it out, you need to [download the repository](https://github.com/kldtz/read-russian/archive/master.zip), unzip it, go to [chrome://extensions/](chrome://extensions/), switch on 'developer mode' (top right corner), click 'load unpacked' and select the root directory of the repository.
+The extension is not released yet. To try it out, you need to [download the repository](https://github.com/kldtz/read-russian/archive/master.zip), unzip it, go to [chrome://extensions/](chrome://extensions/), switch on 'developer mode' (top right corner), click 'load unpacked' and select 'read-russian' under the root directory of the repository.
 
 ## Usage
 
