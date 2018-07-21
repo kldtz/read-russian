@@ -128,5 +128,6 @@ function collectPos(data) {
     if (data.definitions) {
         posList.push(...Object.keys(data.definitions));
     }
+    posList.sort();
     return new Set(posList);
 }
