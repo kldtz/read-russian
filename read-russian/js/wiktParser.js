@@ -121,6 +121,8 @@ function addInflection(info, pos, lemma, grammarInfo) {
   }
   if (!info.inflections[pos].grammarInfos) {
     info.inflections[pos].grammarInfos = []
+  } else if (info.inflections[pos].grammarInfos.indexOf(grammarInfo) > -1) {
+    return;
   }
   info.inflections[pos].grammarInfos.push(grammarInfo);
 }
@@ -135,7 +137,7 @@ function extractDefinition(line) {
     definition = definition.replace(/''+/g, '');
     if (definition && !definition.match(/^[\s\W]+$/)) {
       definition = definition.replace(/[\s]+/g, ' ');
-      return {text: definition.trim(), depth: depth};
+      return { text: definition.trim(), depth: depth };
     }
   }
   return null;
