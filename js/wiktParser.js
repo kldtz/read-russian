@@ -132,6 +132,7 @@ function extractDefinition(line) {
     definition = processTemplates(definition);
     definition = definition.replace(/\(\s*\)/g, '');
     definition = definition.replace(/''+/g, '');
+    definition = definition.replace(/^#+/, '');
     if (definition && !definition.match(/^[\s\W]+$/)) {
       definition = definition.replace(/[\s]+/g, ' ');
       return definition.trim();
