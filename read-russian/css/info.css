@@ -6,6 +6,24 @@
     border-width: 1px;
     width: 100%;
     padding: 5px;
+    color: #131516;
+}
+
+#wikt-info span.pos {
+    padding-left: 5px;
+}
+
+#wikt-info span.sense-num {
+    color: rgb(107, 112, 112);
+    padding-left: 3px;
+}
+
+#wikt-info span.lb {
+    font-style: italic;
+}
+
+#wikt-info span.non-gloss-def {
+    font-style: italic;
 }
 
 #wikt-info-align {

@@ -190,7 +190,7 @@ function replaceLabel(params) {
             cleanList.push(param);
         }
     }
-    return '(<i>' + cleanList.join(', ') + '</i>)';
+    return '(<span class="lb">' + cleanList.join(', ') + '</span>)';
 }
 
 function replaceGloss(params) {
@@ -198,7 +198,7 @@ function replaceGloss(params) {
 }
 
 function replaceNonGlossDefinition(params) {
-    return params.length === 1 ? '<i>' + params[0] + '</i>' : '';
+    return params.length === 1 ? '<span class="non-gloss-def">' + params[0] + '</span>' : '';
 }
 
 /**

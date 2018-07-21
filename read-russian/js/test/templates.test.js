@@ -98,7 +98,7 @@ test('replaces single label', t => {
 
     const replacement = processTemplates(line);
 
-    t.is(replacement, '(<i>blubb</i>)');
+    t.is(replacement, '(<span class="lb">blubb</span>)');
 });
 
 test('replaces multiple labels', t => {
@@ -106,7 +106,7 @@ test('replaces multiple labels', t => {
 
     const replacement = processTemplates(line);
 
-    t.is(replacement, '(<i>blubb1, blubb2, blubb3</i>)');
+    t.is(replacement, '(<span class="lb">blubb1, blubb2, blubb3</span>)');
 });
 
 test('replaces special labels', t => {
@@ -114,7 +114,7 @@ test('replaces special labels', t => {
 
     const replacement = processTemplates(line);
 
-    t.is(replacement, '(<i>blubb1 and blubb2</i>) (<i>blubb1 blubb2</i>)');
+    t.is(replacement, '(<span class="lb">blubb1 and blubb2</span>) (<span class="lb">blubb1 blubb2</span>)');
 });
 
 test('replaces gloss', t => {
@@ -130,7 +130,7 @@ test('replaces non-gloss definition', t => {
 
     const replacement = processTemplates(line);
 
-    t.is(replacement, '<i>some text</i>');
+    t.is(replacement, '<span class="non-gloss-def">some text</span>');
 });
 
 
