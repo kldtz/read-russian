@@ -125,5 +125,12 @@ test('replaces gloss', t => {
     t.is(replacement, '(some text)');
 });
 
+test('replaces non-gloss definition', t => {
+    const line = '{{non-gloss definition|some text}}';
+
+    const replacement = processTemplates(line);
+
+    t.is(replacement, '<i>some text</i>');
+});
 
 

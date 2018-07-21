@@ -13,6 +13,7 @@ const TEMPLATE_FUNCTION_MAPPING = {
     label: replaceLabel,
     m: replaceMention,
     mention: replaceMention,
+    'non-gloss definition': replaceNonGlossDefinition,
     w: replaceWikipediaLink
 };
 
@@ -162,7 +163,7 @@ function replaceGlossary(params) {
 }
 
 function replaceI(params) {
-    return '(' + params[0] + ')';
+    return params.length === 1 ? '(' + params[0] + ')' : '';
 }
 
 function replaceWikipediaLink(params) {
@@ -194,6 +195,10 @@ function replaceLabel(params) {
 
 function replaceGloss(params) {
     return params.length === 1 ? '(' + params[0] + ')' : '';
+}
+
+function replaceNonGlossDefinition(params) {
+    return params.length === 1 ? '<i>' + params[0] + '</i>' : '';
 }
 
 /**
