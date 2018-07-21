@@ -1,0 +1,28 @@
+==Russian==
+
+===Etymology===
+From {{inh|ru|sla-pro|*silьnъ}}. Synchronically analysable as {{af|ru|си́ла|-ный}}.
+
+===Pronunciation===
+* {{ru-IPA|си́льный}}
+* {{audio|Ru-сильный.ogg|Audio|lang=ru}}
+
+===Adjective===
+{{ru-adj|си́льный|сильне́е|сильне́йший}}
+
+# [[strong]], [[powerful]]
+#* '''1886''', [[w:Anton Chekhov|Anton Chekhov]], "The Chorus Girl":
+#*: Барыня встала и в '''сильном''' волнении прошлась по комнате.
+#*:: Bárynja vstála i v '''síl'nom''' volnénii prošlás' po kómnate.
+#*::: The lady got up and walked about the room in '''great''' excitement.
+# {{lb|ru|grammar}} [[irregular]]
+
+====Declension====
+{{ru-decl-adj|си́льный|c'*|short_m=силён,си́лен*|shorttail=*|notes=* Dated.}}
+{{ru-decl-adj|old=1|си́льный|c'*|short_m=силёнъ,си́ленъ*|shorttail=*|notes=* Dated.}}
+
+====Antonyms====
+* {{sense|irregular}} {{l|ru|сла́бый}}, {{l|ru|пра́вильный}}
+
+====Related terms====
+* {{l|ru|сила́ч}}

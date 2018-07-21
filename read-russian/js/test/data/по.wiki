@@ -1,0 +1,279 @@
+{{also|По|ПО|по-|Appendix:Variations of "po"}}
+==Bulgarian==
+
+===Pronunciation 1===
+{{rfc-pron-n|Pronunciation 1|lang=bg}}
+* {{qualifier|unstressed}} {{IPA|/po/|lang=bg}}
+
+====Preposition====
+{{head|bg|preposition|tr=po|sc=Cyrl}}
+
+# {{non-gloss definition|used to indicate movement over a surface or movement bound to certain limits (usually continuous or repeating in time)}}, [[on#Preposition|on]], [[over#Preposition|over]], [[through#Preposition|through]], [[along#Preposition|along]]
+#: {{ux|bg|Вървя '''по''' улицата.|t=I am walking '''on''' the street.|inline=1}}
+# {{non-gloss definition|introducing the object of a targeted action or for an action related to certain state}}, [[on#Preposition|on]], [[over#Preposition|over]], [[for#Preposition|for]]
+#: {{ux|bg|Потупaх го '''по''' рамото.|t=I tapped him '''on''' the shoulder.|inline=1}}
+#: {{ux|bg|Ударих го '''по''' главата.|t=I hit him '''on'''/'''over''' the head.|inline=1}}
+#: {{ux|bg|Тъгувам '''по''' лятото.|t=I long '''for''' the summer.|inline=1}}
+# {{non-gloss definition|in conjunction with countable nouns for price or quantity, expressing quantity, expressing distribution}}, [[by#Preposition|by]]
+#: {{ux|bg|'''По''' евро за книга.|t=A euro for a book.|inline=1}}
+#: {{ux|bg|Двама '''по''' двама.|t=Two '''by''' two.|inline=1}}
+#: {{ux|bg|Тичам '''по''' малко (всеки ден).|t=I am running a little (every day).|inline=1}}
+# {{non-gloss definition|expressing approximate time}}
+#: {{ux|bg|'''По''' обед.|t='''Around''' lunchtime.|inline=1}}
+#: {{ux|bg|'''По''' Коледа.|t='''Around''' Christmas.|inline=1}}
+# {{non-gloss definition|used to describe attire}}, [[with#Preposition|with]] ... [[on#Preposition|on]]
+#: {{ux|bg|Ходя '''по''' чорапи.|t=I am walking '''with''' my socks '''on'''.|inline=1}}
+# {{non-gloss definition|used to indicate means}}, [[by#Preposition|by]], [[via#Preposition|via]], [[on#Preposition|on]]
+#: {{ux|bg|Пращам го '''по''' автобус.|t=I am sending it '''by''' bus.|inline=1}}
+#: {{ux|bg|Пращам го '''по''' въздушна поща.|t=I am sending it '''via''' airmail.|inline=1}}
+#: {{ux|bg|Говоря '''по''' телефона.|t=I am talking '''on''' the phone.|inline=1}}
+# {{non-gloss definition|indicating an activity or it's domain}}, [[of#Preposition|of]]
+#: {{ux|bg|Учител '''по''' история.|t=History teacher.|inline=1}}
+#: {{ux|bg|Факултет '''по''' физика.|t=Faculty '''of''' physics.|inline=1}}
+# {{non-gloss definition|according to, based on}}, [[by#Preposition|by]], [[of#Preposition|of]]
+#: {{ux|bg|Съдя го '''по''' външността му.|t=I am judging him '''by''' his appearance.|inline=1}}
+#: {{ux|bg|Работя '''по''' усмотрение.|t=I work '''of''' my own accord.|inline=1}}
+# {{non-gloss definition|used to indicate cause}}, [[by#Preposition|by]]
+#: {{ux|bg|Пропуснато е '''по''' погрешка.|t=It is missed '''by''' mistake.|inline=1}}
+#: {{ux|bg|'''По''' негова вина закъснях.|t=It is his fault I was late.|inline=1}}
+# {{non-gloss definition|used to indicate direction}}, [[along#Preposition|along]]
+#: {{ux|bg|Плувам '''по''' течението.|t=I am swimming '''along''' the current.|inline=1}}
+#: {{ux|bg|Ходя '''по''' пътеката.|t=I am walking '''along''' the path.|inline=1}}
+
+===Pronunciation 2===
+* {{qualifier|stressed}} {{IPA|/pɔ/|lang=bg}}
+
+====Particle====
+{{head|bg|prefix|tr=po|sc=Cyrl}}
+
+# {{non-gloss definition|used as a prefix to form comparative for adjectives and adverbs}}, [[more]]
+#: {{ux|bg|Корабите са '''по-бавни''' от самолетите.|t=Ships are '''slower''' than airplanes.|inline=1}}
+#: {{ux|bg|Този филм е '''по-интересен'''.|t=This film is '''more interesting'''.|inline=1}}
+#: {{ux|bg|Трябва да ходя '''по-бързо'''.|t=I should walk '''faster'''.|inline=1}}
+
+{{head|bg|particle|head=пò|tr=pó|sc=Cyrl}}
+# {{non-gloss definition|used for nouns, verbs and other parts of speech to form a comparative}}, [[more]]
+#: {{ux|bg|'''Пò''' я обичам!|t=I love her '''more'''!|inline=1}}
+#: {{ux|bg|Той е '''пò''' юнак от теб.|t=He is '''more of''' a hero than you.|inline=1}}
+# {{non-gloss definition|used before prepositions to form a comparative}}, [[more]]
+#: {{ux|bg|Областта е '''пò''' на север.|t=The region is '''more''' northwards.|inline=1}}
+
+===See also===
+* {{l|bg|повече}}
+
+----
+
+==Macedonian==
+
+===Preposition===
+{{head|mk|preposition}}
+
+# [[after]]
+#: ''Ќе се вратат по вечерата.''
+#:: ''They'll return after dinner.''
+# [[on]] (movement along a surface)
+#: ''Одам по улицата.''
+#:: ''I'm walking on the street.''
+# [[by]] (distributive)
+#: ''Влезете еден по еден.''
+#:: ''Enter one by one.''
+# [[times]]
+#: ''Два по два е четири.''
+#:: ''Two times two is four.''
+# {{lb|mk|colloquial}} [[according to]]
+#: ''По тебе, што ќе се случи следно?''
+#:: ''According to you, what's going to happen next?''
+
+----
+
+==Old Church Slavonic==
+
+===Preposition===
+{{cu-prep}}
+
+# [[along]]
+# [[on]]
+# [[after]]
+# [[by]]
+
+===References===
+* ''Mali staroslavensko-hrvatski rječnik'', Matica hrvatska, Zagreb, 2004
+
+----
+
+==Russian==
+
+===Etymology===
+From {{inh|ru|sla-pro|*po}}.
+
+===Pronunciation===
+* {{ru-IPA}}
+* {{ru-IPA|по́}} {{i|when stressed}}
+* {{audio|Ru-по.ogg|Audio|lang=ru}}
+
+===Preposition===
+{{head|ru|preposition}}
+
+# {{non-gloss definition|with [[accusative case]]}}
+## [[up to]]
+## [[till]]
+## {{non-gloss definition|indicates distribution (with numerals other than one, a thousand, a million, a billion, a trillion, etc. and compound numerals ending these words)}}
+##: {{uxi|ru|по́ [[два|два (две)]] / по [[две́сти]]|t=two / two hundred each}}
+# {{non-gloss definition|with [[dative case]]}}
+## [[along]]
+## [[over]]
+## [[on]]
+##: {{uxi|ru|[[плыть]] по [[реке́]]|t=to swim on a river}}
+## [[according to]]
+## {{non-gloss definition|showing the cause that is unwanting or unwilling}} (see [[из-за]]'s usage notes for more detail)
+## {{non-gloss definition|indicates the [[direct object]] of some verbs of striking or hitting}}
+##: {{uxi|ru|[[нанести́]] [[уда́р]] по [[ядерный|я́дерным]] [[объект|объе́ктам]] [[Иран|Ира́на]]|t=to launch a strike at Iran's nuclear ambitions}}
+## {{non-gloss definition|indicates repetition of time}}
+## {{non-gloss definition|indicates distribution (with numerals one, a thousand, a million, a billion, a trillion, etc. and compound numerals ending in these words)}}
+##: {{uxi|ru|по [[один|одному́ (одно́й)]] / по [[тысяча|ты́сяче]] / по [[миллион|миллио́ну]] / по [[миллиард|миллиа́рду]]|t=one / a thousand / a million / a billion each}}
+# {{non-gloss definition|with [[prepositional case]]}}
+## [[after]]
+## [[for]]
+
+====Usage notes====
+* When used with numerals in a distributive sense, the following should be noted:
+** The case of the numeral is the dative for the numerals one, a thousand, a million, a billion, a trillion, etc. and compound numerals ending in these words, e.g. twenty-one, but the accusative inanimate (even with animate nouns) for the remainder.
+**: {{uxi|ru|[[я|Я]] [[дать|дал]] [[они|им]] '''по [[пя́ть]]''' [[рубль|рубле́й]].|I gave them '''five''' rubles '''each'''.}}
+**: {{uxi|ru|[[я|Я]] [[дать|дал]] [[они|им]] '''по [[двадцать один|двадцати́ одному́]]''' [[рубль|рублю́]].|I gave them '''twenty-one''' rubles '''each'''.}}
+**: {{uxi|ru|[[мы|Мы]] [[отправить|отпра́вили]] '''по [[три́]]''' [[человек|челове́ка]].|We sent '''three''' men '''each'''.|source=note, not animate '''*трёх'''}}
+** The case of an associated noun, if any, follows the normal rules for the numeral (dative singular for one and compounds ending in one; genitive singular for two, three, four and compounds ending in these numerals; and genitive plural in all other cases).
+** With {{m|ru|два}}, {{m|ru|три}}, {{m|ru|сто}} (but not compounds ending in these numerals), the stress is optionally drawn onto '''по''':
+**: {{uxi|ru|[[я|Я]] [[дать|дал]] [[они|им]] '''по́ [[два]]'''/'''по [[два́]]''' [[рубль|рубля́]].|I gave them '''two''' rubles '''each'''.}}
+
+====Related terms====
+* {{l|ru|по ме́ре того́ как}}
+
+----
+
+==Serbo-Croatian==
+
+===Etymology 1===
+From {{m|sh|sc=Cyrl|пол}}, from {{etyl|sla-pro|sh}} {{m|sla-pro|*polъ}}. See {{m|sh|sc=Cyrl|по-}}.
+
+====Alternative forms====
+* {{l|sh|sc=Cyrl|по̑л}}
+
+====Pronunciation====
+* {{IPA|/pôː/|lang=sh}}
+
+====Adverb====
+{{sh-adverb|head=по̑}}
+
+# [[half]]
+#: {{ux|sh|сат и '''по'''|t=hour and a half|inline=1}}
+#: {{ux|sh|четири и '''по'''|t=four thirty|inline=1}}
+#: {{ux|sh|чов(ј)ек и '''по'''|t=an excellent man|inline=1}}
+
+===Etymology 2===
+From {{inh|sh|sla-pro|*po}}, from {{etyl|ine-pro|sh}} {{m|ine-pro|*h₂(e)po}}.
+
+====Pronunciation====
+* {{IPA|/pô/|lang=sh}}
+
+====Preposition====
+{{sh-preposition|head=по̏}}
+
+# {{qualifier|+ [[accusative case]]}} [[for]]
+#: {{ux|sh|отићи '''по''' мл(иј)еко|t=to go and get the milk|inline=1}}
+#: {{ux|sh|'''по''' ц(иј)ели дан|t=all day long|inline=1}}
+#: {{ux|sh|'''по''' шести пут|t=for the sixth time|inline=1}}
+#: {{ux|sh|бити штетан '''по''' некога/нешто|t=to be harmful for sb/sth|inline=1}}
+#: {{ux|sh|добро/лоше '''по''' њега|t=good/bad for him|inline=1}}
+# {{qualifier|+ [[locative case]]}} [[over]], [[through]], [[across]], [[in]], [[on]]
+#: {{ux|sh|ударити '''по''' глави|t=to hit on the head|inline=1}}
+#: {{ux|sh|сн(иј)ег је пао '''по''' цести|t=snow fell on the road|inline=1}}
+#: {{ux|sh|вода се пролила '''по''' поду|t=water spilled over the floor|inline=1}}
+#: {{ux|sh|шетати '''по''' шуми|t=to walk in the woods|inline=1}}
+# {{qualifier|+ [[locative case]]}} [[by]], [[with]], [[through]] (using an intermediary or medium)
+#: {{ux|sh|Послао сам му пакет '''по''' заједничком пријатељу.|t=I've sent him a package via a mutual friend.|inline=1}}
+#: {{ux|sh|'''по''' зраку/води|t=by air/water|inline=1}}
+# {{qualifier|+ [[locative case]]}} [[by]], [[according to]]
+#: {{ux|sh|све иде '''по''' плану|t=everything is going according to the plan|inline=1}}
+#: {{ux|sh|Америка је прва држава '''по''' богатству у св(иј)ету.|t=America is the richest country in the world.|inline=1}}
+#: {{ux|sh|'''по''' глави становника|t=per capita|inline=1}}
+#: {{ux|sh|жив(ј)ети '''по''' принципима|t=to live according to principles|inline=1}}
+#: {{ux|sh|'''по''' мом(е) мишљењу|t=in my opinion|inline=1}}
+#: {{ux|sh|'''по''' мом рачуну|t=by my reckoning|inline=1}}
+#: {{ux|sh|'''по''' мени|t=in my opinion; as far as I'm concerned|inline=1}}
+#: {{ux|sh|свирати '''по''' слуху|t=to play by ear|inline=1}}
+#: {{ux|sh|судити '''по''' вањштини|t=to judge by appearance|inline=1}}
+# {{qualifier|+ [[locative case]]}} [[after]]
+#: {{ux|sh|'''по''' свршетку сукоба|t=after (the end of) the conflict|inline=1}}
+# {{qualifier|+ [[locative case]]}} [[during]]
+#: {{ux|sh|'''по''' киши/сунцу|t=in the rain/sun|inline=1}}
+#: {{ux|sh|'''по''' дану|t=during the day|inline=1}}
+# {{qualifier|+ [[locative case]]}} in miscellaneous senses in various phrasal constructs
+#: {{ux|sh|разум(иј)е се (само) '''по''' себи|t=it goes without saying|inline=1}}
+#: {{ux|sh|нека буде '''по''' твоме|t=let it be your way|inline=1}}
+#: {{ux|sh|једнак '''по''' величини|t=equal in size|inline=1}}
+#: {{ux|sh|све је '''по''' старом|t=everything is/goes in the accustomed/usual manner|inline=1}}
+#: {{ux|sh|'''по''' обичају|t=as usual, according to custom|inline=1}}
+#: {{ux|sh|'''по''' вр(иј)едности|t=in value|inline=1}}
+#: {{ux|sh|'''по''' свој прилици|t=in all likelihood|inline=1}}
+#: {{ux|sh|'''по''' роду|t=by birth|inline=1}}
+#: {{ux|sh|'''по''' нарави/природи|t=in nature|inline=1}}
+#: {{ux|sh|'''по''' тој ц(иј)ени|t=at this price|inline=1}}
+#: {{ux|sh|'''по''' параграфу 13|t=under section 13|inline=1}}
+#: {{ux|sh|'''по''' што '''по''' то|t=by all means|inline=1}}
+#: {{ux|sh|'''по''' могућности|t=if possible|inline=1}}
+#: {{ux|sh|'''по''' реду|t=in order, one after another|inline=1}}
+#: {{ux|sh|'''по''' мом укусу|t=(according) to my taste|inline=1}}
+#: {{ux|sh|'''по''' квалитети|t=by quality|inline=1}}
+#: {{ux|sh|'''по''' томе|t=according to this/that, accordingly, consequently, then|inline=1}}
+#: {{ux|sh|'''по''' закону|t=according to the law, by the law|inline=1}}
+#: {{ux|sh|'''по''' дуљини|t=lengthwise|inline=1}}
+
+===Etymology 3===
+
+====Particle====
+{{sh-particle}}
+
+# {{qualifier|+ [[accusative case]] or [[nominative case]]}} ''denoting [[distribution]] and [[succession]]''; [[by]], [[per]], [[each]], [[apiece]]
+#: {{ux|sh|Попили смо сви '''по''' чашицу ракије.|t=We all drank a glass of rakija each.|inline=1}}
+#: {{ux|sh|корак '''по''' корак|t=step by step|inline=1}}
+#: {{ux|sh|један '''по''' један|t=one by one|inline=1}}
+#: {{ux|sh|трипут '''по''' сату|t=three times per hour|inline=1}}
+#: {{ux|sh|Cви смо добили '''по''' јабуку.|t=Each of us received an apple.|inline=1}}
+
+===References===
+* {{R:sh:HJP|eVxmWxc%3D}}
+* {{R:sh:HJP|eVxmWxg%3D}}
+
+----
+
+==Tajik==
+
+===Etymology===
+From {{inh|tg|ine-pro|*pṓds||foot}}, cognates include {{cog|sa|पद्|tr=pád}}, {{cog|la|pes}} ({{cog|fr|pied}}), {{cog|de|Fuß}}, {{cog|en|foot}}.
+
+===Pronunciation===
+* {{IPA|/pɔː/|lang=tg}}
+
+===Noun===
+{{fa-regional|پا|پا|по}}
+{{tg-noun|tr=po}}
+
+# [[leg]], [[foot]]
+
+===See also===
+* {{l|tg|пой|sc=Cyrl}} (poy)
+
+[[Category:tg:Anatomy]]
+[[Category:tg:Units of measure]]
+
+----
+
+==Tundra Nenets==
+
+===Etymology===
+From {{etyl|syd-pro|yrk}} {{m|syd-pro|*poəj}}.
+
+===Noun===
+{{head|yrk|noun|sc=Cyrl|tr=po}}
+
+# [[year]]

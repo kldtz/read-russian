@@ -1,4 +1,4 @@
-import { normalize } from './utils.js'
+import { normalize, countChar } from './utils.js'
 import { parseFormOf, parseInflectionOf, processTemplates } from './templates.js'
 
 const POS_HEADERS = new Set(['Adjective', 'Adverb', 'Article', 'Classifier', 'Conjunction',
@@ -126,16 +126,16 @@ function addInflection(info, pos, lemma, grammarInfo) {
 }
 
 function extractDefinition(line) {
-  if (line.startsWith('#') && !line.startsWith('#:')) {
-    var definition = line.substring(1).replace(/\[\[[^\]]+?\|/g, '');
+  if (/#+[^:*]/.test(line)) {
+    const depth = countChar('#', line);
+    var definition = line.substring(depth).replace(/\[\[[^\]]+?\|/g, '');
     definition = definition.replace(/(\[\[|\]\])/g, '');
     definition = processTemplates(definition);
     definition = definition.replace(/\(\s*\)/g, '');
     definition = definition.replace(/''+/g, '');
-    definition = definition.replace(/^#+/, '');
     if (definition && !definition.match(/^[\s\W]+$/)) {
       definition = definition.replace(/[\s]+/g, ' ');
-      return definition.trim();
+      return {text: definition.trim(), depth: depth};
     }
   }
   return null;

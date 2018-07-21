@@ -81,19 +81,41 @@ function generateInfoString(data) {
     parts.push(data.pronunciation ? ' (' + data.pronunciation + ')' : '');
     parts.push(': ');
     for (let pos of collectPos(data)) {
-        parts.push(pos);
+        parts.push('<span class="pos">' + pos + '</span>');
         if (data.inflections && data.inflections[pos]) {
             parts.push(' (' + data.inflections[pos].lemma + ', ' + data.inflections[pos].grammarInfos.join(', ') + ')');
         }
         if (data.definitions && data.definitions[pos]) {
             parts.push(': ')
             if (data.definitions[pos].length === 1) {
-                parts.push(data.definitions[pos][0]);
+                parts.push(data.definitions[pos][0].text);
             } else {
-                parts.push(data.definitions[pos].map((el, i) => (i + 1) + '. ' + el).join('; '));
+                parts.push(generateDefinitionsString(data.definitions[pos]));
             }
         }
         parts.push('. ');
+    }
+    return parts.join('');
+}
+
+function generateDefinitionsString(definitions) {
+    var lastDepth = 0;
+    var num = 1;
+    var parts = [];
+    for (let def of definitions) {
+        if (def.depth > 2) continue;
+        if (parts.length > 0) {
+            if (lastDepth < def.depth) {
+                parts.push(': ');
+            } else {
+                parts.push('; ');
+            }
+        }
+        if (def.depth === 1) {
+            parts.push('<span class="sense-num">' + num++ + '. ' + '</span>');
+        }
+        parts.push(def.text);
+        lastDepth = def.depth;
     }
     return parts.join('');
 }

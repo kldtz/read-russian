@@ -39,4 +39,12 @@ function peek(stack) {
     return stack[stack.length - 1];
 }
 
-export { findBestResult, normalize, isCyrillic, titleCase, peek };
+function countChar(c, line) {
+    var i = 0;
+    while (line[i] === c) {
+      i++;
+    }
+    return i;
+  }
+
+export { findBestResult, normalize, isCyrillic, titleCase, peek, countChar };

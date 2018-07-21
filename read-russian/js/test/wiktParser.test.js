@@ -70,9 +70,9 @@ test('extracts only second part of link', t => {
 
         const info = parseArticle(article, 'счет');
 
-        t.is(info.definitions.Noun[0], 'place');
-        t.is(info.definitions.Noun[1], 'region, area')
-        t.is(info.definitions.Noun[2], 'site, scene')
+        t.is(info.definitions.Noun[0].text, 'place');
+        t.is(info.definitions.Noun[1].text, 'region, area')
+        t.is(info.definitions.Noun[2].text, 'site, scene')
 });
 
 test('ignores sub-items in definitions', t => {
@@ -83,14 +83,33 @@ test('ignores sub-items in definitions', t => {
         t.is(info.definitions.Noun.length, 1);
 });
 
+test('correctly parses nested definitions', t => {
+        const article = fs.readFileSync('test/data/по.wiki').toString();
+
+        const info = parseArticle(article, 'по');
+
+        // 3 top-level items
+        t.is(info.definitions.Preposition.reduce((acc, curr) => curr.depth == 1 ? acc + 1 : acc, 0), 3);
+        // 13 second-level items
+        t.is(info.definitions.Preposition.reduce((acc, curr) => curr.depth == 2 ? acc + 1 : acc, 0), 13);
+});
+
+test('ignores quotations', t => {
+        const article = fs.readFileSync('test/data/сильный.wiki').toString();
+
+        const info = parseArticle(article, 'сильный');
+
+        t.is(info.definitions.Adjective.length, 2);
+})
+
 test('removes only first part inside link', t => {
         const article = fs.readFileSync('test/data/серия.wiki').toString();
 
         const info = parseArticle(article, 'серия');
 
         t.is(info.definitions.Noun.length, 2);
-        t.is(info.definitions.Noun[0], 'series');
-        t.is(info.definitions.Noun[1], 'episode, part')
+        t.is(info.definitions.Noun[0].text, 'series');
+        t.is(info.definitions.Noun[1].text, 'episode, part')
 });
 
 test('parses template w (shorter links to English Wikipedia)', t => {
@@ -98,7 +117,7 @@ test('parses template w (shorter links to English Wikipedia)', t => {
 
         const info = parseArticle(article, 'Госдума');
 
-        t.is(info.definitions['Proper noun'][0], 'State Duma (lower house of Russian national parliament)');
+        t.is(info.definitions['Proper noun'][0].text, 'State Duma (lower house of Russian national parliament)');
 });
 
 test('extracts definition "to be"', t => {
@@ -107,7 +126,7 @@ test('extracts definition "to be"', t => {
         const info = parseArticle(article, 'быть', new Set(['Verb']));
 
         t.is(info.definitions.Verb.length, 1);
-        t.is(info.definitions.Verb[0], 'to be');
+        t.is(info.definitions.Verb[0].text, 'to be');
 });
 
 test('removes italics and bold markup', t => {
@@ -115,7 +134,7 @@ test('removes italics and bold markup', t => {
 
         const info = parseArticle(article, 'список');
 
-        t.is(info.definitions.Noun[1], 'copy (especially of a picture or an icon)');
+        t.is(info.definitions.Noun[1].text, 'copy (especially of a picture or an icon)');
 });
 
 test('removes nested templates', t => {
@@ -123,7 +142,7 @@ test('removes nested templates', t => {
 
         const info = parseArticle(article, 'готовый');
 
-        t.is(info.definitions.Adjective[0], 'ready, prepared (к + dative)');
+        t.is(info.definitions.Adjective[0].text, 'ready, prepared (к + dative)');
 });
 
 test('recognizes predicative', t => {
