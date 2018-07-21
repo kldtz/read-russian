@@ -77,8 +77,7 @@ function createFooter() {
 
 function generateInfoString(data) {
     var parts = [];
-    parts.push(data.title);
-    parts.push(data.pronunciation ? ' (' + data.pronunciation + ')' : '');
+    parts.push(data.pronunciation ? data.pronunciation : data.title);
     parts.push(': ');
     for (let pos of collectPos(data)) {
         parts.push('<span class="pos">' + pos + '</span>');
