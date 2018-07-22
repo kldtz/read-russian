@@ -13,12 +13,18 @@
     },
     "page_action": {
         "default_icon": {
-            "48": "images/wikt.png"
+            "16": "images/read-russian-16.png",
+            "32": "images/read-russian-32.png",
+            "48": "images/read-russian-48.png",
+            "256": "images/read-russian-256.png"
         },
         "default_title": "Russian"
     },
     "icons": {
-        "48": "images/wikt.png"
+        "16": "images/read-russian-16.png",
+        "32": "images/read-russian-32.png",
+        "48": "images/read-russian-48.png",
+        "256": "images/read-russian-256.png"
     },
     "content_scripts": [
         {

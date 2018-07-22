@@ -101,7 +101,7 @@ function generateInfoString(data) {
 }
 
 function grammarTags(grammarInfos) {
-    const tags = grammarInfos.join(', ');
+    const tags = grammarInfos.join('|');
     if (tags.length > 0) {
         return ', <span class="tags">' + tags + '</span>';
     }
