@@ -1,0 +1,48 @@
+1,1st person,person,1
+2,2nd person,person,1
+3,3rd person,person,1
+impers,impersonal,person,1
+s,singular,number,2
+p,plural,number,2
+m,masculine,gender,3
+f,feminine,gender,3
+n,neuter,gender,3
+an,animate,animacy,-1
+in,inaminate,animacy,-1
+pr,personal,animacy,-1
+pres,present,tense/aspect,4
+past,past,tense/aspect,4
+fut,future,tense/aspect,4
+futr,future,tense/aspect,4
+npast,non-past,tense/aspect,4
+prog,progressive,tense/aspect,4
+pret,preterite,tense/aspect,4
+perf,perfect,tense/aspect,4
+impf,imperfect,tense/aspect,4
+imperf,imperfect,tense/aspect,4
+plup,pluperfect,tense/aspect,4
+pluperf,pluperfect,tense/aspect,4
+semf,semelfactive,tense/aspect,4
+aor,aorist,tense/aspect,4
+aori,aorist,tense/aspect,4
+phis,past historic,tense/aspect,4
+impfv,imperfective,tense/aspect,4
+imperfv,imperfective,tense/aspect,4
+pfv,perfective,tense/aspect,4
+perfv,perfective,tense/aspect,4
+acc,accusative,case,1
+dat,dative,case,1
+gen,genitive,case,1
+ins,instrumental,case,1
+loc,locative,case,1
+nom,nominative,case,1
+par,partitive,case,1
+pre,prepositional,case,1
+prep,prepositional,case,1
+voc,vocative,case,1
+cons,construct,state,5
+def,definite,state,5
+defn,definite,state,5
+indef,indefinite,state,5
+indf,indefinite,state,5
+attr,attributive,state,5
