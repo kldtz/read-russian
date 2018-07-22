@@ -1,6 +1,6 @@
 {
     "name": "Read Russian",
-    "version": "1.0",
+    "version": "1.0.0",
     "description": "Annotates Russian words with information from Wiktionary.",
     "permissions": [
         "activeTab",
@@ -18,7 +18,8 @@
             "48": "images/read-russian-48.png",
             "256": "images/read-russian-256.png"
         },
-        "default_title": "Russian"
+        "default_title": "Russian",
+        "default_popup": "popup.html"
     },
     "icons": {
         "16": "images/read-russian-16.png",
@@ -37,6 +38,7 @@
                 "js/annotate.js"
             ],
             "css": [
+                "css/fonts.css",
                 "css/info.css"
             ],
             "run_at": "document_end"

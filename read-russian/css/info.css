@@ -9,6 +9,7 @@
     width: 100%;
     padding: 5px;
     color: #131516;
+    font-family: 'Source Sans Pro', sans-serif;   
 }
 
 #wikt-info span.pos {
@@ -34,7 +35,7 @@
 }
 
 #wikt-info-content {
-    font-size: 16px;
+    font-size: 12pt;
 }
 
 #wikt-info-close {
@@ -42,7 +43,7 @@
     border: none;
     cursor: pointer;
     float: left;
-    font-size: 16px;
+    font-size: 12pt;
 }
 
 #wikt-info-close:hover {
@@ -50,12 +51,21 @@
 }
 
 #wikt-info-footer {
-    font-size: 10px;
+    font-size: 10pt;
     padding-top: 5px;
 }
 
-.wikt-info-class > a:hover {
-    opacity: 0.5;
+#wikt-info a {
+    text-decoration: none;
+    color: #006697;
+}
+
+#wikt-info a:link, a:visited {
+    color: #006697;
+}
+
+#wikt-info a:hover {
+    opacity: 0.6;
 }
 
 span.tags {

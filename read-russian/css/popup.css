@@ -1,0 +1,30 @@
+h1 {
+    font-size: 13.5pt;
+    font-weight: normal;
+    color: #131516;
+}
+
+body {
+    background-color:rgba(48,95,163, 0.1);
+    width: 250px;
+    font-size: 12pt;
+    color: #505253;
+    font-family: 'Source Sans Pro', sans-serif;   
+}
+
+a {
+    text-decoration: none;
+    color: #006697;
+}
+
+a:link, a:visited {
+    color: #006697;
+}
+
+a:hover {
+    opacity: 0.6;
+}
+
+#footer {
+    font-size: 10pt;
+}
