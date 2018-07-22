@@ -57,3 +57,7 @@
 .wikt-info-class > a:hover {
     opacity: 0.5;
 }
+
+span.tags {
+    font-variant: small-caps;
+}

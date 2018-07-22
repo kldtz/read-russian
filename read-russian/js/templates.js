@@ -83,7 +83,7 @@ function parseInflectionOf(line) {
         }
         features.push(field);
     }
-    info.grammarInfo = features.join('|');
+    info.grammarInfo = features.join('.');
     return info;
 }
 

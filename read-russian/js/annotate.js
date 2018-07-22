@@ -78,11 +78,14 @@ function createFooter() {
 function generateInfoString(data) {
     var parts = [];
     parts.push(data.pronunciation ? data.pronunciation : data.title);
-    for (let pos of collectPos(data)) {
+    const pos_set = collectPos(data);
+    if (pos_set.size > 0) {
         parts.push(': ');
+    }
+    for (let pos of pos_set) {
         parts.push('<span class="pos">' + pos + '</span>');
         if (data.inflections && data.inflections[pos]) {
-            parts.push(' (' + data.inflections[pos].lemma + ', ' + data.inflections[pos].grammarInfos.join(', ') + ')');
+            parts.push(' (' + data.inflections[pos].lemma + grammarTags(data.inflections[pos].grammarInfos) + ')');
         }
         if (data.definitions && data.definitions[pos]) {
             parts.push(': ')
@@ -95,6 +98,14 @@ function generateInfoString(data) {
         parts.push('. ');
     }
     return parts.join('');
+}
+
+function grammarTags(grammarInfos) {
+    const tags = grammarInfos.join(', ');
+    if (tags.length > 0) {
+        return ', <span class="tags">' + tags + '</span>';
+    }
+    return '';
 }
 
 function generateDefinitionsString(definitions) {
