@@ -60,7 +60,7 @@
     color: #006697;
 }
 
-#wikt-info a:link, a:visited {
+#wikt-info a:link, #wikt-info a:visited {
     color: #006697;
 }
 
@@ -68,6 +68,6 @@
     opacity: 0.6;
 }
 
-span.tags {
+#wikt-info span.tags {
     font-variant: small-caps;
 }
