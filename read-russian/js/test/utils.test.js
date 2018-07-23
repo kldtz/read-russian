@@ -10,6 +10,14 @@ test('selects result with maximal common prefix length', t => {
     t.is(bestResult, 'весь');
 });
 
+test('findBestResult returns first title', t => {
+    const resultTitles = ['наблюдений', 'наблюдении', 'наблюдение'];
+
+    const bestResult = findBestResult('наблюдений', resultTitles);
+
+    t.is(bestResult, 'наблюдений');
+});
+
 test('keeps combining characters unrelated to pronunciation', t => {
     const words = ['слу́чай']
 
