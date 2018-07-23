@@ -4,7 +4,7 @@ import { findBestResult } from './utils.js'
 var selectionHandler = function (e) {
   if (e.selectionText) {
     var data = { selection: e.selectionText };
-    const url = 'https://en.wiktionary.org/w/api.php?action=query&format=json&list=search&utf8=1&srwhat=text&srsearch=' + e.selectionText;
+    const url = 'https://en.wiktionary.org/w/api.php?action=query&format=json&list=search&utf8=1&srwhat=text&srlimit=30&srprop=size&srsearch=' + e.selectionText;
     httpGetAsync(url, function (text) {
       const json = JSON.parse(text);
       data.hits = parseInt(json.query.searchinfo.totalhits);
