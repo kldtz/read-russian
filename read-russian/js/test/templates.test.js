@@ -25,7 +25,7 @@ test('parses "inflection of" template, ignores order, lang parameter and empty f
 
     const results = lines.map(parseInflectionOf);
 
-    const expectedResult = { lemma: 'весь', grammarInfo: 'gen|s|f' };
+    const expectedResult = { lemma: 'весь', grammarInfo: 'gen.s.f' };
     t.deepEqual(results[0], expectedResult);
     t.deepEqual(results[1], expectedResult);
 });

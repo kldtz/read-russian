@@ -27,7 +27,7 @@ test('extracts lemma and grammar infos from inflection-of template', t => {
 
         t.is(info.inflections.Noun.lemma, 'шко́ла');
         t.is(info.inflections.Noun.normalizedLemma, 'школа');
-        t.deepEqual(info.inflections.Noun.grammarInfos, ['gen|s', 'nom|p', 'acc|p']);
+        t.deepEqual(info.inflections.Noun.grammarInfos, ['gen.s', 'nom.p', 'acc.p']);
 });
 
 test('extracts lemma from "ru-participle of" template', t => {
