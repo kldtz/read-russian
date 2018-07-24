@@ -18,7 +18,7 @@
             "48": "images/read-russian-48.png",
             "256": "images/read-russian-256.png"
         },
-        "default_title": "Russian",
+        "default_title": "Read Russian",
         "default_popup": "popup.html"
     },
     "icons": {
