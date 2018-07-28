@@ -85,7 +85,8 @@ function generateInfoString(data) {
     for (let pos of pos_set) {
         parts.push('<span class="pos">' + pos + '</span>');
         if (data.inflections && data.inflections[pos]) {
-            parts.push(' (' + data.inflections[pos].lemma + grammarTags(data.inflections[pos].grammarInfos) + ')');
+            const p = data.inflections[pos];
+            parts.push(' (' + (p.lemma ? p.lemma : p.alternative) + grammarTags(data.inflections[pos].grammarInfos) + ')');
         }
         if (data.definitions && data.definitions[pos]) {
             parts.push(': ')
@@ -101,11 +102,11 @@ function generateInfoString(data) {
 }
 
 function grammarTags(grammarInfos) {
-    const tags = grammarInfos.join('|');
-    if (tags.length > 0) {
-        return ', <span class="tags">' + tags + '</span>';
+    if (!grammarInfos) {
+        return '';
     }
-    return '';
+    const tags = grammarInfos.join('|');
+    return ', <span class="tags">' + tags + '</span>';
 }
 
 function generateDefinitionsString(definitions) {

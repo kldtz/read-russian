@@ -5,6 +5,7 @@ const FORM_OF_PATTERN = new RegExp('{{(' + FORM_OF.join('|') + ')\\|(.+?)}}');
 const INFLECTION_OF_PATTERN = /{{(inflection of|ru-participle of)\|(.+?)}}/;
 const NAMED_PARAMETER = /^(\w+)=([^=]+)$/;
 const TEMPLATE_FUNCTION_MAPPING = {
+    glink: replaceGlossary,
     gloss: replaceGloss,
     glossary: replaceGlossary,
     i: replaceI,
