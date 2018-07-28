@@ -1,4 +1,4 @@
-import { isCyrillic, titleCase, peek, alt } from './utils.js'
+import { isCyrillic, titleCase, peek, alt, findFirst } from './utils.js'
 
 const FORM_OF = ['form of', 'abbreviation of', 'comparative of', 'superlative of', 'alternative spelling of', 'misspelling of'];
 const FORM_OF_PATTERN = new RegExp('{{(' + FORM_OF.join('|') + ')\\|(.+?)}}');
@@ -27,32 +27,12 @@ function parseFormOf(line) {
     }
     var info = {};
     info.grammarInfo = formOf[1].substring(0, formOf[1].length - 3);
-    parseFields(info, formOf[2].split('|'));
+    const pMap = parseParameters(formOf[2].split('|'));
+    if (pMap.pos) {
+        info.pos = titleCase(pMap.pos);
+    }
+    info.lemma = alt(findFirst(pMap.ps0, isCyrillic), pMap.ps0[0]);
     return info;
-}
-
-function parseFields(info, fields) {
-    for (let field of fields) {
-        field = field.trim();
-        if (!field) {
-            // empty
-            continue;
-        }
-        if (field.includes('=')) {
-            // named parameter
-            let keyVal = field.split('=');
-            if (keyVal[0].toLowerCase() === 'pos') {
-                info.pos = titleCase(keyVal[1]);
-            }
-            continue;
-        }
-        if (!info.lemma && isCyrillic(field)) {
-            info.lemma = field;
-        }
-    }
-    if (!info.lemma) {
-        info.lemma = fields[0];
-    }
 }
 
 function parseInflectionOf(line) {
@@ -61,30 +41,12 @@ function parseInflectionOf(line) {
         return null;
     }
     var info = {};
-    var features = []
-    for (let field of inflectionOf[2].split('|')) {
-        field = field.trim();
-        if (!field) {
-            // empty
-            continue;
-        }
-        if (field.includes('=')) {
-            // named parameter
-            let keyVal = field.split('=');
-            if (keyVal[0].toLowerCase() === 'pos') {
-                info.pos = titleCase(keyVal[1]);
-            }
-            continue;
-        }
-        if (isCyrillic(field)) {
-            if (!info.lemma) {
-                info.lemma = field;
-            }
-            continue;
-        }
-        features.push(field);
+    const pMap = parseParameters(inflectionOf[2].split('|'));
+    if (pMap.pos) {
+        info.pos = titleCase(pMap.pos);
     }
-    info.grammarInfo = features.join('.');
+    info.lemma = alt(findFirst(pMap.ps0, isCyrillic), pMap.ps0[0]);
+    info.grammarInfo = pMap.ps0.filter(el => el.length > 0 && !isCyrillic(el)).join('.');
     return info;
 }
 
@@ -222,11 +184,28 @@ function replaceAcronym(params) {
 function parsePositionalParams(params) {
     var ps0 = [];
     for (let param of params) {
+        param = param.trim();
         if (!NAMED_PARAMETER.test(param)) {
             ps0.push(param);
         }
     }
     return ps0;
+}
+
+function parseParameters(params) {
+    var paramMap = { ps0: [] };
+    for (let param of params) {
+        param = param.trim();
+        let match = NAMED_PARAMETER.exec(param);
+        if (!match) {
+            paramMap.ps0.push(param);
+        } else {
+            let key = match[1].toLowerCase();
+            let value = match[2];
+            paramMap[key] = value;
+        }
+    }
+    return paramMap;
 }
 
 export { parseFormOf, parseInflectionOf, buildTemplateTrees, processTemplates };

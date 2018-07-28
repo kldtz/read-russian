@@ -51,14 +51,23 @@ function alt(a, b) {
     return a ? a : b ? b : '';
 }
 
+function findFirst(array, property) {
+    for (let el of array) {
+        if (property(el)) {
+            return el;
+        }
+    }
+    return null;
+}
+
 function httpGetAsync(theUrl, callback) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
-      if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-        callback(xmlHttp.responseText);
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
     }
     xmlHttp.open("GET", encodeURI(theUrl), true); // true for asynchronous 
     xmlHttp.send(null);
-  }
+}
 
-export { findBestResult, normalize, isCyrillic, titleCase, peek, countChar, alt, httpGetAsync };
+export { findBestResult, normalize, isCyrillic, titleCase, peek, countChar, alt, httpGetAsync, findFirst };
