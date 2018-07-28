@@ -57,12 +57,20 @@ test('reads only filtered pos', t => {
         t.falsy(info.definitions.Adverb)
 });
 
-test('extracts alternative form', t => {
+test('extracts alternative noun form', t => {
         const article = fs.readFileSync('test/data/счет.wiki').toString();
 
         const info = parseArticle(article, 'счет');
 
         t.is(info.inflections.Noun.alternative, 'счёт');
+});
+
+test('extracts alternative adjective form', t => {
+        const article = fs.readFileSync('test/data/никчемный.wiki').toString();
+
+        const info = parseArticle(article, 'никчемный');
+
+        t.is(info.inflections.Adjective.alternative, 'никчёмный');
 });
 
 test('extracts only second part of link', t => {
