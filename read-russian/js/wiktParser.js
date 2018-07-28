@@ -128,7 +128,7 @@ function addInflection(info, pos, lemma, grammarInfo) {
 }
 
 function extractDefinition(line) {
-  if (/#+[^:*]/.test(line)) {
+  if (/^#+[^:*]/.test(line)) {
     const depth = countChar('#', line);
     var definition = line.substring(depth).replace(/\[\[[^\]]+?\|/g, '');
     definition = definition.replace(/(\[\[|\]\])/g, '');

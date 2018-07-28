@@ -1,0 +1,85 @@
+{{also|пост-}}
+==Macedonian==
+
+===Noun===
+{{mk-noun|m}}
+
+# [[fast]]
+
+====Inflection====
+{{mk-decl-noun-m||постов}}
+
+----
+
+==Russian==
+
+===Pronunciation===
+* {{ru-IPA}}
+
+===Etymology 1===
+From {{inh|ru|sla-pro|*postъ}}.
+
+====Noun====
+{{ru-noun+|b|loc=в [[посту́]],в [[посте́]]}}
+
+# [[fast]] {{gloss|period of restricted eating}}
+:# [[великий]] пост - [[Lent]]
+
+=====Declension=====
+{{ru-noun-table|b|loc=в [[посту́]],в [[посте́]]}}
+
+=====Related terms=====
+* {{l|ru|поститься}}
+* {{l|ru|по́стный}}
+
+===Etymology 2===
+[[Image:Guard Prague Castle 0451.jpg|thumb|пост]]
+
+====Noun====
+{{ru-noun+|b|loc=на [[посту́]]}}
+
+# [[post]], [[office]], [[appointment]], [[position]], [[job]]
+# [[picket]], [[outpost]], [[guard post]], [[station]]
+
+=====Declension=====
+{{ru-noun-table|b|loc=на [[посту́]]}}
+
+=====Related terms=====
+* {{l|ru|постовой}}
+
+===Etymology 3===
+Borrowed from {{bor|ru|en|post}}.
+
+====Noun====
+{{ru-noun+}}
+
+# {{lb|ru|slang}} [[post]], [[message]] (online forums)
+
+=====Declension=====
+{{ru-noun-table}}
+
+----
+
+==Serbo-Croatian==
+
+===Etymology===
+From {{inh|sh|sla-pro|*postъ}}.
+
+===Pronunciation===
+* {{IPA|/pôːst/|lang=sh}}
+
+===Noun===
+{{sh-noun|g=m|head=по̑ст}}
+
+# [[fast]], [[fasting]]
+
+====Declension====
+{{sh-decl-noun|sc=Cyrl
+|по̑ст|по̀стови
+|по̏ста|постова
+|посту|постовима
+|пост|постове
+|посте|постови
+|посту|постовима
+|постом|постовима
+}}

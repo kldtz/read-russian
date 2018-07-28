@@ -152,3 +152,11 @@ test('recognizes predicative', t => {
 
         t.is(info.definitions.Predicative.length, 2);
 });
+
+test('ignores indented lines between definitions', t => {
+        const article = fs.readFileSync('test/data/пост.wiki').toString();
+
+        const info = parseArticle(article, 'пост');
+
+        t.is(info.definitions.Noun.length, 4);
+});
