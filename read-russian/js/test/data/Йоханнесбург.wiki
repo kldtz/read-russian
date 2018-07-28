@@ -1,0 +1,25 @@
+==Russian==
+{{wikipedia|lang=ru}}
+
+===Pronunciation===
+* {{ru-IPA|phon=Йо̂ха́ннэсбург|gem=n}}
+* {{ru-IPA|phon=Йоха́ннэсбург|gem=n}}
+
+===Proper noun===
+{{ru-proper noun+|Йоха́ннесбург//Joxánnɛsburg}}
+
+# [[Johannesburg]], the largest city in [[South Africa]].
+
+====Declension====
+{{ru-noun-table|Йоха́ннесбург//Joxánnɛsburg|n=sg}}
+
+====Related terms====
+* {{l|ru|йоханнесбургский}}
+
+====See also====
+* {{l|ru|Прето́рия|g=f}}
+* {{l|ru|Ке́йпта́ун|g=m}}
+* {{l|ru|Блу́мфонте́йн|tr=Blúmfontɛ́jn|g=m}}
+* {{l|ru|ЮА́Р}}, {{l|ru|Ю́жно-Африка́нская Респу́блика}}, {{l|ru|Ю́жная А́фрика}}
+
+{{topics|ru|Cities in South Africa}}

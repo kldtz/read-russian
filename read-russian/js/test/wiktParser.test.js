@@ -160,3 +160,11 @@ test('ignores indented lines between definitions', t => {
 
         t.is(info.definitions.Noun.length, 4);
 });
+
+test('extracts phon parameter from ru-IPA template', t => {
+        const article = fs.readFileSync('test/data/Йоханнесбург.wiki').toString();
+
+        const info = parseArticle(article, 'Йоханнесбург');
+
+        t.is(info.pronunciation, 'Йо̂ха́ннэсбург');
+});

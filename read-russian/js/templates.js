@@ -51,6 +51,11 @@ function parseInflectionOf(line) {
     return info;
 }
 
+function parseIpa(params) {
+    const pMap = parseParameters(params);
+    return alt(pMap.phon, pMap.ps0[0]);
+}
+
 function processTemplates(line) {
     const roots = buildTemplateTrees(line);
     return replaceTemplates(roots, line);
@@ -209,5 +214,5 @@ function parseParameters(params) {
     return paramMap;
 }
 
-export { parseFormOf, parseInflectionOf, buildTemplateTrees, processTemplates };
+export { parseFormOf, parseInflectionOf, parseIpa, buildTemplateTrees, processTemplates };
 

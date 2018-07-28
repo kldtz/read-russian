@@ -77,7 +77,7 @@ function createFooter() {
 
 function generateInfoString(data) {
     var parts = [];
-    parts.push(data.pronunciation ? data.pronunciation : data.title);
+    addTitleAndOrPronunciation(parts, data);
     const pos_set = collectPos(data);
     if (pos_set.size > 0) {
         parts.push(': ');
@@ -99,6 +99,16 @@ function generateInfoString(data) {
         parts.push('. ');
     }
     return parts.join('');
+}
+
+function addTitleAndOrPronunciation(parts, data) {
+    if (!data.pronunciation) {
+        parts.push(data.title);
+    } else if (normalize(data.pronunciation) == normalize(data.title)) {
+        parts.push(data.pronunciation);
+    } else {
+        parts.push(data.title + ' [' + data.pronunciation + ']');
+    }
 }
 
 function grammarTags(grammarInfos) {
@@ -141,4 +151,8 @@ function collectPos(data) {
     }
     posList.sort();
     return new Set(posList);
+}
+
+function normalize(word) {
+    return word.normalize('NFD').replace(/[\u0300-\u0303]/g, '');
 }

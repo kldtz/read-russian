@@ -1,5 +1,5 @@
 import { normalize, countChar } from './utils.js'
-import { parseFormOf, parseInflectionOf, processTemplates } from './templates.js'
+import { parseFormOf, parseInflectionOf, parseIpa, processTemplates } from './templates.js'
 
 const POS_HEADERS = new Set(['Adjective', 'Adverb', 'Article', 'Classifier', 'Conjunction',
   'Contraction', 'Counter', 'Determiner', 'Interjection', 'Noun', 'Numeral', 'Participle',
@@ -49,9 +49,9 @@ function addPronunciation(info, line) {
     info['pronunciation'] = info.title;
     return;
   }
-  var pronMatch = /{{ru\-IPA\|(.+?)(\|.+?)?}}/.exec(line);
+  var pronMatch = /{{ru\-IPA\|(.+?)}}/.exec(line);
   if ((!info.pronunciation || info.pronunciation === info.title) && pronMatch) {
-    info['pronunciation'] = pronMatch[1];
+    info.pronunciation = parseIpa(pronMatch[1].split('|'));
   }
 }
 
