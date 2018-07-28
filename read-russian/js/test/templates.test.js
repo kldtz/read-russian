@@ -133,4 +133,12 @@ test('replaces non-gloss definition', t => {
     t.is(replacement, '<span class="non-gloss-def">some text</span>');
 });
 
+test('replaces acronym', t => {
+    const line = '{{ru-acronym of|Ю́жно-Африка́нская Респу́блика|g=f||South-African Republic}}';
+
+    const replacement = processTemplates(line);
+    
+    const expectedReplacement = '<span class="acronym">acronym of Ю́жно-Африка́нская Респу́блика (South-African Republic)</span>'
+    t.is(replacement, expectedReplacement)
+});
 

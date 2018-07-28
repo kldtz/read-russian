@@ -1,5 +1,5 @@
 import parseArticle from './wiktParser.js'
-import { findBestResult } from './utils.js'
+import { findBestResult, httpGetAsync } from './utils.js'
 
 const EN_WIKT_API = 'https://en.wiktionary.org/w/api.php?';
 const QUERY = 'action=query&format=json&list=search&utf8=1&srwhat=text&srlimit=30&srprop=size&srsearch=';
@@ -86,13 +86,3 @@ chrome.runtime.onStartup.addListener(function () {
   });
   chrome.contextMenus.onClicked.addListener(selectionHandler);
 });
-
-function httpGetAsync(theUrl, callback) {
-  var xmlHttp = new XMLHttpRequest();
-  xmlHttp.onreadystatechange = function () {
-    if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-      callback(xmlHttp.responseText);
-  }
-  xmlHttp.open("GET", encodeURI(theUrl), true); // true for asynchronous 
-  xmlHttp.send(null);
-}

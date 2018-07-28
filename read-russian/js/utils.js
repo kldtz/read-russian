@@ -42,9 +42,23 @@ function peek(stack) {
 function countChar(c, line) {
     var i = 0;
     while (line[i] === c) {
-      i++;
+        i++;
     }
     return i;
+}
+
+function alt(a, b) {
+    return a ? a : b ? b : '';
+}
+
+function httpGetAsync(theUrl, callback) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+      if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+        callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", encodeURI(theUrl), true); // true for asynchronous 
+    xmlHttp.send(null);
   }
 
-export { findBestResult, normalize, isCyrillic, titleCase, peek, countChar };
+export { findBestResult, normalize, isCyrillic, titleCase, peek, countChar, alt, httpGetAsync };

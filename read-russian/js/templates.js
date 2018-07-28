@@ -1,9 +1,9 @@
-import { isCyrillic, titleCase, peek } from './utils.js'
+import { isCyrillic, titleCase, peek, alt } from './utils.js'
 
 const FORM_OF = ['form of', 'abbreviation of', 'comparative of', 'superlative of', 'alternative spelling of', 'misspelling of'];
 const FORM_OF_PATTERN = new RegExp('{{(' + FORM_OF.join('|') + ')\\|(.+?)}}');
 const INFLECTION_OF_PATTERN = /{{(inflection of|ru-participle of)\|(.+?)}}/;
-const NAMED_PARAMETER = /^\w+=[^=]+$/;
+const NAMED_PARAMETER = /^(\w+)=([^=]+)$/;
 const TEMPLATE_FUNCTION_MAPPING = {
     gloss: replaceGloss,
     glossary: replaceGlossary,
@@ -16,6 +16,7 @@ const TEMPLATE_FUNCTION_MAPPING = {
     m: replaceMention,
     mention: replaceMention,
     'non-gloss definition': replaceNonGlossDefinition,
+    'ru-acronym of': replaceAcronym,
     w: replaceWikipediaLink
 };
 
@@ -161,7 +162,8 @@ function extractInfoFromTemplate(name, params) {
 }
 
 function replaceGlossary(params) {
-    return extractParamAt(params, 2, 1);
+    const ps = parsePositionalParams(params);
+    return alt(ps[1], ps[0]);
 }
 
 function replaceI(params) {
@@ -169,11 +171,13 @@ function replaceI(params) {
 }
 
 function replaceWikipediaLink(params) {
-    return extractParamAt(params, 2, 1);
+    const ps = parsePositionalParams(params);
+    return alt(ps[1], ps[0]);
 }
 
 function replaceMention(params) {
-    return extractParamAt(params, 3, 2);
+    const ps = parsePositionalParams(params);
+    return alt(ps[2], ps[1]);
 }
 
 function replaceLabel(params) {
@@ -203,28 +207,26 @@ function replaceNonGlossDefinition(params) {
     return params.length === 1 ? '<span class="non-gloss-def">' + params[0] + '</span>' : '';
 }
 
-/**
- * Extract an unnamed parameter at a prefered or alternative position. 
- * Positions are counted starting from 1!
- */
-function extractParamAt(params, preferred, alternative) {
-    var plainParams = [];
-    for (let param of params) {
-        if (!isNamedParameter(param)) {
-            plainParams.push(param);
-            if (plainParams.length === preferred) {
-                return param;
-            }
-        }
+function replaceAcronym(params) {
+    const ps = parsePositionalParams(params);
+    var parts = ['<span class="acronym">acronym of '];
+    parts.push(alt(ps[0], ps[1]));
+    const gloss = ps[2];
+    if (gloss) {
+        parts.push(' (' + gloss + ')')
     }
-    if (alternative && plainParams.length >= alternative) {
-        return plainParams[alternative - 1];
-    }
-    return '';
+    parts.push('</span>');
+    return parts.join('');
 }
 
-function isNamedParameter(param) {
-    return NAMED_PARAMETER.test(param);
+function parsePositionalParams(params) {
+    var ps0 = [];
+    for (let param of params) {
+        if (!NAMED_PARAMETER.test(param)) {
+            ps0.push(param);
+        }
+    }
+    return ps0;
 }
 
 export { parseFormOf, parseInflectionOf, buildTemplateTrees, processTemplates };

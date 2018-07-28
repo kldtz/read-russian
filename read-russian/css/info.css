@@ -71,3 +71,7 @@
 #wikt-info span.tags {
     font-variant: small-caps;
 }
+
+#wikt-info span.acronym {
+    font-style: italic;
+}
