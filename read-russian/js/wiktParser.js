@@ -72,7 +72,7 @@ function updatePos(state, line, posFilter) {
 }
 
 function addAlternativeForm(info, line, pos) {
-  var alternative = /{{ru-.+?-alt-ё\|(.+?)}}/.exec(line);
+  var alternative = /{{(ru-.+?-alt-ё|alternative form of)\|(.+?)}}/.exec(line);
   if (alternative) {
     if (!info.inflections) {
       info.inflections = {};
@@ -80,7 +80,7 @@ function addAlternativeForm(info, line, pos) {
     if (!info.inflections[pos]) {
       info.inflections[pos] = {};
     }
-    info.inflections[pos].alternative = alternative[1].split('|')[0];
+    info.inflections[pos].alternative = alternative[2].split('|')[0];
   }
 }
 
@@ -135,6 +135,7 @@ function extractDefinition(line) {
     definition = processTemplates(definition);
     definition = definition.replace(/\(\s*\)/g, '');
     definition = definition.replace(/''+/g, '');
+    definition = definition.replace(/\.+$/, '');
     if (definition && !definition.match(/^[\s\W]+$/)) {
       definition = definition.replace(/[\s]+/g, ' ');
       return { text: definition.trim(), depth: depth };

@@ -18,6 +18,7 @@ const TEMPLATE_FUNCTION_MAPPING = {
     mention: replaceMention,
     'non-gloss definition': replaceNonGlossDefinition,
     'ru-acronym of': replaceAcronym,
+    'diminutive of': replaceDiminutive,
     w: replaceWikipediaLink
 };
 
@@ -185,6 +186,14 @@ function replaceAcronym(params) {
     }
     parts.push('</span>');
     return parts.join('');
+}
+
+function replaceDiminutive(params) {
+    const ps = parsePositionalParams(params);
+    var parts = ['<span class="diminutive">diminutive of '];
+    parts.push(ps[0]);
+    parts.push('</span>');
+    return parts.join(''); 
 }
 
 function parsePositionalParams(params) {

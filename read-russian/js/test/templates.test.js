@@ -142,3 +142,10 @@ test('replaces acronym', t => {
     t.is(replacement, expectedReplacement)
 });
 
+test('replaces diminutive', t => {
+    const line = '{{diminutive of|стул|lang=ru}}';
+
+    const replacement = processTemplates(line);
+    
+    t.is(replacement, '<span class="diminutive">diminutive of стул</span>')
+});
