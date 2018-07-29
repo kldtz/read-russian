@@ -1,51 +1,77 @@
 import parseArticle from './wiktParser.js'
-import { findBestResult, httpGetAsync } from './utils.js'
+import { findBestResult, httpGetPromise, alt } from './utils.js'
 
 const EN_WIKT_API = 'https://en.wiktionary.org/w/api.php?';
 const QUERY = 'action=query&format=json&list=search&utf8=1&srwhat=text&srlimit=30&srprop=size&srsearch=';
 
-var selectionHandler = function (e) {
+var pSelectionHandler = function (e) {
   if (e.selectionText) {
+    var data = { selection: e.selectionText };
     const url = EN_WIKT_API + QUERY + e.selectionText;
-    httpGetAsync(url, annotateSelection.bind({ selection: e.selectionText }));
+    httpGetPromise(url)
+      .then(searchForSelection.bind(data))
+      .then(title => httpGetPromise('https://en.wiktionary.org/wiki/' + title + '?action=raw'))
+      .then(processBestResult.bind(data))
+      .then(processLinkedArticles.bind(data))
+      .catch(handleError);
   }
 }
 
-function annotateSelection(text) {
+function searchForSelection(text) {
   const json = JSON.parse(text);
   this.hits = parseInt(json.query.searchinfo.totalhits);
   if (this.hits === 0) {
     sendMessage(this);
-    return;
+    return Promise.reject(new Error('Zero hits'));
   }
-  this.title = findBestResult(this.selection, json.query.search.map(el => el.title));
-  httpGetAsync('https://en.wiktionary.org/wiki/' + this.title + '?action=raw', processBestResult.bind(this));
+  const title = findBestResult(this.selection, json.query.search.map(el => el.title));
+  this.title = title;
+  return title;
 }
 
 function processBestResult(article) {
-  var info = parseArticle(article, this.title);
-  info.titles = [this.title];
-  this.info = info;
-  if (info.inflections) {
-    for (let pos in info.inflections) {
-      if (info.definitions && info.definitions.pos) {
-        continue;
-      }
-      let link = info.inflections[pos].normalizedLemma;
-      if (!link) {
-        link = info.inflections[pos].alternative;
-      }
-      httpGetAsync('https://en.wiktionary.org/wiki/' + link + '?action=raw', parseLemmaArticle.bind({data:this, link:link, pos:pos}));
-    }
-  } else {
-    sendMessage(this);
-  }
+  this.info = parseArticle(article, this.title);
+  this.info.titles = [this.title];
+  return followLinks(this);
 }
 
-function parseLemmaArticle(lemmaArticle) {
-  const lemmaInfo = parseArticle(lemmaArticle, this.link, new Set([this.pos]));
-  mergeDefinitions(this.data.info, lemmaInfo);
-  sendMessage(this.data);
+function followLinks(data) {
+  var promises = [];
+  if (data.info.inflections) {
+    data.posLinkPairs = collectPosLinkPairs(data.info);
+    for (let pair of data.posLinkPairs) {
+      promises.push(httpGetPromise('https://en.wiktionary.org/wiki/' + pair.link + '?action=raw'));
+    }
+  }
+  return Promise.all(promises);
+}
+
+function collectPosLinkPairs(info) {
+  if (!info.inflections) {
+    return [];
+  }
+  var posLinkPairs = [];
+  for (let pos in info.inflections) {
+    if (info.definitions && info.definitions[pos]) {
+      continue;
+    }
+    let iipos = info.inflections[pos];
+    let link = alt(iipos.normalizedLemma, iipos.alternative);
+    posLinkPairs.push({ pos: pos, link: link });
+  }
+  return posLinkPairs;
+}
+
+function processLinkedArticles(articles) {
+  for (let i = 0; i < articles.length; i++) {
+    let pair = this.posLinkPairs[i];
+    const lemmaInfo = parseArticle(articles[i], pair.link, new Set([pair.pos]));
+    mergeDefinitions(this.info, lemmaInfo);
+  }
+  if (this.posLinkPairs) {
+    delete this.posLinkPairs;
+  }
+  sendMessage(this);
 }
 
 function mergeDefinitions(info, newInfo) {
@@ -69,13 +95,25 @@ function sendMessage(data) {
   });
 }
 
+function handleError(err) {
+  if (err instanceof Error) {
+    if (err.message === 'Zero hits') {
+      // OK
+    } else {
+      console.error(err.stack);
+    }
+  } else {
+    console.error(JSON.stringify(err));
+  }
+}
+
 chrome.runtime.onInstalled.addListener(function () {
   chrome.contextMenus.create({
     "title": "Get info for '%s'",
     "id": "selectionContextMenu",
     "contexts": ["selection"]
   });
-  chrome.contextMenus.onClicked.addListener(selectionHandler);
+  chrome.contextMenus.onClicked.addListener(pSelectionHandler);
 });
 
 chrome.runtime.onStartup.addListener(function () {
@@ -84,5 +122,5 @@ chrome.runtime.onStartup.addListener(function () {
     "id": "selectionContextMenu",
     "contexts": ["selection"]
   });
-  chrome.contextMenus.onClicked.addListener(selectionHandler);
+  chrome.contextMenus.onClicked.addListener(pSelectionHandler);
 });

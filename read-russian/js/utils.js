@@ -60,14 +60,28 @@ function findFirst(array, property) {
     return null;
 }
 
-function httpGetAsync(theUrl, callback) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
-    }
-    xmlHttp.open("GET", encodeURI(theUrl), true); // true for asynchronous 
-    xmlHttp.send(null);
+function httpGetPromise(url) {
+    return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function() {
+            if (this.status == 200) {
+                resolve(xhr.response);
+            } else {
+                reject({
+                    status: this.status,
+                    statusText: xhr.statusText
+                });
+            }
+        };
+        xhr.onerror = function () {
+            reject({
+                status: this.status,
+                statusText: xhr.statusText
+            });
+        }
+        xhr.open("GET", encodeURI(url), true);
+        xhr.send();
+    });
 }
 
-export { findBestResult, normalize, isCyrillic, titleCase, peek, countChar, alt, httpGetAsync, findFirst };
+export { findBestResult, normalize, isCyrillic, titleCase, peek, countChar, alt, findFirst, httpGetPromise };
