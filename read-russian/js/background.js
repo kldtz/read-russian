@@ -1,11 +1,12 @@
 import parseArticle from './wiktParser.js'
 import { findBestResult, httpGetPromise, alt, normalize } from './utils.js'
 
+const MENU_ITEM_ID = 'selectionContextMenu';
 const EN_WIKT_API = 'https://en.wiktionary.org/w/api.php?';
 const QUERY = 'action=query&format=json&list=search&utf8=1&srwhat=text&srlimit=30&srprop=size&srsearch=';
 
 var selectionHandler = function (e) {
-  if (e.selectionText) {
+  if (e.menuItemId === MENU_ITEM_ID && e.selectionText) {
     var data = { selection: e.selectionText };
     const url = EN_WIKT_API + QUERY + e.selectionText;
     httpGetPromise(url)
@@ -110,17 +111,9 @@ function handleError(err) {
 chrome.runtime.onInstalled.addListener(function () {
   chrome.contextMenus.create({
     "title": "Get info for '%s'",
-    "id": "selectionContextMenu",
+    "id": MENU_ITEM_ID,
     "contexts": ["selection"]
   });
-  chrome.contextMenus.onClicked.addListener(selectionHandler);
 });
 
-chrome.runtime.onStartup.addListener(function () {
-  chrome.contextMenus.create({
-    "title": "Get info for '%s'",
-    "id": "selectionContextMenu",
-    "contexts": ["selection"]
-  });
-  chrome.contextMenus.onClicked.addListener(selectionHandler);
-});
+chrome.contextMenus.onClicked.addListener(selectionHandler);
