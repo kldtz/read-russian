@@ -1,10 +1,8 @@
 {
     "name": "Read Russian",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Annotates Russian words with information from Wiktionary.",
     "permissions": [
-        "activeTab",
-        "declarativeContent",
         "contextMenus",
         "tabs"
     ],
@@ -26,6 +24,7 @@
         "16": "images/read-russian-16.png",
         "32": "images/read-russian-32.png",
         "48": "images/read-russian-48.png",
+        "128": "images/read-russian-128.png",
         "256": "images/read-russian-256.png"
     },
     "content_scripts": [

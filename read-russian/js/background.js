@@ -2,6 +2,7 @@ import parseArticle from './wiktParser.js'
 import { findBestResult, httpGetPromise, alt, normalize } from './utils.js'
 
 const MENU_ITEM_ID = 'selectionContextMenu';
+const EN_WIKI = 'https://en.wiktionary.org/wiki/';
 const EN_WIKT_API = 'https://en.wiktionary.org/w/api.php?';
 const QUERY = 'action=query&format=json&list=search&utf8=1&srwhat=text&srlimit=30&srprop=size&srsearch=';
 
@@ -11,7 +12,7 @@ var selectionHandler = function (e) {
     const url = EN_WIKT_API + QUERY + e.selectionText;
     httpGetPromise(url)
       .then(searchForSelection.bind(data))
-      .then(title => httpGetPromise('https://en.wiktionary.org/wiki/' + normalize(title) + '?action=raw'))
+      .then(title => httpGetPromise(EN_WIKI + normalize(title) + '?action=raw'))
       .then(processBestResult.bind(data))
       .then(processLinkedArticles.bind(data))
       .catch(handleError);
@@ -41,7 +42,7 @@ function followLinks(data) {
   if (data.info.inflections) {
     data.posLinkPairs = collectPosLinkPairs(data.info);
     for (let pair of data.posLinkPairs) {
-      promises.push(httpGetPromise('https://en.wiktionary.org/wiki/' + normalize(pair.link) + '?action=raw'));
+      promises.push(httpGetPromise(EN_WIKI + normalize(pair.link) + '?action=raw'));
     }
   }
   return Promise.all(promises);
