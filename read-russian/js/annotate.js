@@ -1,4 +1,4 @@
-const MAX_HISTORY = 150;
+const MAX_HISTORY = 200;
 const SLICED_HISTORY = 100;
 
 var info;

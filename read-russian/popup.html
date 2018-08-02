@@ -4,14 +4,18 @@
 <head>
     <link rel="stylesheet" type="text/css" href="css/fonts.css">
     <link rel="stylesheet" type="text/css" href="css/popup.css">
-    <script src="js/popup.js"></script>
+    <script type="module" src="js/popup.js"></script>
 </head>
 
 <body>
-    <h1>Read Russian</h1>
-    <p>Select a Russian word and click on the extension's context menu item.</p>
-    <p>Report issues and find the source code on
-        <a rel="source" href="https://github.com/kldtz/read-russian">GitHub</a>.</p>
+    <div id="main">
+        <h1>Read Russian</h1>
+        <p>Select a Russian word and click on the extension's context menu item.</p>
+        <div>Cached words:
+            <span id="history-info"></span>
+        </div>
+        <div id="buttons"></div>
+    </div>
     <div id="footer">
         <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">
             <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/3.0/80x15.png" />

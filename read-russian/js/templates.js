@@ -9,6 +9,7 @@ const TEMPLATE_FUNCTION_MAPPING = {
     gloss: replaceGloss,
     glossary: replaceGlossary,
     i: replaceI,
+    'initialism of': replaceAcronym,
     l: replaceMention,
     label: replaceLabel,
     lb: replaceLabel,
