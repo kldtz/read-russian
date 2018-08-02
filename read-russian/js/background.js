@@ -1,5 +1,5 @@
 import parseArticle from './wiktParser.js'
-import { findBestResult, httpGetPromise, alt, normalize } from './utils.js'
+import { findBestResult, httpGetPromise, alt, normalize, localStorage } from './utils.js'
 
 const MENU_ITEM_ID = 'selectionContextMenu';
 const EN_WIKI = 'https://en.wiktionary.org/wiki/';
@@ -9,13 +9,23 @@ const QUERY = 'action=query&format=json&list=search&utf8=1&srwhat=text&srlimit=3
 var selectionHandler = function (e) {
   if (e.menuItemId === MENU_ITEM_ID && e.selectionText) {
     var data = { selection: e.selectionText };
-    const url = EN_WIKT_API + QUERY + e.selectionText;
-    httpGetPromise(url)
+    localStorage.get(data.selection)
+      .then(items => {
+        if (!items[data.selection]) {
+          return Promise.resolve('No cached value');
+        }
+        sendMessage(items[data.selection]);
+        return Promise.reject('Found cached value');
+      }, error => {
+        console.warn(JSON.stringify(error));
+        return Promise.resolve('No cached value')
+      })
+      .then(() => httpGetPromise(EN_WIKT_API + QUERY + e.selectionText))
       .then(searchForSelection.bind(data))
       .then(title => httpGetPromise(EN_WIKI + normalize(title) + '?action=raw'))
       .then(processBestResult.bind(data))
       .then(processLinkedArticles.bind(data))
-      .catch(handleError);
+      .catch(handleReject);
   }
 }
 
@@ -24,7 +34,7 @@ function searchForSelection(text) {
   this.hits = parseInt(json.query.searchinfo.totalhits);
   if (this.hits === 0) {
     sendMessage(this);
-    return Promise.reject(new Error('Zero hits'));
+    return Promise.reject('Zero hits');
   }
   const title = findBestResult(this.selection, json.query.search.map(el => el.title));
   this.title = title;
@@ -97,19 +107,18 @@ function sendMessage(data) {
   });
 }
 
-function handleError(err) {
-  if (err instanceof Error) {
-    if (err.message === 'Zero hits') {
-      // OK
-    } else {
-      console.error(err.stack);
-    }
+function handleReject(rejectedItem) {
+  if (rejectedItem === 'Zero hits' || rejectedItem == 'Found cached value') {
+    // OK
+  } else if (rejectedItem instanceof Error) {
+    console.error(rejectedItem.stack);
   } else {
-    console.error(JSON.stringify(err));
+    console.error(JSON.stringify(rejectedItem));
   }
 }
 
 chrome.runtime.onInstalled.addListener(function () {
+  chrome.storage.local.clear(function() {});
   chrome.contextMenus.create({
     "title": "Get info for '%s'",
     "id": MENU_ITEM_ID,

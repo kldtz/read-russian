@@ -1,10 +1,11 @@
 {
     "name": "Read Russian",
-    "version": "1.0.2",
+    "version": "1.1.0",
     "description": "Annotates Russian words with information from Wiktionary.",
     "permissions": [
         "contextMenus",
-        "tabs"
+        "tabs",
+        "storage"
     ],
     "background": {
         "page": "background.html",

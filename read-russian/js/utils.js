@@ -61,9 +61,9 @@ function findFirst(array, property) {
 }
 
 function httpGetPromise(url) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
         var xhr = new XMLHttpRequest();
-        xhr.onload = function() {
+        xhr.onload = function () {
             if (this.status == 200) {
                 resolve(xhr.response);
             } else {
@@ -84,4 +84,68 @@ function httpGetPromise(url) {
     });
 }
 
-export { findBestResult, normalize, isCyrillic, titleCase, peek, countChar, alt, findFirst, httpGetPromise };
+var localStorage = {
+    get: (keys) => {
+        return new Promise((resolve, reject) => {
+            chrome.storage.local.get(keys, (items) => {
+                let lastErr = chrome.runtime.lastErr;
+                if (lastErr) {
+                    reject(lastErr);
+                } else {
+                    resolve(items);
+                }
+            })
+        });
+    },
+    set: (items) => {
+        return new Promise((resolve, reject) => {
+            chrome.storage.local.set(items, () => {
+                let lastError = chrome.runtime.lastError;
+                if (lastError) {
+                    reject(lastError);
+                } else {
+                    resolve();
+                }
+            });
+        });
+    },
+    getBytesInUse: (keys) => {
+        return new Promise((resolve, reject) => {
+            chrome.storage.local.getBytesInUse(keys, (items) => {
+                let lastError = chrome.runtime.lastError;
+                if (lastError) {
+                    reject(lastError);
+                } else {
+                    resolve(items);
+                }
+            });
+        });
+    },
+    remove: (keys) => {
+        return new Promise((resolve, reject) => {
+            chrome.storage.local.remove(keys, () => {
+                let lastError = chrome.runtime.lastError;
+                if (lastError) {
+                    reject(lastError);
+                } else {
+                    resolve();
+                }
+            });
+        });
+    },
+    clear: () => {
+        return new Promise((resolve, reject) => {
+            chrome.storage.local.clear(() => {
+                let lastError = chrome.runtime.lastError;
+                if (lastError) {
+                    reject(lastError);
+                } else {
+                    resolve();
+                }
+            });
+        });
+    }
+}
+
+
+export { findBestResult, normalize, isCyrillic, titleCase, peek, countChar, alt, findFirst, httpGetPromise, localStorage };
