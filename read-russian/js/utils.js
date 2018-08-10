@@ -147,5 +147,18 @@ var localStorage = {
     }
 }
 
+function download(options) {
+    return new Promise((resolve, reject) => {
+        chrome.downloads.download(options, id => {
+            let lastErr = chrome.runtime.lastErr;
+            if (lastErr) {
+                reject(lastErr);
+            } else {
+                resolve({downloadId:id, message: 'download error'});
+            }
+        });
+    })
+}
 
-export { findBestResult, normalize, isCyrillic, titleCase, peek, countChar, alt, findFirst, httpGetPromise, localStorage };
+
+export { findBestResult, normalize, isCyrillic, titleCase, peek, countChar, alt, findFirst, httpGetPromise, localStorage, download };

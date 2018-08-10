@@ -1,7 +1,7 @@
 {
     "name": "Read Russian",
     "version": "1.1.0",
-    "description": "Annotates Russian words with information from Wiktionary.",
+    "description": "Helps you to learn the Russian language by reading.",
     "permissions": [
         "contextMenus",
         "tabs",

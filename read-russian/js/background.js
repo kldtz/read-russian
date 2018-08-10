@@ -5,16 +5,18 @@ const MENU_ITEM_ID = 'selectionContextMenu';
 const EN_WIKI = 'https://en.wiktionary.org/wiki/';
 const EN_WIKT_API = 'https://en.wiktionary.org/w/api.php?';
 const QUERY = 'action=query&format=json&list=search&utf8=1&srwhat=text&srlimit=30&srprop=size&srsearch=';
+const CACHE_SUFFIX = '--c';
 
 var selectionHandler = function (e) {
   if (e.menuItemId === MENU_ITEM_ID && e.selectionText) {
     var data = { selection: e.selectionText };
-    localStorage.get(data.selection)
+    const cacheKey = e.selectionText + CACHE_SUFFIX;
+    localStorage.get(cacheKey)
       .then(items => {
-        if (!items[data.selection]) {
+        if (!items[cacheKey]) {
           return Promise.resolve('No cached value');
         }
-        sendMessage(items[data.selection]);
+        sendMessage(items[cacheKey]);
         return Promise.reject('Found cached value');
       }, error => {
         console.warn(JSON.stringify(error));

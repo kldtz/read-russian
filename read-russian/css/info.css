@@ -79,3 +79,44 @@
 #wikt-info span.diminutive {
     font-style: italic;
 }
+
+#selectedTextKey {
+    cursor: pointer;
+    color: #740000;
+}
+
+#max-flashcards-dialog {
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 9999;
+    background-color: #ffffff;
+    border-bottom-style: solid;
+    border-width: 1px;
+    width: 100%;
+    padding: 5px;
+    color: #131516;
+    font-family: 'Source Sans Pro', sans-serif;    
+}
+
+#max-cards-div-close {
+    background-color: #ffffff;
+    border: none;
+    cursor: pointer;
+    float: left;
+    font-size: 12pt;
+}
+
+#max-cards-div-close:hover {
+    opacity: 0.5;
+}
+
+#max-flashcards-message {
+    overflow: hidden;
+    padding-left: 5px;
+}
+
+#max-flashcard-sub {
+    font-size: 10pt;
+    padding-top: 5px;
+}

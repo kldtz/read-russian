@@ -1,6 +1,8 @@
-import { localStorage } from './utils.js'
+import { localStorage, download } from './utils.js'
 
 const DOUBLE_QUOTES = /"/g;
+const CACHE_SUFFIX = '--c';
+const FLASHCARDS = 'flashcards';
 
 document.addEventListener('DOMContentLoaded', function () {
     var links = document.getElementsByTagName("a");
@@ -28,47 +30,74 @@ function saveFlashcards() {
                 if (!v.infoString || v.infoString.startsWith('No English Wiktionary article found')) {
                     continue;
                 }
-                vocabList.push(quote(k) + ',' + quote(v.infoString));
+                vocabList.push(quote(extractSelection(k)) + ',' + quote(cleanInfo(v.infoString)));
             }
             const content = vocabList.join('\n');
             const blob = new Blob([content], { type: "text/plain" });
             const url = URL.createObjectURL(blob);
-            chrome.downloads.download({
+            return download({
                 url: url,
                 saveAs: true
             });
         })
         .catch(rejectedItem => {
             if (rejectedItem === 'Empty history!') {
-                alert('Empty history!');
+                alert('No flashcards to export!');
             } else {
                 console.error(JSON.stringify(rejectedItem));
             }
         });
 }
 
+function extractSelection(cacheKey) {
+    return cacheKey.slice(0, cacheKey.length - CACHE_SUFFIX.length);
+}
+
 function quote(value) {
     return '"' + value.replace(DOUBLE_QUOTES, '""') + '"';
 }
 
-function clearCache() {
-    chrome.storage.local.clear(function() {
-        updateCacheElements();
-    });
+function cleanInfo(value) {
+    return value.replace(/title="Save as flashcard"/g, '');
+}
+
+function deleteFlashcards() {
+    localStorage.get(FLASHCARDS)
+        .then(items => {
+            if (!items[FLASHCARDS]) {
+                return Promise.reject('No flashcards!');
+            }
+            return localStorage.remove(items[FLASHCARDS].concat(FLASHCARDS));
+        })
+        .then(() => {
+            updateCacheElements();
+        })
+        .catch(rejectedItem => {
+            if (rejectedItem === 'No flashcards!') {
+                alert('No flashcards to export!');
+            } else {
+                console.error(JSON.stringify(rejectedItem));
+            }
+        });
 }
 
 function updateCacheElements() {
     var size = 0;
-    localStorage.get('history')
-    .then(items => {
-        if (items.history) {
-            size = items.history.length;
-        }
-        document.querySelector('#history-info').innerHTML = size + '/200';
-        if (size > 0) {
-            createButtons();
-        }
-    });
+    localStorage.get(FLASHCARDS)
+        .then(items => {
+            if (items[FLASHCARDS]) {
+                size = items[FLASHCARDS].length;
+            }
+        })
+        .catch(_ => {
+            // ignore rejections
+         })
+        .finally(() => {
+            document.querySelector('#flashcard-info').innerHTML = size + '/100';
+            if (size > 0) {
+                createButtons();
+            }
+        });
 }
 
 function createButtons() {
@@ -76,8 +105,8 @@ function createButtons() {
 
     var saveFlashcardsButton = document.createElement('a');
     saveFlashcardsButton.id = 'save-flashcards';
-    saveFlashcardsButton.innerHTML = 'Save Flashcards';
-    saveFlashcardsButton.title = 'Save flashcards in CSV format'
+    saveFlashcardsButton.innerHTML = 'Export Flashcards';
+    saveFlashcardsButton.title = 'Export flashcards in CSV format'
     saveFlashcardsButton.addEventListener('click', saveFlashcards);
     buttonDiv.appendChild(saveFlashcardsButton);
 
@@ -87,9 +116,9 @@ function createButtons() {
 
     var clearCacheButton = document.createElement('a');
     clearCacheButton.id = 'clear-cache';
-    clearCacheButton.innerHTML = 'Clear Cache';
-    clearCacheButton.title = 'Reset collected words';
-    clearCacheButton.addEventListener('click', clearCache);
+    clearCacheButton.innerHTML = 'Clear Storage';
+    clearCacheButton.title = 'Delete all flashcards';
+    clearCacheButton.addEventListener('click', deleteFlashcards);
     buttonDiv.appendChild(clearCacheButton);
 }
 
