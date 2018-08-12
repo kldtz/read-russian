@@ -17,20 +17,17 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function saveFlashcards() {
-    localStorage.get('history')
+    localStorage.get(FLASHCARDS)
         .then(items => {
-            if (!items.history) {
-                return Promise.reject('Empty history!');
+            if (!items[FLASHCARDS]) {
+                return Promise.reject('No Flashcards!');
             }
-            return localStorage.get(items.history);
+            return localStorage.get(items[FLASHCARDS]);
         })
         .then(items => {
             var vocabList = [];
             for (let [k, v] of Object.entries(items)) {
-                if (!v.infoString || v.infoString.startsWith('No English Wiktionary article found')) {
-                    continue;
-                }
-                vocabList.push(quote(extractSelection(k)) + ',' + quote(cleanInfo(v.infoString)));
+                vocabList.push(quote(extractSelection(k)) + ',' + quote(cleanInfo(v)));
             }
             const content = vocabList.join('\n');
             const blob = new Blob([content], { type: "text/plain" });
@@ -41,7 +38,7 @@ function saveFlashcards() {
             });
         })
         .catch(rejectedItem => {
-            if (rejectedItem === 'Empty history!') {
+            if (rejectedItem === 'No Flashcards!') {
                 alert('No flashcards to export!');
             } else {
                 console.error(JSON.stringify(rejectedItem));
@@ -93,7 +90,7 @@ function updateCacheElements() {
             // ignore rejections
          })
         .finally(() => {
-            document.querySelector('#flashcard-info').innerHTML = size + '/100';
+            document.querySelector('#flashcard-info').innerHTML = size + '/200';
             if (size > 0) {
                 createButtons();
             }

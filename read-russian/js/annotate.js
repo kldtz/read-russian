@@ -3,7 +3,7 @@ const SLICED_CACHE = 25;
 const CACHE = 'history';
 const CACHE_SUFFIX = '--c';
 
-const MAX_FLASHCARDS = 100;
+const MAX_FLASHCARDS = 200;
 const FLASHCARDS = 'flashcards';
 const FLASHCARD_SUFFIX = '--f';
 
@@ -86,9 +86,11 @@ function storeFlashcard() {
         setObj[key] = infoString;
         chrome.storage.local.set(setObj, function () {
             if (flashcards.length >= MAX_FLASHCARDS) {
+                if (!maxCardsDiv) {
+                    maxCardsDiv = createMaxCardsDiv();
+                }
+                maxCardsDiv.style.display = 'block';
                 info.style.display = 'none';
-                maxCardsDiv = createMaxCardsDiv();
-                document.body.insertBefore(maxCardsDiv, document.body.firstChild);
             }
         });
     });
@@ -111,9 +113,10 @@ function createMaxCardsDiv() {
     message.id = 'max-flashcards-message';
     message.innerHTML = '<div>You have reached the limit of ' + MAX_FLASHCARDS +
         ' flashcards. Please (export and) delete your cards before you continue!</div>' +
-        '<div id="max-flashcard-sub">Click on the toolbar icon to find the export and delete options.</div>';
+        '<div id="max-flashcard-sub">Click on the extension\'s toolbar icon to find the export and delete options.</div>';
     maxCardsDiv.appendChild(message);
 
+    document.body.insertBefore(maxCardsDiv, document.body.firstChild);
     return maxCardsDiv;
 }
 
