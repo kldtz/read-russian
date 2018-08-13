@@ -33,6 +33,9 @@ var selectionHandler = function (e) {
 
 function searchForSelection(text) {
   const json = JSON.parse(text);
+  if (json.error != undefined) {
+    return Promise.reject(json.error);
+  }
   this.hits = parseInt(json.query.searchinfo.totalhits);
   if (this.hits === 0) {
     sendMessage(this);
@@ -120,7 +123,7 @@ function handleReject(rejectedItem) {
 }
 
 chrome.runtime.onInstalled.addListener(function () {
-  chrome.storage.local.clear(function() {});
+  chrome.storage.local.clear(function () { });
   chrome.contextMenus.create({
     "title": "Get info for '%s'",
     "id": MENU_ITEM_ID,
@@ -129,3 +132,10 @@ chrome.runtime.onInstalled.addListener(function () {
 });
 
 chrome.contextMenus.onClicked.addListener(selectionHandler);
+
+chrome.runtime.onMessage.addListener(function (message, sender, _) {
+  if (message.badgeText != undefined) {
+    chrome.browserAction.setBadgeText({ text: message.badgeText });
+    chrome.browserAction.setBadgeBackgroundColor({color: "gray"});
+  }
+});

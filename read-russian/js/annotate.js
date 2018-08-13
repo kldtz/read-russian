@@ -18,7 +18,7 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
         createInfo();
     }
     info.style.display = 'block';
-    if (message.infoString && message.titlesString) {
+    if (message.infoString != undefined && message.titlesString != undefined) {
         content.innerHTML = message.infoString;
         var selectedTextKey = content.querySelector('#selectedTextKey');
         selectedTextKey.addEventListener('click', storeFlashcard.bind({ selection: message.selection, infoString: message.infoString }));
@@ -68,7 +68,7 @@ function storeFlashcard() {
     const infoString = this.infoString;
     chrome.storage.local.get([key, FLASHCARDS], function (result) {
         var flashcards = [];
-        if (!chrome.runtime.lastError && result[FLASHCARDS]) {
+        if (!chrome.runtime.lastError && result[FLASHCARDS] != undefined) {
             flashcards = result[FLASHCARDS];
             if (flashcards.length >= MAX_FLASHCARDS) {
                 if (!maxCardsDiv) {
@@ -94,6 +94,7 @@ function storeFlashcard() {
                 maxCardsDiv.style.display = 'block';
                 info.style.display = 'none';
             }
+            chrome.runtime.sendMessage({badgeText: String(flashcards.length)});
         });
     });
 }

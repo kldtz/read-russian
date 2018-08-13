@@ -85,6 +85,10 @@
     color: #740000;
 }
 
+#selectedTextKey:hover {
+    opacity: 0.5;
+}
+
 #max-flashcards-dialog {
     top: 0;
     left: 0;

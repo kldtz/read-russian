@@ -68,6 +68,7 @@ function deleteFlashcards() {
         })
         .then(() => {
             updateCacheElements();
+            chrome.runtime.sendMessage({badgeText: ''});
         })
         .catch(rejectedItem => {
             if (rejectedItem === 'No flashcards!') {
