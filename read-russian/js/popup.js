@@ -71,7 +71,7 @@ function deleteFlashcards() {
         })
         .catch(rejectedItem => {
             if (rejectedItem === 'No flashcards!') {
-                alert('No flashcards to export!');
+                // OK
             } else {
                 console.error(JSON.stringify(rejectedItem));
             }

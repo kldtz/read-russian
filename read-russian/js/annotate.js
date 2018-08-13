@@ -20,6 +20,8 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
     info.style.display = 'block';
     if (message.infoString && message.titlesString) {
         content.innerHTML = message.infoString;
+        var selectedTextKey = content.querySelector('#selectedTextKey');
+        selectedTextKey.addEventListener('click', storeFlashcard.bind({ selection: message.selection, infoString: message.infoString }));
         titles.innerHTML = message.titlesString;
         return;
     }
@@ -56,7 +58,7 @@ function cache(selection, infoString, titlesString) {
         }
         var setObj = {};
         setObj[CACHE] = cache;
-        setObj[key] = { infoString: infoString, titlesString: titlesString };
+        setObj[key] = { infoString: infoString, titlesString: titlesString, selection: selection };
         chrome.storage.local.set(setObj, function () { });
     });
 }
