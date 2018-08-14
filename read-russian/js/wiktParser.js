@@ -3,7 +3,8 @@ import { parseFormOf, parseInflectionOf, parseIpa, processTemplates } from './te
 
 const POS_HEADERS = new Set(['Adjective', 'Adverb', 'Article', 'Classifier', 'Conjunction',
   'Contraction', 'Counter', 'Determiner', 'Interjection', 'Noun', 'Numeral', 'Participle',
-  'Particle', 'Postposition', 'Predicative', 'Preposition', 'Pronoun', 'Proper noun', 'Verb']);
+  'Particle', 'Postposition', 'Predicative', 'Prefix', 'Preposition', 'Pronoun', 'Proper noun', 
+  'Verb']);
 
 export default function parseArticle(markup, title, posFilter) {
   var info = { title: title };
