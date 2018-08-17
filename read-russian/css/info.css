@@ -12,10 +12,6 @@
     font-family: 'Source Sans Pro', sans-serif;   
 }
 
-#wikt-info span.pos {
-    padding-left: 5px;
-}
-
 #wikt-info span.sense-num {
     color: rgb(107, 112, 112);
     padding-left: 3px;
@@ -80,11 +76,6 @@
     font-style: italic;
 }
 
-#selectedTextKey {
-    cursor: pointer;
-    color: #740000;
-}
-
 #selectedTextKey:hover {
     opacity: 0.5;
 }
@@ -123,4 +114,13 @@
 #max-flashcard-sub {
     font-size: 10pt;
     padding-top: 5px;
+}
+
+#wikt-info .flashcard-option:hover {
+    opacity: 0.7;
+}
+
+#wikt-info .flashcard-option {
+    cursor: pointer;
+    padding-left: 5px;
 }

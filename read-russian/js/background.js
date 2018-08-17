@@ -33,7 +33,7 @@ var selectionHandler = function (e) {
 
 function searchForSelection(text) {
   const json = JSON.parse(text);
-  if (json.error != undefined) {
+  if (json.error) {
     return Promise.reject(json.error);
   }
   this.hits = parseInt(json.query.searchinfo.totalhits);

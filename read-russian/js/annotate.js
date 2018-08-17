@@ -18,33 +18,26 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
         createInfo();
     }
     info.style.display = 'block';
-    if (message.infoString != undefined && message.titlesString != undefined) {
-        content.innerHTML = message.infoString;
-        var selectedTextKey = content.querySelector('#selectedTextKey');
-        selectedTextKey.addEventListener('click', storeFlashcard.bind({ selection: message.selection, infoString: message.infoString }));
-        titles.innerHTML = message.titlesString;
-        return;
-    }
     if (message.hits === 0) {
-        const infoString = "No English Wiktionary article found for '" + message.selection + "'.";
-        content.innerHTML = infoString;
+        content.innerHTML = "No English Wiktionary article found for '" + message.selection + "'.";
         titles.innerHTML = '';
-        cache(message.selection, infoString, '');
+        cache(message);
         return;
     }
-    const infoString = generateInfoString(message.info);
-    content.innerHTML = infoString;
-    var selectedTextKey = content.querySelector('#selectedTextKey');
-    selectedTextKey.addEventListener('click', storeFlashcard.bind({ selection: message.selection, infoString: infoString }));
-    const titlesString = '(' + message.info.titles.map(convertToLink).join(', ') + ')';
+    updateContent(content, message.info)
+    const titlesString = generateTitlesString(message.info.titles);
     if (titlesString) {
         titles.innerHTML = titlesString;
     }
-    cache(message.selection, infoString, titlesString);
+    cache(message);
 });
 
-function cache(selection, infoString, titlesString) {
-    const key = selection + CACHE_SUFFIX;
+function generateTitlesString(titles) {
+    return '(' + titles.map(convertToLink).join(', ') + ')';
+}
+
+function cache(message) {
+    const key = message.selection + CACHE_SUFFIX;
     chrome.storage.local.get(CACHE, function (result) {
         var cache = [];
         if (!chrome.runtime.lastError && result[CACHE]) {
@@ -58,14 +51,14 @@ function cache(selection, infoString, titlesString) {
         }
         var setObj = {};
         setObj[CACHE] = cache;
-        setObj[key] = { infoString: infoString, titlesString: titlesString, selection: selection };
+        setObj[key] = message;
         chrome.storage.local.set(setObj, function () { });
     });
 }
 
 function storeFlashcard() {
-    const key = this.selection + FLASHCARD_SUFFIX;
-    const infoString = this.infoString;
+    const key = this.lemma + '--' + this.pos + FLASHCARD_SUFFIX;
+    const card = this;
     chrome.storage.local.get([key, FLASHCARDS], function (result) {
         var flashcards = [];
         if (!chrome.runtime.lastError && result[FLASHCARDS] != undefined) {
@@ -85,7 +78,7 @@ function storeFlashcard() {
         flashcards.push(key);
         var setObj = {};
         setObj[FLASHCARDS] = flashcards;
-        setObj[key] = infoString;
+        setObj[key] = card;
         chrome.storage.local.set(setObj, function () {
             if (flashcards.length >= MAX_FLASHCARDS) {
                 if (!maxCardsDiv) {
@@ -94,7 +87,7 @@ function storeFlashcard() {
                 maxCardsDiv.style.display = 'block';
                 info.style.display = 'none';
             }
-            chrome.runtime.sendMessage({badgeText: String(flashcards.length)});
+            chrome.runtime.sendMessage({ badgeText: String(flashcards.length) });
         });
     });
 }
@@ -180,31 +173,63 @@ function createFooter() {
     return footer;
 }
 
-function generateInfoString(data) {
-    var parts = [];
-    addTitleAndOrPronunciation(parts, data);
+function updateContent(div, data) {
+    removeChildren(div);
+    div.appendChild(createTitleAndPronunciation(data));
+    // add colon
     const pos_set = collectPos(data);
     if (pos_set.size > 0) {
-        parts.push(': ');
+        div.appendChild(document.createTextNode(': '));
     }
+    // add features and definitions
     for (let pos of pos_set) {
-        parts.push('<span class="pos">' + pos + '</span>');
+        var card = { pos: pos, lemma: data.title, pronunciation: data.pronunciation };
+        var posLemma = document.createElement('span');
+        posLemma.id = pos;
+        var parts = [pos];
         if (data.inflections && data.inflections[pos]) {
             const p = data.inflections[pos];
-            parts.push(' (' + (p.lemma ? p.lemma : p.alternative) + grammarTags(data.inflections[pos].grammarInfos) + ')');
+            const lemma = p.lemma ? p.lemma : p.alternative;
+            card.pronunciation = lemma;
+            card.lemma = normalize(lemma);
+            parts.push(' (' + lemma + grammarTags(data.inflections[pos].grammarInfos) + ')');
         }
         if (data.definitions && data.definitions[pos]) {
-            parts.push(': ')
+            parts.push(': ');
             if (data.definitions[pos].length === 1) {
-                parts.push(data.definitions[pos][0].text);
+                card.definitions = data.definitions[pos][0].text;
+                parts.push(card.definitions);
             } else {
-                parts.push(generateDefinitionsString(data.definitions[pos]));
+                card.definitions = generateDefinitionsString(data.definitions[pos]);
+                parts.push(card.definitions);
             }
+            posLemma.className = 'flashcard-option';
+            posLemma.title = "Save flashcard for '" + card.lemma + " (" + card.pos + ")'";
+            posLemma.addEventListener('click', storeFlashcard.bind(card));
         }
-        parts.push('. ');
+        posLemma.innerHTML = parts.join('');
+        div.appendChild(posLemma);
+        div.appendChild(document.createTextNode('. '));
     }
-    parts.push(parts.pop().trim());
-    return parts.join('');
+}
+
+function removeChildren(element) {
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+}
+
+function createTitleAndPronunciation(data) {
+    var title = document.createElement('span');
+    title.id = 'titleAndPronunciation'
+    if (!data.pronunciation) {
+        title.innerHTML = data.title;
+    } else if (normalize(data.pronunciation) == normalize(data.title)) {
+        title.innerHTML = data.pronunciation;
+    } else {
+        title.innerHTML = data.title + ' [' + data.pronunciation + ']';
+    }
+    return title;
 }
 
 function addTitleAndOrPronunciation(parts, data) {

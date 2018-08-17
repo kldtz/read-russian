@@ -27,7 +27,7 @@ function saveFlashcards() {
         .then(items => {
             var vocabList = [];
             for (let [k, v] of Object.entries(items)) {
-                vocabList.push(quote(extractSelection(k)) + ',' + quote(cleanInfo(v)));
+                vocabList.push(createFlashcard(k, v));
             }
             const content = vocabList.join('\n');
             const blob = new Blob([content], { type: "text/plain" });
@@ -46,16 +46,16 @@ function saveFlashcards() {
         });
 }
 
-function extractSelection(cacheKey) {
-    return cacheKey.slice(0, cacheKey.length - CACHE_SUFFIX.length);
+function createFlashcard(k, v) {
+    return quote(extractLemma(k)) + ',' + quote(v.pronunciation + ', ' + v.pos.toLowerCase() + ': ' + v.definitions);
+}
+
+function extractLemma(value) {
+    return value.split('--')[0];
 }
 
 function quote(value) {
     return '"' + value.replace(DOUBLE_QUOTES, '""') + '"';
-}
-
-function cleanInfo(value) {
-    return value.replace(/title="Save as flashcard"/g, '');
 }
 
 function deleteFlashcards() {
@@ -68,7 +68,7 @@ function deleteFlashcards() {
         })
         .then(() => {
             updateCacheElements();
-            chrome.runtime.sendMessage({badgeText: ''});
+            chrome.runtime.sendMessage({ badgeText: '' });
         })
         .catch(rejectedItem => {
             if (rejectedItem === 'No flashcards!') {
@@ -89,7 +89,7 @@ function updateCacheElements() {
         })
         .catch(_ => {
             // ignore rejections
-         })
+        })
         .finally(() => {
             document.querySelector('#flashcard-info').innerHTML = size + '/200';
             if (size > 0) {
