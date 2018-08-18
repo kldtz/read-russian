@@ -149,3 +149,11 @@ test('replaces diminutive', t => {
     
     t.is(replacement, '<span class="diminutive">diminutive of стул</span>')
 });
+
+test('replaces given name', t => {
+    const line = '{{given name|male|lang=ru}}';
+
+    const replacement = processTemplates(line);
+
+    t.is(replacement, 'male given name');
+});

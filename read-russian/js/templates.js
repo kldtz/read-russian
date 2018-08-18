@@ -5,6 +5,7 @@ const FORM_OF_PATTERN = new RegExp('{{(' + FORM_OF.join('|') + ')\\|(.+?)}}');
 const INFLECTION_OF_PATTERN = /{{(inflection of|ru-participle of)\|(.+?)}}/;
 const NAMED_PARAMETER = /^(\w+)=([^=]+)$/;
 const TEMPLATE_FUNCTION_MAPPING = {
+    'given name': replaceGivenName,
     glink: replaceGlossary,
     gloss: replaceGloss,
     glossary: replaceGlossary,
@@ -22,6 +23,7 @@ const TEMPLATE_FUNCTION_MAPPING = {
     'diminutive of': replaceDiminutive,
     w: replaceWikipediaLink
 };
+const NAME_GENDER = new Set(['male', 'female', 'unisex']);
 
 function parseFormOf(line) {
     const formOf = FORM_OF_PATTERN.exec(line);
@@ -194,7 +196,18 @@ function replaceDiminutive(params) {
     var parts = ['<span class="diminutive">diminutive of '];
     parts.push(ps[0]);
     parts.push('</span>');
-    return parts.join(''); 
+    return parts.join('');
+}
+
+function replaceGivenName(params) {
+    const paramMap = parseParameters(params);
+    if (paramMap.gender)
+        return paramMap.gender + ' given name';
+    for (let param of paramMap.ps0) {
+        if (NAME_GENDER.has(param))
+            return param + ' given name';
+    }
+    return 'given name';
 }
 
 function parsePositionalParams(params) {
