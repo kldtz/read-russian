@@ -47,7 +47,7 @@ function saveFlashcards() {
 }
 
 function createFlashcard(k, v) {
-    return quote(extractLemma(k)) + ',' + quote(v.pronunciation + ', ' + v.pos.toLowerCase() + ': ' + v.definitions);
+    return quote(extractLemma(k)) + ',' + quote('(' + v.pronunciation + ', ' + v.pos.toLowerCase() + '): ' + v.definitions);
 }
 
 function extractLemma(value) {
