@@ -180,37 +180,40 @@ function updateContent(div, data) {
     const pos_set = collectPos(data);
     if (pos_set.size > 0) {
         div.appendChild(document.createTextNode(': '));
-    }
-    // add features and definitions
-    for (let pos of pos_set) {
-        var card = { pos: pos, lemma: data.title, pronunciation: data.pronunciation };
-        var posLemma = document.createElement('span');
-        posLemma.id = pos;
-        var parts = [pos];
-        if (data.inflections && data.inflections[pos]) {
-            const p = data.inflections[pos];
-            const lemma = p.lemma ? p.lemma : p.alternative;
-            card.pronunciation = lemma;
-            card.lemma = normalize(lemma);
-            parts.push(' (' + lemma + grammarTags(data.inflections[pos].grammarInfos) + ')');
+        // add features and definitions
+        for (let pos of pos_set) {
+            div.appendChild(createPosSpan(data, pos));
+            div.appendChild(document.createTextNode('. '));
         }
-        if (data.definitions && data.definitions[pos]) {
-            parts.push(': ');
-            if (data.definitions[pos].length === 1) {
-                card.definitions = data.definitions[pos][0].text;
-                parts.push(card.definitions);
-            } else {
-                card.definitions = generateDefinitionsString(data.definitions[pos]);
-                parts.push(card.definitions);
-            }
-            posLemma.className = 'flashcard-option';
-            posLemma.title = "Save flashcard for '" + card.lemma + " (" + card.pos + ")'";
-            posLemma.addEventListener('click', storeFlashcard.bind(card));
-        }
-        posLemma.innerHTML = parts.join('');
-        div.appendChild(posLemma);
-        div.appendChild(document.createTextNode('. '));
     }
+}
+
+function createPosSpan(data, pos) {
+    var card = { pos: pos, lemma: data.title, pronunciation: data.pronunciation };
+    var posLemma = document.createElement('span');
+    var parts = [pos];
+    if (data.inflections && data.inflections[pos]) {
+        const p = data.inflections[pos];
+        const lemma = p.lemma ? p.lemma : p.alternative;
+        card.pronunciation = lemma;
+        card.lemma = normalize(lemma);
+        parts.push(' (' + lemma + grammarTags(data.inflections[pos].grammarInfos) + ')');
+    }
+    if (data.definitions && data.definitions[pos]) {
+        parts.push(': ');
+        if (data.definitions[pos].length === 1) {
+            card.definitions = data.definitions[pos][0].text;
+            parts.push(card.definitions);
+        } else {
+            card.definitions = generateDefinitionsString(data.definitions[pos]);
+            parts.push(card.definitions);
+        }
+        posLemma.className = 'flashcard-option';
+        posLemma.title = "Save flashcard for '" + card.lemma + " (" + card.pos + ")'";
+        posLemma.addEventListener('click', storeFlashcard.bind(card));
+    }
+    posLemma.innerHTML = parts.join('');
+    return posLemma;
 }
 
 function removeChildren(element) {
@@ -230,18 +233,6 @@ function createTitleAndPronunciation(data) {
         title.innerHTML = data.title + ' [' + data.pronunciation + ']';
     }
     return title;
-}
-
-function addTitleAndOrPronunciation(parts, data) {
-    parts.push('<span id="selectedTextKey" title="Save as flashcard">');
-    if (!data.pronunciation) {
-        parts.push(data.title);
-    } else if (normalize(data.pronunciation) == normalize(data.title)) {
-        parts.push(data.pronunciation);
-    } else {
-        parts.push(data.title + ' [' + data.pronunciation + ']');
-    }
-    parts.push('</span>');
 }
 
 function grammarTags(grammarInfos) {
