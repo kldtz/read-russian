@@ -21,6 +21,7 @@ const TEMPLATE_FUNCTION_MAPPING = {
     'non-gloss definition': replaceNonGlossDefinition,
     'ru-acronym of': replaceAcronym,
     'diminutive of': replaceDiminutive,
+    'ru-initialism of': replaceAcronym,
     w: replaceWikipediaLink
 };
 const NAME_GENDER = new Set(['male', 'female', 'unisex']);
