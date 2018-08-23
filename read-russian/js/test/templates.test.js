@@ -7,7 +7,7 @@ test('extracts lemma and grammarInfo from "superlative of" template', t => {
 
     const result = parseFormOf(line)
 
-    t.is(result.lemma, 'ста́рый')
+    t.is(result.lemma, 'ста́рый');
     t.is(result.grammarInfo, 'superlative');
 });
 
