@@ -43,3 +43,21 @@ test('Returns selection and zero hits', t => {
         t.is(result.selection, selection);
     });
 });
+
+test('Returns rejected item on error', t => {
+    localStorageStub.resolves({});
+    httpGetPromiseStub.resolves('{"error": {"reason": "test"}}');
+
+    return wiktRequests.collectInfo('test').catch(rejected => {
+        t.is(rejected.reason, 'test');
+    });
+});
+
+test('Returns value from local storage if present', t => {
+    const selection = 'test';
+    localStorageStub.resolves({ 'test--c': { title: selection } });
+
+    return wiktRequests.collectInfo(selection).then(result => {
+        t.is(result.title, selection);
+    });
+});

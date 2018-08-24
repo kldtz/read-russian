@@ -154,7 +154,7 @@ function download(options) {
             if (lastErr) {
                 reject(lastErr);
             } else {
-                resolve({downloadId:id, message: 'download error'});
+                resolve({ downloadId: id, message: 'download error' });
             }
         });
     })
@@ -167,4 +167,7 @@ function sendMessage(data) {
 }
 
 
-export { findBestResult, normalize, isCyrillic, titleCase, peek, countChar, alt, findFirst, httpGetPromise, localStorage, download, sendMessage };
+export {
+    findBestResult, normalize, isCyrillic, titleCase, peek, countChar, alt,
+    findFirst, httpGetPromise, localStorage, download, sendMessage
+};
