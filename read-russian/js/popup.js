@@ -34,7 +34,8 @@ function saveFlashcards() {
             const url = URL.createObjectURL(blob);
             return download({
                 url: url,
-                saveAs: true
+                saveAs: true,
+                filename: 'Russian_flashcards_' + Date.now() +'.csv'
             });
         })
         .catch(rejectedItem => {

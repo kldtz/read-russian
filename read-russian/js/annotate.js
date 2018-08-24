@@ -160,14 +160,15 @@ function createFooter() {
     wiktionaryLink.innerText = 'Wiktionary';
     var licenseLink = document.createElement('a');
     licenseLink.href = 'http://creativecommons.org/licenses/by-sa/3.0/';
-    licenseLink.innerText = 'Creative Commons Attribution-ShareAlike 3.0 Unported License';
+    licenseLink.innerText = 'CC BY-SA 3.0';
+    licenseLink.title = 'Creative Commons Attribution-ShareAlike 3.0 Unported';
     titles = document.createElement('span')
     titles.id = 'wikt-info-titles';
     titles.className = 'wikt-info-class';
     footer.appendChild(document.createTextNode('This information was aggregated from '));
     footer.appendChild(wiktionaryLink);
     footer.appendChild(titles);
-    footer.appendChild(document.createTextNode(' under a '));
+    footer.appendChild(document.createTextNode(' under '));
     footer.appendChild(licenseLink);
     footer.appendChild(document.createTextNode('.'));
     return footer;
