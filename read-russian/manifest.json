@@ -1,7 +1,7 @@
 {
     "name": "Read Russian",
-    "version": "1.2.0",
-    "description": "Helps you to learn the Russian language by reading.",
+    "version": "1.2.1",
+    "description": "Helps you learn Russian by reading.",
     "permissions": [
         "contextMenus",
         "tabs",
