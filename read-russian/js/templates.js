@@ -5,6 +5,7 @@ const FORM_OF_PATTERN = new RegExp('{{(' + FORM_OF.join('|') + ')\\|(.+?)}}');
 const INFLECTION_OF_PATTERN = /{{(inflection of|ru-participle of)\|(.+?)}}/;
 const NAMED_PARAMETER = /^(\w+)=([^=]+)$/;
 const TEMPLATE_FUNCTION_MAPPING = {
+    'diminutive of': replaceDiminutive,
     'given name': replaceGivenName,
     glink: replaceGlossary,
     gloss: replaceGloss,
@@ -19,8 +20,8 @@ const TEMPLATE_FUNCTION_MAPPING = {
     m: replaceMention,
     mention: replaceMention,
     'non-gloss definition': replaceNonGlossDefinition,
+    'pejorative of': replacePejorative,
     'ru-acronym of': replaceAcronym,
-    'diminutive of': replaceDiminutive,
     'ru-initialism of': replaceAcronym,
     w: replaceWikipediaLink
 };
@@ -209,6 +210,14 @@ function replaceGivenName(params) {
             return param + ' given name';
     }
     return 'given name';
+}
+
+function replacePejorative(params) {
+    const ps = parsePositionalParams(params);
+    var parts = ['<span class="pejorative">pejorative of ']
+    parts.push(ps[0]);
+    parts.push('</span>')
+    return parts.join('');
 }
 
 function parsePositionalParams(params) {
