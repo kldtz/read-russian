@@ -21,6 +21,7 @@ const TEMPLATE_FUNCTION_MAPPING = {
     mention: replaceMention,
     'non-gloss definition': replaceNonGlossDefinition,
     'pejorative of': replacePejorative,
+    place: replacePlace,
     'ru-acronym of': replaceAcronym,
     'ru-initialism of': replaceAcronym,
     w: replaceWikipediaLink
@@ -218,6 +219,21 @@ function replacePejorative(params) {
     parts.push(ps[0]);
     parts.push('</span>')
     return parts.join('');
+}
+
+function replacePlace(params) {
+    const paramMap = parseParameters(params);
+    var parts = [];
+    const translation = paramMap.t1;
+    if (translation) {
+        parts.push(translation);
+        parts.push(' ');
+    }
+    const placetype = paramMap.ps0[1];
+    parts.push('(');
+    parts.push(placetype);
+    parts.push(')');
+    return parts.join('');    
 }
 
 function parsePositionalParams(params) {
