@@ -176,3 +176,13 @@ test('extracts phon parameter from ru-IPA template', t => {
 
         t.is(info.pronunciation, 'Йо̂ха́ннэсбург');
 });
+
+test('deals with trema', t => {
+        const article = fs.readFileSync('test/data/тёмный.wiki').toString();
+
+        const info = parseArticle(article, 'тёмный');
+
+        t.is(info.pronunciation, 'тёмный');
+        t.is(info.definitions['Adjective'][0].text, 'dark');
+        t.is(info.definitions['Adjective'][1].text, 'ignorant, uneducated (person)');
+});

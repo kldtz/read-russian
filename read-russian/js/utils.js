@@ -24,6 +24,10 @@ function commonPrefixLength(a, b) {
 }
 
 function normalize(word) {
+    return word.normalize('NFD').replace(/[\u0300-\u0303\u0308]/g, '');
+}
+
+function normalizeUrl(word) {
     return word.normalize('NFD').replace(/[\u0300-\u0303]/g, '');
 }
 
@@ -166,8 +170,7 @@ function sendMessage(data) {
     });
 }
 
-
 export {
-    findBestResult, normalize, isCyrillic, titleCase, peek, countChar, alt,
-    findFirst, httpGetPromise, localStorage, download, sendMessage
+    findBestResult, normalize, normalizeUrl, isCyrillic, titleCase, peek, countChar,
+    alt, findFirst, httpGetPromise, localStorage, download, sendMessage
 };

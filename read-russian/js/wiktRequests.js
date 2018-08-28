@@ -1,5 +1,5 @@
 import parseArticle from './wiktParser.js'
-import { findBestResult, httpGetPromise, alt, normalize, localStorage } from './utils.js'
+import { findBestResult, httpGetPromise, alt, normalizeUrl, localStorage } from './utils.js'
 
 const EN_WIKI = 'https://en.wiktionary.org/wiki/';
 const EN_WIKT_API = 'https://en.wiktionary.org/w/api.php?';
@@ -20,7 +20,7 @@ function collectInfo(selection) {
         })
         .then(() => httpGetPromise(EN_WIKT_API + QUERY + selection))
         .then(searchForSelection.bind(data))
-        .then(title => httpGetPromise(EN_WIKI + normalize(title) + '?action=raw'))
+        .then(title => httpGetPromise(EN_WIKI + normalizeUrl(title) + '?action=raw'))
         .then(processBestResult.bind(data))
         .then(processLinkedArticles.bind(data))
         .catch(handleReject);
@@ -51,7 +51,7 @@ function followLinks(data) {
     if (data.info.inflections) {
         data.posLinkPairs = collectPosLinkPairs(data.info);
         for (let pair of data.posLinkPairs) {
-            promises.push(httpGetPromise(EN_WIKI + normalize(pair.link) + '?action=raw'));
+            promises.push(httpGetPromise(EN_WIKI + normalizeUrl(pair.link) + '?action=raw'));
         }
     }
     return Promise.all(promises);

@@ -279,5 +279,5 @@ function collectPos(data) {
 }
 
 function normalize(word) {
-    return word.normalize('NFD').replace(/[\u0300-\u0303]/g, '');
+    return word.normalize('NFD').replace(/[\u0300-\u0303\u0308]/g, '');
 }

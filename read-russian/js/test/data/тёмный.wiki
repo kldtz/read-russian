@@ -1,0 +1,37 @@
+==Russian==
+
+===Etymology===
+From {{inh|ru|sla-pro|*tьmьnъ}}
+
+===Pronunciation===
+* {{audio|Ru-тёмный.ogg|Audio|lang=ru}}
+* {{ru-IPA}}
+
+===Adjective===
+{{ru-adj|тёмный|темне́е|темне́йший}}
+
+# [[dark]]
+# [[ignorant]], [[uneducated]] ''(person)''
+# [[obscure]], [[vague]]
+
+====Declension====
+{{ru-decl-adj|тёмный|b*|short_m=тёмен}}
+
+====Synonyms====
+* {{l|ru|ту́склый}}
+* {{l|ru|неяркий}}
+* {{l|ru|мра́чный}}
+
+====Antonyms====
+* {{l|ru|све́тлый}}
+
+====Related terms====
+* {{l|ru|затемно}}
+* {{l|ru|те́мень}}
+* {{l|ru|темне́ть}}
+* {{l|ru|темни́ть}}
+* {{l|ru|темноволосый}}
+* {{l|ru|темнокожий}}
+* {{l|ru|темнота́}}
+* {{l|ru|темным-темно́}}
+* {{l|ru|тьма}}
