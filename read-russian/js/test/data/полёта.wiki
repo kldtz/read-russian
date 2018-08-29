@@ -1,0 +1,10 @@
+{{also|полета}}
+==Russian==
+
+===Pronunciation===
+* {{ru-IPA}}
+
+===Noun===
+{{ru-noun form||m-in}}
+
+# {{inflection of|lang=ru|полёт||gen|s}}

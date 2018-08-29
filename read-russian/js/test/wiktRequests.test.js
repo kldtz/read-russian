@@ -61,3 +61,22 @@ test('Returns value from local storage if present', t => {
         t.is(result.title, selection);
     });
 });
+
+test('Keeps trema in normalized lemma for URL', t => {
+    const selection = 'полёта'; // composition U0435 + U0308
+    localStorageStub.resolves({});
+    httpGetPromiseStub.withArgs(wiktRequests.EN_WIKT_API + wiktRequests.QUERY + selection)
+        .resolves(fs.readFileSync('test/data/полёта-search-results.json').toString());
+    httpGetPromiseStub.withArgs(wiktRequests.EN_WIKI + selection + '?action=raw')
+        .resolves(fs.readFileSync('test/data/полёта.wiki').toString());
+    httpGetPromiseStub.withArgs(wiktRequests.EN_WIKI + 'полёт' + '?action=raw')
+        .resolves(fs.readFileSync('test/data/полёт.wiki').toString());
+    httpGetPromiseStub.withArgs(wiktRequests.EN_WIKI + 'полет' + '?action=raw')
+        .resolves('FAIL');
+
+    return wiktRequests.collectInfo(selection).then(result => {
+        t.is(result.info.pronunciation, 'полёта'); // U+0451
+        t.is(result.info.definitions.Noun[0].text, 'flight, flying');
+    });
+
+});

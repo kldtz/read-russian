@@ -1,0 +1,17 @@
+{{also|Полет|полет}}
+==Russian==
+
+===Pronunciation===
+* {{ru-IPA}}
+* {{audio|Ru-полёт.ogg|Audio|lang=ru}}
+
+===Noun===
+{{ru-noun+}}
+
+# [[flight]], [[flying]]
+
+====Declension====
+{{ru-noun-table}}
+
+====Related terms====
+* {{l|ru|лета́ть}}, {{l|ru|лете́ть}}

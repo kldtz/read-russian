@@ -1,4 +1,4 @@
-import { normalize, countChar } from './utils.js'
+import { normalizeUrl, countChar } from './utils.js'
 import { parseFormOf, parseInflectionOf, parseIpa, processTemplates } from './templates.js'
 
 const POS_HEADERS = new Set(['Adjective', 'Adverb', 'Article', 'Classifier', 'Conjunction',
@@ -118,7 +118,7 @@ function addInflection(info, pos, lemma, grammarInfo) {
     info.inflections[pos].lemma = lemma;
   }
   if (!info.inflections[pos].normalizedLemma) {
-    info.inflections[pos].normalizedLemma = normalize(lemma);
+    info.inflections[pos].normalizedLemma = normalizeUrl(lemma);
   }
   if (!info.inflections[pos].grammarInfos) {
     info.inflections[pos].grammarInfos = []
