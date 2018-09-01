@@ -7,7 +7,7 @@ const POS_HEADERS = new Set(['Adjective', 'Adverb', 'Article', 'Classifier', 'Co
   'Verb']);
 
 export default function parseArticle(markup, title, posFilter) {
-  var info = { title: title };
+  var info = new Info(title);
   var state = { russian: false, pos: null };
   if (!posFilter) {
     posFilter = POS_HEADERS;
@@ -22,16 +22,16 @@ function processLine(info, state, posFilter, line) {
   line = line.trim();
   updateLanguage(state, line);
   if (state.russian) {
-    addPronunciation(info, line);
+    info.pronunciation = extractPronunciation(line);
     updatePos(state, line, posFilter);
     if (state.pos) {
-      addAlternativeForm(info, line, state.pos);
+      info.setAlternativeForm(state.pos, extractAlternativeForm(line));
       let inflection = extractInflection(line);
       if (inflection) {
         let pos = inflection.pos && POS_HEADERS.has(inflection.pos) ? inflection.pos : state.pos;
-        addInflection(info, pos, inflection.lemma, inflection.grammarInfo);
+        info.addInflection(pos, inflection.lemma, inflection.grammarInfo);
       } else {
-        addDefinition(info, line, state.pos);
+        info.addDefinition(state.pos, extractDefinition(line));
       }
     }
   }
@@ -45,15 +45,12 @@ function updateLanguage(state, line) {
   }
 }
 
-function addPronunciation(info, line) {
-  if (!info.pronunciation && line.includes('{{ru-IPA}}')) {
-    info['pronunciation'] = info.title;
-    return;
-  }
+function extractPronunciation(line) {
   var pronMatch = /{{ru\-IPA\|(.+?)}}/.exec(line);
-  if ((!info.pronunciation || info.pronunciation === info.title) && pronMatch) {
-    info.pronunciation = parseIpa(pronMatch[1].split('|'));
+  if (pronMatch) {
+    return parseIpa(pronMatch[1].split('|'));
   }
+  return null;
 }
 
 function updatePos(state, line, posFilter) {
@@ -72,27 +69,12 @@ function updatePos(state, line, posFilter) {
   }
 }
 
-function addAlternativeForm(info, line, pos) {
+function extractAlternativeForm(line) {
   var alternative = /{{(ru-.+?-alt-ё|alternative form of)\|(.+?)}}/.exec(line);
   if (alternative) {
-    if (!info.inflections) {
-      info.inflections = {};
-    }
-    if (!info.inflections[pos]) {
-      info.inflections[pos] = {};
-    }
-    info.inflections[pos].alternative = alternative[2].split('|')[0];
+    return alternative[2].split('|')[0];
   }
-}
-
-function addDefinition(info, line, pos) {
-  const definition = extractDefinition(line);
-  if (definition) {
-    if (!info.definitions) {
-      info.definitions = {};
-    }
-    addValue(info.definitions, pos, definition);
-  }
+  return null;
 }
 
 function extractInflection(line) {
@@ -105,27 +87,6 @@ function extractInflection(line) {
     return inflectionOf;
   }
   return null;
-}
-
-function addInflection(info, pos, lemma, grammarInfo) {
-  if (!info.inflections) {
-    info.inflections = {};
-  }
-  if (!info.inflections[pos]) {
-    info.inflections[pos] = {};
-  }
-  if (!info.inflections[pos].lemma) {
-    info.inflections[pos].lemma = lemma;
-  }
-  if (!info.inflections[pos].normalizedLemma) {
-    info.inflections[pos].normalizedLemma = normalizeUrl(lemma);
-  }
-  if (!info.inflections[pos].grammarInfos) {
-    info.inflections[pos].grammarInfos = []
-  } else if (info.inflections[pos].grammarInfos.indexOf(grammarInfo) > -1) {
-    return;
-  }
-  info.inflections[pos].grammarInfos.push(grammarInfo);
 }
 
 function extractDefinition(line) {
@@ -145,11 +106,65 @@ function extractDefinition(line) {
   return null;
 }
 
-function addValue(definitions, pos, definition) {
-  if (!definitions[pos]) {
-    definitions[pos] = [];
+class Info {
+  constructor(title) {
+    this.title = title;
+    this._pronunciation = title;
   }
-  definitions[pos].push(definition);
+
+  addInflection(pos, lemma, grammarInfo) {
+    if (!this.inflections) {
+      this.inflections = {};
+    }
+    if (!this.inflections[pos]) {
+      this.inflections[pos] = {};
+    }
+    if (!this.inflections[pos].lemma) {
+      this.inflections[pos].lemma = lemma;
+    }
+    if (!this.inflections[pos].normalizedLemma) {
+      this.inflections[pos].normalizedLemma = normalizeUrl(lemma);
+    }
+    if (!this.inflections[pos].grammarInfos) {
+      this.inflections[pos].grammarInfos = []
+    } else if (this.inflections[pos].grammarInfos.indexOf(grammarInfo) > -1) {
+      return;
+    }
+    this.inflections[pos].grammarInfos.push(grammarInfo);
+  }
+
+  setAlternativeForm(pos, alternativeForm) {
+    if (!alternativeForm) return;
+    if (!this.inflections) {
+      this.inflections = {};
+    }
+    if (!this.inflections[pos]) {
+      this.inflections[pos] = {};
+    }
+    this.inflections[pos].alternative = alternativeForm;
+  }
+
+  addDefinition(pos, definition) {
+    if (!definition) return;
+    if (!this.definitions) {
+      this.definitions = {};
+    }
+    if (!this.definitions[pos]) {
+      this.definitions[pos] = [];
+    }
+    this.definitions[pos].push(definition);
+  }
+
+  set pronunciation(pronunciation) {
+    if (!pronunciation) return;
+    if (!this._pronunciation || this._pronunciation === this.title) {
+      this._pronunciation = pronunciation;
+    }
+  }
+
+  get pronunciation() {
+    return this._pronunciation;
+  }
 }
 
 export { parseArticle };
