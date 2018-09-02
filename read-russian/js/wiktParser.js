@@ -22,7 +22,7 @@ function processLine(info, state, posFilter, line) {
   line = line.trim();
   updateLanguage(state, line);
   if (state.russian) {
-    info.pronunciation = extractPronunciation(line);
+    info.setPronunciation(extractPronunciation(line));
     updatePos(state, line, posFilter);
     if (state.pos) {
       info.setAlternativeForm(state.pos, extractAlternativeForm(line));
@@ -109,7 +109,6 @@ function extractDefinition(line) {
 class Info {
   constructor(title) {
     this.title = title;
-    this._pronunciation = title;
   }
 
   addInflection(pos, lemma, grammarInfo) {
@@ -155,15 +154,10 @@ class Info {
     this.definitions[pos].push(definition);
   }
 
-  set pronunciation(pronunciation) {
-    if (!pronunciation) return;
-    if (!this._pronunciation || this._pronunciation === this.title) {
-      this._pronunciation = pronunciation;
+  setPronunciation(pronunciation) {
+    if (!this.pronunciation && pronunciation) {
+      this.pronunciation = pronunciation;
     }
-  }
-
-  get pronunciation() {
-    return this._pronunciation;
   }
 }
 

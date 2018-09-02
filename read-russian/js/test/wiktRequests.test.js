@@ -75,7 +75,7 @@ test('Keeps trema in normalized lemma for URL', t => {
         .resolves('FAIL');
 
     return wiktRequests.collectInfo(selection).then(result => {
-        t.is(result.info.pronunciation, 'полёта'); // U+0451
+        t.is(result.info.title, 'полёта'); // U+0451
         t.is(result.info.definitions.Noun[0].text, 'flight, flying');
     });
 

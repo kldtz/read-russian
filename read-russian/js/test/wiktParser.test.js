@@ -12,12 +12,12 @@ test('reads only Russian section', t => {
         t.is(info.definitions.Noun.length, 4);
 });
 
-test('recognizes default pronunciation', t => {
+test('no explicit pronunciation for trivial cases', t => {
         const article = fs.readFileSync('test/data/вряд.wiki').toString();
 
         const info = parseArticle(article, 'вряд');
 
-        t.is(info.pronunciation, 'вряд');
+        t.falsy(info.pronunciation);
 });
 
 test('extracts lemma and grammar infos from inflection-of template', t => {
@@ -182,7 +182,7 @@ test('deals with trema', t => {
 
         const info = parseArticle(article, 'тёмный');
 
-        t.is(info.pronunciation, 'тёмный');
+        t.is(info.title, 'тёмный');
         t.is(info.definitions['Adjective'][0].text, 'dark');
         t.is(info.definitions['Adjective'][1].text, 'ignorant, uneducated (person)');
 });
