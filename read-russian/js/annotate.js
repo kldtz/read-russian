@@ -1,8 +1,3 @@
-const MAX_CACHE = 50;
-const SLICED_CACHE = 25;
-const CACHE = 'history';
-const CACHE_SUFFIX = '--c';
-
 const MAX_FLASHCARDS = 200;
 const FLASHCARDS = 'flashcards';
 const FLASHCARD_SUFFIX = '--f';
@@ -21,7 +16,6 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
     if (message.hits === 0) {
         content.innerHTML = "No English Wiktionary article found for '" + message.selection + "'.";
         titles.innerHTML = '';
-        cache(message);
         return;
     }
     updateContent(content, message.info)
@@ -29,31 +23,10 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
     if (titlesString) {
         titles.innerHTML = titlesString;
     }
-    cache(message);
 });
 
 function generateTitlesString(titles) {
     return '(' + titles.map(convertToLink).join(', ') + ')';
-}
-
-function cache(message) {
-    const key = message.selection + CACHE_SUFFIX;
-    chrome.storage.local.get(CACHE, function (result) {
-        var cache = [];
-        if (!chrome.runtime.lastError && result[CACHE]) {
-            cache = result[CACHE];
-        }
-        cache.push(key);
-        if (cache.length > MAX_CACHE) {
-            let numRemoved = cache.length - SLICED_CACHE;
-            cache = cache.slice(numRemoved);
-            chrome.storage.local.remove(cache.slice(0, numRemoved), function () { })
-        }
-        var setObj = {};
-        setObj[CACHE] = cache;
-        setObj[key] = message;
-        chrome.storage.local.set(setObj, function () { });
-    });
 }
 
 function storeFlashcard() {

@@ -1,21 +1,26 @@
 import { collectInfo } from './wiktRequests.js'
-import { sendMessage } from './utils.js'
+import { sendMessage, localStorage } from './utils.js'
 
 const MENU_ITEM_ID = 'selectionContextMenu';
 
+const MAX_CACHE = 50;
+const SLICED_CACHE = 25;
+const CACHE = 'history';
+const CACHE_SUFFIX = '--c';
+
 var selectionHandler = function (e) {
   if (e.menuItemId === MENU_ITEM_ID && e.selectionText) {
-      collectInfo(e.selectionText)
-          .then(info => sendMessage(info))
-          .catch(rejectedItem => logError(rejectedItem));
+    collectInfo(e.selectionText)
+      .then(info => { sendMessage(info); cache(info); })
+      .catch(rejectedItem => logError(rejectedItem));
   }
 }
 
 function logError(rejectedItem) {
   if (rejectedItem instanceof Error) {
-      console.error(rejectedItem.stack);
+    console.error(rejectedItem.stack);
   } else {
-      console.error(JSON.stringify(rejectedItem));
+    console.error(JSON.stringify(rejectedItem));
   }
 }
 
@@ -36,3 +41,28 @@ chrome.runtime.onMessage.addListener(function (message, sender, _) {
     chrome.browserAction.setBadgeBackgroundColor({ color: "gray" });
   }
 });
+
+function cache(data) {
+  if (data.cached) return;
+  localStorage.get(CACHE)
+    .then(updateCache.bind(data));
+}
+
+function updateCache(result) {
+  const key = this.selection + CACHE_SUFFIX;
+  var cache = [];
+  if (!chrome.runtime.lastError && result[CACHE]) {
+    cache = result[CACHE];
+  }
+  cache.push(key);
+  if (cache.length > MAX_CACHE) {
+    let numRemoved = cache.length - SLICED_CACHE;
+    cache = cache.slice(numRemoved);
+    chrome.storage.local.remove(cache.slice(0, numRemoved), function () { })
+  }
+  var setObj = {};
+  setObj[CACHE] = cache;
+  this.cached = true;
+  setObj[key] = this;
+  chrome.storage.local.set(setObj, function () { });
+}
