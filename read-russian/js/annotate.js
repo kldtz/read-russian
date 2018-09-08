@@ -25,6 +25,74 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
     }
 });
 
+function extractContext() {
+    var selection = window.getSelection();
+    var selectionAncestor = findFirstBlockAncestor(selection);
+    const offset = getCharOffsetRelativeTo(selectionAncestor, selection.anchorNode, selection.anchorOffset);
+    const text = selectionAncestor.textContent;
+    
+    var suffix = '';
+    var end = regexIndexOf(text, /[.?!](\s+[^а-яё]|\s*$)/, offset) + 1;
+    if (end === 0) end = text.length;
+    if (end - offset > 150) {
+        end = indexOfPlusFiveWords(text, offset);
+        suffix = ' ...';
+    }
+
+    var prefix = '';
+    var start = regexLastIndexOf(text, /[^а-яё\s]\s*([.?!]|$)/, offset) - 1;
+    if (start < 0) start = 0;
+    if (offset - start > 150) {
+        start = indexOfMinusFiveWords(text, offset);
+        prefix = '... ';
+    }
+    return prefix + text.substring(start, end).trim().replace(/\s+/g, ' ') + suffix;
+}
+
+function findFirstBlockAncestor(selection) {
+    var selectionAncestor = selection.anchorNode.parentNode;
+    while (getDisplayType(selectionAncestor) !== 'block') {
+        selectionAncestor = selectionAncestor.parentElement;
+    }
+    return selectionAncestor;
+}
+
+function getDisplayType(element) {
+    var cStyle = element.currentStyle || window.getComputedStyle(element, ""); 
+    return cStyle.display;
+}
+
+function getCharOffsetRelativeTo(container, node, offset) {
+    var range = document.createRange();
+    range.selectNodeContents(container);
+    range.setEnd(node, offset);
+    return range.toString().length;
+}
+
+function regexIndexOf(text, regex, offset) {
+    const indexInSuffix = text.slice(offset).search(regex);
+    return indexInSuffix < 0 ? indexInSuffix : indexInSuffix + offset;
+}
+
+function indexOfPlusFiveWords(text, offset) {
+    const fiveWords = /(\s+[^\s]+){5}/.exec(text.slice(offset, text.length));
+    return fiveWords ? offset + fiveWords.index + fiveWords[0].length : text.length;
+}
+
+function regexLastIndexOf(text, regex, offset) {
+    const indexRev = reverse(text.slice(0, offset)).search(regex);
+    return indexRev < 0 ? indexRev : offset - indexRev;
+}
+
+function indexOfMinusFiveWords(text, offset) {
+    const fiveWords = /(\s+[^\s]+){5}/.exec(reverse(text.slice(0, offset)));
+    return fiveWords ? offset - fiveWords.index - fiveWords[0].length : 0;
+}
+
+function reverse(str) {
+    return [...str].reverse().join('');
+}
+
 function generateTitlesString(titles) {
     return '(' + titles.map(convertToLink).join(', ') + ')';
 }
