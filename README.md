@@ -14,6 +14,14 @@ Click on a translation in the pop-up window to add it as a flashcard to Chrome's
 
 CSV files can be imported into Anki via _Files > Import..._ - please make sure that the comma is used as field separator and _Allow HTML in fields_ is checked.
 
+## CSV Fields
+
+1. Lemma
+2. Translations
+3. Context
+4. Pronunciation
+5. POS, morphosyntactic features
+
 ## License
 
 This work is licensed under a [Creative Commons Attribution-ShareAlike 3.0 Unported License](http://creativecommons.org/licenses/by-sa/3.0/). 
