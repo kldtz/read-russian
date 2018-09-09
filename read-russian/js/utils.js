@@ -170,7 +170,15 @@ function sendMessage(data) {
     });
 }
 
+function queryTabPromise() {
+    return new Promise((resolve, _) => {
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            resolve(tabs);
+        });
+    });
+}
+
 export {
     findBestResult, normalize, normalizeUrl, isCyrillic, titleCase, peek, countChar,
-    alt, findFirst, httpGetPromise, localStorage, download, sendMessage
+    alt, findFirst, httpGetPromise, localStorage, download, sendMessage, queryTabPromise
 };

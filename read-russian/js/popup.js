@@ -35,7 +35,7 @@ function saveFlashcards() {
             return download({
                 url: url,
                 saveAs: true,
-                filename: 'Russian_flashcards_' + Date.now() +'.csv'
+                filename: 'Russian_flashcards_' + Date.now() + '.csv'
             });
         })
         .catch(rejectedItem => {
@@ -48,7 +48,14 @@ function saveFlashcards() {
 }
 
 function createFlashcard(k, v) {
-    return quote(extractLemma(k)) + ',' + quote('(' + v.pronunciation + ', ' + v.pos.toLowerCase() + '): ' + v.definitions);
+    var fields = [
+        quote(extractLemma(k)), 
+        quote(v.definitions),
+        quote(v.context),
+        quote(v.pronunciation),
+        quote(v.pos + (v.grammarInfos ? ', ' + v.grammarInfos : ''))
+    ];
+    return fields.join(',');
 }
 
 function extractLemma(value) {

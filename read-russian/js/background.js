@@ -1,5 +1,5 @@
 import { collectInfo } from './wiktRequests.js'
-import { sendMessage, localStorage } from './utils.js'
+import { sendMessage, queryTabPromise, localStorage } from './utils.js'
 
 const MENU_ITEM_ID = 'selectionContextMenu';
 
@@ -10,10 +10,35 @@ const CACHE_SUFFIX = '--c';
 
 var selectionHandler = function (e) {
   if (e.menuItemId === MENU_ITEM_ID && e.selectionText) {
-    collectInfo(e.selectionText)
-      .then(info => { sendMessage(info); cache(info); })
+    extractContextAndCollectInfo(e.selectionText)
+      .then(result => {
+        var [context, data] = result;
+        const regex = new RegExp(data.selection, 'g');
+        const replacement = '<strong>' + data.selection + '</strong>';
+        data.info.context = context.replace(regex, replacement); 
+        sendMessage(data); 
+        cache(data); 
+      })
       .catch(rejectedItem => logError(rejectedItem));
   }
+}
+
+function extractContextAndCollectInfo(selection) {
+  var data = {message: 'context'};
+  const contextPromise = getContextPromise(data);
+  const infoPromise = collectInfo(selection);
+  return Promise.all([contextPromise, infoPromise]);
+}
+
+function getContextPromise(data) {
+  return queryTabPromise()
+      .then(tabs => {
+          return new Promise((resolve, _) => {
+              chrome.tabs.sendMessage(tabs[0].id, data, function (response) {
+                  resolve(response);
+              });
+          });
+      });
 }
 
 function logError(rejectedItem) {

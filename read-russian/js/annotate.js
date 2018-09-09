@@ -8,7 +8,15 @@ var titles;
 var maxCardsDiv;
 
 
-chrome.runtime.onMessage.addListener(function (message, sender) {
+chrome.runtime.onMessage.addListener(function (message, sender, callback) {
+    if (message.message === 'context') {
+        callback(extractContext());
+        return;
+    }
+    showInfo(message);
+});
+
+function showInfo(message) {
     if (!info) {
         createInfo();
     }
@@ -23,19 +31,19 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
     if (titlesString) {
         titles.innerHTML = titlesString;
     }
-});
+}
 
 function extractContext() {
     var selection = window.getSelection();
     var selectionAncestor = findFirstBlockAncestor(selection);
     const offset = getCharOffsetRelativeTo(selectionAncestor, selection.anchorNode, selection.anchorOffset);
     const text = selectionAncestor.textContent;
-    
+
     var suffix = '';
     var end = regexIndexOf(text, /[.?!](\s+[^а-яё]|\s*$)/, offset) + 1;
     if (end === 0) end = text.length;
     if (end - offset > 150) {
-        end = indexOfPlusFiveWords(text, offset);
+        end = indexAfterNextWords(text, offset);
         suffix = ' ...';
     }
 
@@ -43,7 +51,7 @@ function extractContext() {
     var start = regexLastIndexOf(text, /[^а-яё\s]\s*([.?!]|$)/, offset) - 1;
     if (start < 0) start = 0;
     if (offset - start > 150) {
-        start = indexOfMinusFiveWords(text, offset);
+        start = indexBeforePreviousWords(text, offset);
         prefix = '... ';
     }
     return prefix + text.substring(start, end).trim().replace(/\s+/g, ' ') + suffix;
@@ -58,7 +66,7 @@ function findFirstBlockAncestor(selection) {
 }
 
 function getDisplayType(element) {
-    var cStyle = element.currentStyle || window.getComputedStyle(element, ""); 
+    var cStyle = element.currentStyle || window.getComputedStyle(element, "");
     return cStyle.display;
 }
 
@@ -74,7 +82,7 @@ function regexIndexOf(text, regex, offset) {
     return indexInSuffix < 0 ? indexInSuffix : indexInSuffix + offset;
 }
 
-function indexOfPlusFiveWords(text, offset) {
+function indexAfterNextWords(text, offset) {
     const fiveWords = /(\s+[^\s]+){5}/.exec(text.slice(offset, text.length));
     return fiveWords ? offset + fiveWords.index + fiveWords[0].length : text.length;
 }
@@ -84,7 +92,7 @@ function regexLastIndexOf(text, regex, offset) {
     return indexRev < 0 ? indexRev : offset - indexRev;
 }
 
-function indexOfMinusFiveWords(text, offset) {
+function indexBeforePreviousWords(text, offset) {
     const fiveWords = /(\s+[^\s]+){5}/.exec(reverse(text.slice(0, offset)));
     return fiveWords ? offset - fiveWords.index - fiveWords[0].length : 0;
 }
@@ -231,7 +239,11 @@ function updateContent(div, data) {
 }
 
 function createPosSpan(data, pos) {
-    var card = { pos: pos, lemma: data.title, pronunciation: data.pronunciation };
+    var card = { pos: pos, lemma: data.title, pronunciation: data.pronunciation, 
+        context: data.context };
+    if (data.inflections && data.inflections[pos] && data.inflections[pos].grammarInfos) {
+        card.grammarInfos = data.inflections[pos].grammarInfos;
+    }
     var posLemma = document.createElement('span');
     var parts = [pos];
     if (data.inflections && data.inflections[pos]) {
