@@ -67,6 +67,9 @@ function collectPosLinkPairs(info) {
             continue;
         }
         let iipos = info.inflections[pos];
+        if (!iipos.normalizedLemma && !iipos.alternative) {
+            continue;
+        }
         let link = alt(iipos.normalizedLemma, iipos.alternative);
         posLinkPairs.push({ pos: pos, link: link });
     }
@@ -77,7 +80,7 @@ function processLinkedArticles(articles) {
     for (let i = 0; i < articles.length; i++) {
         let pair = this.posLinkPairs[i];
         const lemmaInfo = parseArticle(articles[i], pair.link, new Set([pair.pos]));
-        mergeDefinitions(this.info, lemmaInfo);
+        merge(this.info, lemmaInfo);
     }
     if (this.posLinkPairs) {
         delete this.posLinkPairs;
@@ -85,16 +88,25 @@ function processLinkedArticles(articles) {
     return Promise.resolve(this);
 }
 
-function mergeDefinitions(info, newInfo) {
+function merge(info, newInfo) {
     if (!newInfo.definitions) {
         return;
     }
     if (!info.definitions) {
         info.definitions = {};
     }
-    for (var pos in newInfo.definitions) {
+    for (let pos in newInfo.definitions) {
         if (!(pos in info.definitions)) {
             info.definitions[pos] = newInfo.definitions[pos]
+        }
+    }
+    for (let pos in newInfo.inflections) {
+        if (newInfo.inflections[pos].aspect) {
+            if (!(pos in info.inflections)) {
+                info.inflections[pos] = {};
+            }
+            info.inflections[pos].aspect = newInfo.inflections[pos].aspect;
+            info.inflections[pos].aspectPartner = newInfo.inflections[pos].aspectPartner;
         }
     }
     info.titles.push(newInfo.title);

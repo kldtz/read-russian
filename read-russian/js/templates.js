@@ -1,6 +1,6 @@
 import { isCyrillic, titleCase, peek, alt, findFirst } from './utils.js'
 
-const FORM_OF = ['form of', 'abbreviation of', 'comparative of', 'superlative of', 'alternative spelling of', 'misspelling of'];
+const FORM_OF = ['form of', 'abbreviation of', 'comparative of', 'superlative of', 'alternative spelling of', 'misspelling of', 'passive form of'];
 const FORM_OF_PATTERN = new RegExp('{{(' + FORM_OF.join('|') + ')\\|(.+?)}}');
 const INFLECTION_OF_PATTERN = /{{(inflection of|ru-participle of)\|(.+?)}}/;
 const NAMED_PARAMETER = /^(\w+)=([^=]+)$/;
@@ -61,6 +61,22 @@ function parseInflectionOf(line) {
 function parseIpa(params) {
     const pMap = parseParameters(params);
     return alt(pMap.phon, pMap.ps0[0]);
+}
+
+function parseRuVerb(line) {
+    var headVerb = /{{ru-verb\|(.+?)}}/.exec(line);
+    if (headVerb) {
+        const params = parseParameters(headVerb[1].split('|'));
+        var aspect = params.ps0[1];
+        if (aspect === 'both') {
+            aspect = 'impf/pf';
+        }
+        if (aspect) {
+            const aspectPartner = params.impf ? params.impf : params.pf ? params.pf : null;
+            return { aspect: aspect, aspectPartner: aspectPartner };
+        }
+    }
+    return null;
 }
 
 function processTemplates(line) {
@@ -233,7 +249,7 @@ function replacePlace(params) {
     parts.push('(');
     parts.push(placetype);
     parts.push(')');
-    return parts.join('');    
+    return parts.join('');
 }
 
 function parsePositionalParams(params) {
@@ -263,5 +279,5 @@ function parseParameters(params) {
     return paramMap;
 }
 
-export { parseFormOf, parseInflectionOf, parseIpa, buildTemplateTrees, processTemplates };
+export { parseFormOf, parseInflectionOf, parseIpa, buildTemplateTrees, processTemplates, parseRuVerb };
 

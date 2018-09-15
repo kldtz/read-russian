@@ -1,9 +1,9 @@
 import { normalizeUrl, countChar } from './utils.js'
-import { parseFormOf, parseInflectionOf, parseIpa, processTemplates } from './templates.js'
+import { parseFormOf, parseInflectionOf, parseIpa, processTemplates, parseRuVerb } from './templates.js'
 
 const POS_HEADERS = new Set(['Adjective', 'Adverb', 'Article', 'Classifier', 'Conjunction',
   'Contraction', 'Counter', 'Determiner', 'Interjection', 'Noun', 'Numeral', 'Participle',
-  'Particle', 'Postposition', 'Predicative', 'Prefix', 'Preposition', 'Pronoun', 'Proper noun', 
+  'Particle', 'Postposition', 'Predicative', 'Prefix', 'Preposition', 'Pronoun', 'Proper noun',
   'Verb']);
 
 export default function parseArticle(markup, title, posFilter) {
@@ -30,8 +30,17 @@ function processLine(info, state, posFilter, line) {
       if (inflection) {
         let pos = inflection.pos && POS_HEADERS.has(inflection.pos) ? inflection.pos : state.pos;
         info.addInflection(pos, inflection.lemma, inflection.grammarInfo);
-      } else {
-        info.addDefinition(state.pos, extractDefinition(line));
+        return;
+      }
+      let definition = extractDefinition(line);
+      if (definition) {
+        info.addDefinition(state.pos, definition);
+        return;
+      }
+      let aspectInfo = parseRuVerb(line);
+      if (aspectInfo) {
+        info.setAspect(state.pos, aspectInfo);
+        return;
       }
     }
   }
@@ -152,6 +161,18 @@ class Info {
       this.definitions[pos] = [];
     }
     this.definitions[pos].push(definition);
+  }
+
+  setAspect(pos, aspectInfo) {
+    if (!aspectInfo) return;
+    if (!this.inflections) {
+      this.inflections = {};
+    }
+    if (!this.inflections[pos]) {
+      this.inflections[pos] = {};
+    }
+    this.inflections[pos].aspect = aspectInfo.aspect;
+    this.inflections[pos].aspectPartner = aspectInfo.aspectPartner;
   }
 
   setPronunciation(pronunciation) {

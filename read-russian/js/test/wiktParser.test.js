@@ -186,3 +186,12 @@ test('deals with trema', t => {
         t.is(info.definitions['Adjective'][0].text, 'dark');
         t.is(info.definitions['Adjective'][1].text, 'ignorant, uneducated (person)');
 });
+
+test('reads aspect information', t => {
+        const article = fs.readFileSync('test/data/знать.wiki').toString();
+
+        const info = parseArticle(article, 'знать', new Set(['Verb']));
+
+        t.is(info.inflections.Verb.aspect, 'impf');
+        t.is(info.inflections.Verb.aspectPartner, 'узна́ть')
+});

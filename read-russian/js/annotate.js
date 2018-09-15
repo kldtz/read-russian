@@ -242,20 +242,16 @@ function updateContent(div, data) {
 }
 
 function createPosSpan(data, pos) {
-    var card = { pos: pos, lemma: data.title, pronunciation: data.pronunciation, 
-        context: data.context };
+    var card = {
+        pos: pos, lemma: data.title, pronunciation: data.pronunciation,
+        context: data.context
+    };
     if (data.inflections && data.inflections[pos] && data.inflections[pos].grammarInfos) {
         card.grammarInfos = data.inflections[pos].grammarInfos;
     }
     var posLemma = document.createElement('span');
     var parts = [pos];
-    if (data.inflections && data.inflections[pos]) {
-        const p = data.inflections[pos];
-        const lemma = p.lemma ? p.lemma : p.alternative;
-        card.pronunciation = lemma;
-        card.lemma = normalize(lemma);
-        parts.push(' (' + lemma + grammarTags(data.inflections[pos].grammarInfos) + ')');
-    }
+    parts.push(generateParentheses(data, pos, card));
     if (data.definitions && data.definitions[pos]) {
         parts.push(': ');
         if (data.definitions[pos].length === 1) {
@@ -271,6 +267,36 @@ function createPosSpan(data, pos) {
     }
     posLemma.innerHTML = parts.join('');
     return posLemma;
+}
+
+function generateParentheses(data, pos, card) {
+    if (data.inflections && data.inflections[pos]) {
+        var parenContent = [];
+        const p = data.inflections[pos];
+        const lemma = p.lemma ? p.lemma : p.alternative;
+        var features = null;
+        if (lemma) {
+            card.pronunciation = lemma;
+            card.lemma = normalize(lemma);
+            parenContent.push(lemma);
+            features = grammarTags(data.inflections[pos].grammarInfos);
+            parenContent.push(features);
+        }
+        if (data.inflections[pos].aspect) {
+            if (!features) {
+                parenContent.push(data.inflections[pos].aspect);
+            }
+            if (data.inflections[pos].aspectPartner) {
+                const partner = data.inflections[pos].aspect === 'pf' ? 'impf' : 'pf';
+                parenContent.push('<span class="tags">' + partner + '</span>' +
+                    ': ' + data.inflections[pos].aspectPartner);
+            }
+        }
+        if (parenContent.length > 0) {
+            return ' (' + parenContent.filter(el => el.length > 0).join(', ') + ')';
+        }
+    }
+    return '';
 }
 
 function removeChildren(element) {
@@ -297,7 +323,7 @@ function grammarTags(grammarInfos) {
         return '';
     }
     const tags = grammarInfos.join('|');
-    return ', <span class="tags">' + tags + '</span>';
+    return '<span class="tags">' + tags + '</span>';
 }
 
 function generateDefinitionsString(definitions) {
