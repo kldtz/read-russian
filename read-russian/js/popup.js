@@ -1,7 +1,6 @@
 import { localStorage, download } from './utils.js'
 
 const DOUBLE_QUOTES = /"/g;
-const CACHE_SUFFIX = '--c';
 const FLASHCARDS = 'flashcards';
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -48,12 +47,13 @@ function saveFlashcards() {
 }
 
 function createFlashcard(k, v) {
+    const lemma = extractLemma(k);
     var fields = [
-        quote(extractLemma(k)), 
+        quote(lemma), 
         quote(v.definitions),
-        quote(v.context),
-        quote(v.pronunciation),
-        quote(v.pos + (v.grammarInfos ? ', ' + v.grammarInfos : ''))
+        quote(v.context ? v.context : ''),
+        quote(v.pronunciation ? v.pronunciation : lemma),
+        quote(v.pos.toLowerCase() + (v.grammarInfos ? ', ' + v.grammarInfos : ''))
     ];
     return fields.join(',');
 }

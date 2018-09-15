@@ -35,6 +35,9 @@ function showInfo(message) {
 
 function extractContext() {
     var selection = window.getSelection();
+    if (!selection || !selection.anchorNode) {
+        return '';
+    }
     var selectionAncestor = findFirstBlockAncestor(selection);
     const offset = getCharOffsetRelativeTo(selectionAncestor, selection.anchorNode, selection.anchorOffset);
     const text = selectionAncestor.textContent;

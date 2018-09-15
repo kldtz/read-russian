@@ -15,7 +15,7 @@ var selectionHandler = function (e) {
         var [context, data] = result;
         const regex = new RegExp(data.selection, 'g');
         const replacement = '<strong>' + data.selection + '</strong>';
-        data.info.context = context.replace(regex, replacement); 
+        if (data.info && context) data.info.context = context.replace(regex, replacement); 
         sendMessage(data); 
         cache(data); 
       })
@@ -50,7 +50,7 @@ function logError(rejectedItem) {
 }
 
 chrome.runtime.onInstalled.addListener(function () {
-  chrome.storage.local.clear(function () { });
+  //chrome.storage.local.clear(function () { });
   chrome.contextMenus.create({
     "title": "Get info for '%s'",
     "id": MENU_ITEM_ID,
