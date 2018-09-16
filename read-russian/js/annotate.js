@@ -236,39 +236,29 @@ function updateContent(div, data) {
     removeChildren(div);
     div.appendChild(createTitleAndPronunciation(data.title, data.pronunciation));
     // add colon
-    const pos_set = collectPos(data);
-    if (pos_set.size > 0) {
-        div.appendChild(document.createTextNode(': '));
-        // add features and definitions
-        for (let pos of pos_set) {
-            div.appendChild(createPosSpan(data, pos));
-            div.appendChild(document.createTextNode('. '));
-        }
+    div.appendChild(document.createTextNode(': '));
+    // add features and definitions
+    for (let pos in data.meanings) {
+        var card = {
+            pos: pos, lemma: data.title, pronunciation: data.pronunciation,
+            context: data.context
+        };
+        div.appendChild(createPosSpan(data.meanings[pos], pos, card));
+        div.appendChild(document.createTextNode('. '));
     }
 }
 
-function createPosSpan(data, pos) {
-    var card = {
-        pos: pos, lemma: data.title, pronunciation: data.pronunciation,
-        context: data.context
-    };
-    if (data.inflections && data.inflections[pos] && data.inflections[pos].grammarInfos) {
-        card.grammarInfos = data.inflections[pos].grammarInfos;
+function createPosSpan(meaning, pos, card) {
+    if (meaning.grammarInfos) {
+        card.grammarInfos = meaning.grammarInfos;
     }
     var posLemma = document.createElement('span');
     var parts = [pos];
-    if (data.inflections && data.inflections[pos]) {
-        parts.push(generateParentheses(data.inflections[pos], pos, card));
-    }
-    if (data.definitions && data.definitions[pos]) {
+    parts.push(generateParentheses(meaning, card));
+    if (meaning.definitions) {
         parts.push(': ');
-        if (data.definitions[pos].length === 1) {
-            card.definitions = data.definitions[pos][0].text;
-            parts.push(card.definitions);
-        } else {
-            card.definitions = generateDefinitionsString(data.definitions[pos]);
-            parts.push(card.definitions);
-        }
+        card.definitions = generateDefinitionsString(meaning.definitions);
+        parts.push(card.definitions);
         posLemma.className = 'flashcard-option';
         posLemma.title = "Save flashcard for '" + card.lemma + " (" + card.pos + ")'";
         posLemma.addEventListener('click', storeFlashcard.bind(card));
@@ -332,6 +322,9 @@ function grammarTags(grammarInfos) {
 }
 
 function generateDefinitionsString(definitions) {
+    if (definitions.length === 1) {
+        return definitions[0].text;
+    }
     var lastDepth = 0;
     var num = 1;
     var parts = [];
@@ -351,18 +344,6 @@ function generateDefinitionsString(definitions) {
         lastDepth = def.depth;
     }
     return parts.join('');
-}
-
-function collectPos(data) {
-    var posList = [];
-    if (data.inflections) {
-        posList.push(...Object.keys(data.inflections));
-    }
-    if (data.definitions) {
-        posList.push(...Object.keys(data.definitions));
-    }
-    posList.sort();
-    return new Set(posList);
 }
 
 function normalize(word) {

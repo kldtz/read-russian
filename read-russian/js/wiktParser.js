@@ -118,61 +118,53 @@ function extractDefinition(line) {
 class Info {
   constructor(title) {
     this.title = title;
+    this.meanings = {};
   }
 
   addInflection(pos, lemma, grammarInfo) {
-    if (!this.inflections) {
-      this.inflections = {};
+    if (!this.meanings[pos]) {
+      this.meanings[pos] = {};
     }
-    if (!this.inflections[pos]) {
-      this.inflections[pos] = {};
+    if (!this.meanings[pos].lemma) {
+      this.meanings[pos].lemma = lemma;
     }
-    if (!this.inflections[pos].lemma) {
-      this.inflections[pos].lemma = lemma;
+    if (!this.meanings[pos].normalizedLemma) {
+      this.meanings[pos].normalizedLemma = normalizeUrl(lemma);
     }
-    if (!this.inflections[pos].normalizedLemma) {
-      this.inflections[pos].normalizedLemma = normalizeUrl(lemma);
-    }
-    if (!this.inflections[pos].grammarInfos) {
-      this.inflections[pos].grammarInfos = []
-    } else if (this.inflections[pos].grammarInfos.indexOf(grammarInfo) > -1) {
+    if (!this.meanings[pos].grammarInfos) {
+      this.meanings[pos].grammarInfos = []
+    } else if (this.meanings[pos].grammarInfos.indexOf(grammarInfo) > -1) {
       return;
     }
-    this.inflections[pos].grammarInfos.push(grammarInfo);
+    this.meanings[pos].grammarInfos.push(grammarInfo);
   }
 
   setAlternativeForm(pos, alternativeForm) {
     if (!alternativeForm) return;
-    if (!this.inflections) {
-      this.inflections = {};
+    if (!this.meanings[pos]) {
+      this.meanings[pos] = {};
     }
-    if (!this.inflections[pos]) {
-      this.inflections[pos] = {};
-    }
-    this.inflections[pos].alternative = alternativeForm;
+    this.meanings[pos].alternative = alternativeForm;
   }
 
   addDefinition(pos, definition) {
     if (!definition) return;
-    if (!this.definitions) {
-      this.definitions = {};
+    if (!this.meanings[pos]) {
+      this.meanings[pos] = {};
     }
-    if (!this.definitions[pos]) {
-      this.definitions[pos] = [];
+    if (!this.meanings[pos].definitions) {
+      this.meanings[pos].definitions = [];
     }
-    this.definitions[pos].push(definition);
+    this.meanings[pos].definitions.push(definition);
   }
 
   setAspect(pos, aspectInfo) {
     if (!aspectInfo) return;
-    if (!this.inflections) {
-      this.inflections = {};
+    if (!this.meanings[pos]) {
+      this.meanings[pos] = {};
     }
-    if (!this.inflections[pos]) {
-      this.inflections[pos] = {};
-    }
-    this.inflections[pos].aspect = aspectInfo.aspect;
-    this.inflections[pos].aspectPartner = aspectInfo.aspectPartner;
+    this.meanings[pos].aspect = aspectInfo.aspect;
+    this.meanings[pos].aspectPartner = aspectInfo.aspectPartner;
   }
 
   setPronunciation(pronunciation) {
@@ -182,43 +174,32 @@ class Info {
   }
 
   merge(newInfo) {
-    if (!newInfo.definitions) {
-      return;
-    }
-    if (!this.definitions) {
-      this.definitions = {};
-    }
-    for (let pos in newInfo.definitions) {
-      if (!(pos in this.definitions)) {
-        this.definitions[pos] = newInfo.definitions[pos]
+    for (let pos in newInfo.meanings) {
+      if (!(pos in this.meanings)) {
+        this.meanings[pos] = newInfo.meanings[pos];
       }
-    }
-    for (let pos in newInfo.inflections) {
-      if (newInfo.inflections[pos].aspect) {
-        if (!(pos in this.inflections)) {
-          this.inflections[pos] = {};
-        }
-        this.inflections[pos].aspect = newInfo.inflections[pos].aspect;
-        this.inflections[pos].aspectPartner = newInfo.inflections[pos].aspectPartner;
+      if (newInfo.meanings[pos].definitions && !this.meanings[pos].definitions) {
+        this.meanings[pos].definitions = newInfo.meanings[pos].definitions;
+      }
+      if (newInfo.meanings[pos].aspect) {
+        this.meanings[pos].aspect = newInfo.meanings[pos].aspect;
+        this.meanings[pos].aspectPartner = newInfo.meanings[pos].aspectPartner;
       }
     }
     this.titles.push(newInfo.title);
   }
-  
+
   collectPosLinkPairs() {
-    if (!this.inflections) {
-      return [];
-    }
     var posLinkPairs = [];
-    for (let pos in this.inflections) {
-      if (this.definitions && this.definitions[pos]) {
+    for (let pos in this.meanings) {
+      let meaning = this.meanings[pos];
+      if (meaning.definitions) {
         continue;
       }
-      let iipos = this.inflections[pos];
-      if (!iipos.normalizedLemma && !iipos.alternative) {
+      if (!meaning.normalizedLemma && !meaning.alternative) {
         continue;
       }
-      let link = alt(iipos.normalizedLemma, iipos.alternative);
+      let link = alt(meaning.normalizedLemma, meaning.alternative);
       posLinkPairs.push({ pos: pos, link: link });
     }
     return posLinkPairs;
