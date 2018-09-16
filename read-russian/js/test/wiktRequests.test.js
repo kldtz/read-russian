@@ -28,7 +28,7 @@ test('Collects expected information from article', t => {
     return wiktRequests.collectInfo(selection).then(result => {
         t.is(result.title, selection);
         t.is(result.info.pronunciation, 'число́');
-        t.is(result.info.definitions.Noun[0].text, 'cardinal number');
+        t.is(result.info.meanings.Noun.definitions[0].text, 'cardinal number');
     });
 });
 
@@ -76,7 +76,7 @@ test('Keeps trema in normalized lemma for URL', t => {
 
     return wiktRequests.collectInfo(selection).then(result => {
         t.is(result.info.title, 'полёта'); // U+0451
-        t.is(result.info.definitions.Noun[0].text, 'flight, flying');
+        t.is(result.info.meanings.Noun.definitions[0].text, 'flight, flying');
     });
 
 });
