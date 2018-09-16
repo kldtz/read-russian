@@ -1,4 +1,4 @@
-import { normalizeUrl, countChar } from './utils.js'
+import { normalizeUrl, countChar, alt } from './utils.js'
 import { parseFormOf, parseInflectionOf, parseIpa, processTemplates, parseRuVerb } from './templates.js'
 
 const POS_HEADERS = new Set(['Adjective', 'Adverb', 'Article', 'Classifier', 'Conjunction',
@@ -179,6 +179,49 @@ class Info {
     if (!this.pronunciation && pronunciation) {
       this.pronunciation = pronunciation;
     }
+  }
+
+  merge(newInfo) {
+    if (!newInfo.definitions) {
+      return;
+    }
+    if (!this.definitions) {
+      this.definitions = {};
+    }
+    for (let pos in newInfo.definitions) {
+      if (!(pos in this.definitions)) {
+        this.definitions[pos] = newInfo.definitions[pos]
+      }
+    }
+    for (let pos in newInfo.inflections) {
+      if (newInfo.inflections[pos].aspect) {
+        if (!(pos in this.inflections)) {
+          this.inflections[pos] = {};
+        }
+        this.inflections[pos].aspect = newInfo.inflections[pos].aspect;
+        this.inflections[pos].aspectPartner = newInfo.inflections[pos].aspectPartner;
+      }
+    }
+    this.titles.push(newInfo.title);
+  }
+  
+  collectPosLinkPairs() {
+    if (!this.inflections) {
+      return [];
+    }
+    var posLinkPairs = [];
+    for (let pos in this.inflections) {
+      if (this.definitions && this.definitions[pos]) {
+        continue;
+      }
+      let iipos = this.inflections[pos];
+      if (!iipos.normalizedLemma && !iipos.alternative) {
+        continue;
+      }
+      let link = alt(iipos.normalizedLemma, iipos.alternative);
+      posLinkPairs.push({ pos: pos, link: link });
+    }
+    return posLinkPairs;
   }
 }
 

@@ -48,68 +48,23 @@ function processBestResult(article) {
 
 function followLinks(data) {
     var promises = [];
-    if (data.info.inflections) {
-        data.posLinkPairs = collectPosLinkPairs(data.info);
-        for (let pair of data.posLinkPairs) {
-            promises.push(httpGetPromise(EN_WIKI + normalizeUrl(pair.link) + '?action=raw'));
-        }
+    data.posLinkPairs = data.info.collectPosLinkPairs();
+    for (let pair of data.posLinkPairs) {
+        promises.push(httpGetPromise(EN_WIKI + normalizeUrl(pair.link) + '?action=raw'));
     }
     return Promise.all(promises);
-}
-
-function collectPosLinkPairs(info) {
-    if (!info.inflections) {
-        return [];
-    }
-    var posLinkPairs = [];
-    for (let pos in info.inflections) {
-        if (info.definitions && info.definitions[pos]) {
-            continue;
-        }
-        let iipos = info.inflections[pos];
-        if (!iipos.normalizedLemma && !iipos.alternative) {
-            continue;
-        }
-        let link = alt(iipos.normalizedLemma, iipos.alternative);
-        posLinkPairs.push({ pos: pos, link: link });
-    }
-    return posLinkPairs;
 }
 
 function processLinkedArticles(articles) {
     for (let i = 0; i < articles.length; i++) {
         let pair = this.posLinkPairs[i];
         const lemmaInfo = parseArticle(articles[i], pair.link, new Set([pair.pos]));
-        merge(this.info, lemmaInfo);
+        this.info.merge(lemmaInfo);
     }
     if (this.posLinkPairs) {
         delete this.posLinkPairs;
     }
     return Promise.resolve(this);
-}
-
-function merge(info, newInfo) {
-    if (!newInfo.definitions) {
-        return;
-    }
-    if (!info.definitions) {
-        info.definitions = {};
-    }
-    for (let pos in newInfo.definitions) {
-        if (!(pos in info.definitions)) {
-            info.definitions[pos] = newInfo.definitions[pos]
-        }
-    }
-    for (let pos in newInfo.inflections) {
-        if (newInfo.inflections[pos].aspect) {
-            if (!(pos in info.inflections)) {
-                info.inflections[pos] = {};
-            }
-            info.inflections[pos].aspect = newInfo.inflections[pos].aspect;
-            info.inflections[pos].aspectPartner = newInfo.inflections[pos].aspectPartner;
-        }
-    }
-    info.titles.push(newInfo.title);
 }
 
 function handleReject(rejectedItem) {

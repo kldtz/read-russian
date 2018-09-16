@@ -33,6 +33,8 @@ function showInfo(message) {
     }
 }
 
+// start content extraction
+
 function extractContext() {
     var selection = window.getSelection();
     if (!selection || !selection.anchorNode) {
@@ -103,6 +105,8 @@ function indexBeforePreviousWords(text, offset) {
 function reverse(str) {
     return [...str].reverse().join('');
 }
+
+// end content extraction
 
 function generateTitlesString(titles) {
     return '(' + titles.map(convertToLink).join(', ') + ')';
@@ -226,9 +230,11 @@ function createFooter() {
     return footer;
 }
 
+// start display generation
+
 function updateContent(div, data) {
     removeChildren(div);
-    div.appendChild(createTitleAndPronunciation(data));
+    div.appendChild(createTitleAndPronunciation(data.title, data.pronunciation));
     // add colon
     const pos_set = collectPos(data);
     if (pos_set.size > 0) {
@@ -251,7 +257,9 @@ function createPosSpan(data, pos) {
     }
     var posLemma = document.createElement('span');
     var parts = [pos];
-    parts.push(generateParentheses(data, pos, card));
+    if (data.inflections && data.inflections[pos]) {
+        parts.push(generateParentheses(data.inflections[pos], pos, card));
+    }
     if (data.definitions && data.definitions[pos]) {
         parts.push(': ');
         if (data.definitions[pos].length === 1) {
@@ -269,32 +277,29 @@ function createPosSpan(data, pos) {
     return posLemma;
 }
 
-function generateParentheses(data, pos, card) {
-    if (data.inflections && data.inflections[pos]) {
-        var parenContent = [];
-        const p = data.inflections[pos];
-        const lemma = p.lemma ? p.lemma : p.alternative;
-        var features = null;
-        if (lemma) {
-            card.pronunciation = lemma;
-            card.lemma = normalize(lemma);
-            parenContent.push(lemma);
-            features = grammarTags(data.inflections[pos].grammarInfos);
-            parenContent.push(features);
+function generateParentheses(meaning, card) {
+    var parts = [];
+    const lemma = meaning.lemma ? meaning.lemma : meaning.alternative;
+    var features = null;
+    if (lemma) {
+        card.pronunciation = lemma;
+        card.lemma = normalize(lemma);
+        parts.push(lemma);
+        features = grammarTags(meaning.grammarInfos);
+        parts.push(features);
+    }
+    if (meaning.aspect) {
+        if (!features) {
+            parts.push('<span class="tags">' + meaning.aspect + '</span>');
         }
-        if (data.inflections[pos].aspect) {
-            if (!features) {
-                parenContent.push(data.inflections[pos].aspect);
-            }
-            if (data.inflections[pos].aspectPartner) {
-                const partner = data.inflections[pos].aspect === 'pf' ? 'impf' : 'pf';
-                parenContent.push('<span class="tags">' + partner + '</span>' +
-                    ': ' + data.inflections[pos].aspectPartner);
-            }
+        if (meaning.aspectPartner) {
+            const partner = meaning.aspect === 'pf' ? 'impf' : 'pf';
+            parts.push('<span class="tags">' + partner + '</span>' +
+                ': ' + meaning.aspectPartner);
         }
-        if (parenContent.length > 0) {
-            return ' (' + parenContent.filter(el => el.length > 0).join(', ') + ')';
-        }
+    }
+    if (parts.length > 0) {
+        return ' (' + parts.filter(el => el.length > 0).join(', ') + ')';
     }
     return '';
 }
@@ -305,17 +310,17 @@ function removeChildren(element) {
     }
 }
 
-function createTitleAndPronunciation(data) {
-    var title = document.createElement('span');
-    title.id = 'titleAndPronunciation'
-    if (!data.pronunciation) {
-        title.innerHTML = data.title;
-    } else if (normalize(data.pronunciation) == normalize(data.title)) {
-        title.innerHTML = data.pronunciation;
+function createTitleAndPronunciation(title, pronunciation) {
+    var titleSpan = document.createElement('span');
+    titleSpan.id = 'titleAndPronunciation'
+    if (!pronunciation) {
+        titleSpan.innerHTML = title;
+    } else if (normalize(pronunciation) == normalize(title)) {
+        titleSpan.innerHTML = pronunciation;
     } else {
-        title.innerHTML = data.title + ' [' + data.pronunciation + ']';
+        titleSpan.innerHTML = title + ' [' + pronunciation + ']';
     }
-    return title;
+    return titleSpan;
 }
 
 function grammarTags(grammarInfos) {
@@ -363,3 +368,5 @@ function collectPos(data) {
 function normalize(word) {
     return word.normalize('NFD').replace(/[\u0300-\u0303\u0308]/g, '');
 }
+
+// end display generation
