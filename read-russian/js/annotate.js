@@ -240,8 +240,8 @@ function updateContent(div, data) {
     // add features and definitions
     for (let pos in data.meanings) {
         var card = {
-            pos: pos, lemma: data.title, pronunciation: data.pronunciation,
-            context: data.context
+            pos: pos.toLowerCase(), lemma: data.title, pronunciation: data.pronunciation,
+            context: data.context, wordFormFeatures: '', lemmaFeatures: ''
         };
         div.appendChild(createPosSpan(data.meanings[pos], pos, card));
         div.appendChild(document.createTextNode('. '));
@@ -250,7 +250,7 @@ function updateContent(div, data) {
 
 function createPosSpan(meaning, pos, card) {
     if (meaning.grammarInfos) {
-        card.grammarInfos = meaning.grammarInfos;
+        card.wordFormFeatures += meaning.grammarInfos.join('|');
     }
     var posLemma = document.createElement('span');
     var parts = [pos];
@@ -286,6 +286,7 @@ function generateParentheses(meaning, card) {
             const partner = meaning.aspect === 'pf' ? 'impf' : 'pf';
             parts.push('<span class="tags">' + partner + '</span>' +
                 ': ' + meaning.aspectPartner);
+            card.lemmaFeatures = meaning.aspect + ', ' + partner + ': ' + meaning.aspectPartner;
         }
     }
     if (parts.length > 0) {

@@ -53,7 +53,9 @@ function createFlashcard(k, v) {
         quote(v.definitions),
         quote(v.context ? v.context : ''),
         quote(v.pronunciation ? v.pronunciation : lemma),
-        quote(v.pos.toLowerCase() + (v.grammarInfos ? ', ' + v.grammarInfos : ''))
+        quote(v.pos),
+        quote(v.lemmaFeatures),
+        quote(v.wordFormFeatures)
     ];
     return fields.join(',');
 }
