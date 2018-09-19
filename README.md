@@ -20,7 +20,9 @@ CSV files can be imported into Anki via _Files > Import..._ - please make sure t
 2. Translations
 3. Context
 4. Pronunciation
-5. POS, morphosyntactic features
+5. POS
+6. Lemma features
+7. Word form features
 
 ## License
 
