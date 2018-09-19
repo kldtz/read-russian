@@ -13,9 +13,7 @@ var selectionHandler = function (e) {
     extractContextAndCollectInfo(e.selectionText)
       .then(result => {
         var [context, data] = result;
-        const regex = new RegExp(data.selection, 'g');
-        const replacement = '<strong>' + data.selection + '</strong>';
-        if (data.info && context) data.info.context = context.replace(regex, replacement);
+        if (data.info && context) data.info.context = context;
         sendMessage(data); 
         cache(data); 
       })
@@ -24,7 +22,7 @@ var selectionHandler = function (e) {
 }
 
 function extractContextAndCollectInfo(selection) {
-  var data = {message: 'context'};
+  var data = {message: 'context', selectedText: selection};
   const contextPromise = getContextPromise(data);
   const infoPromise = collectInfo(selection);
   return Promise.all([contextPromise, infoPromise]);

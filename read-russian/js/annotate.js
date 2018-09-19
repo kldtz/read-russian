@@ -10,7 +10,7 @@ var maxCardsDiv;
 
 chrome.runtime.onMessage.addListener(function (message, sender, callback) {
     if (message.message === 'context') {
-        callback(extractContext());
+        callback(extractContext(message.selectedText));
         return;
     }
     showInfo(message);
@@ -35,7 +35,7 @@ function showInfo(message) {
 
 // start content extraction
 
-function extractContext() {
+function extractContext(selectedText) {
     var selection = window.getSelection();
     if (!selection || !selection.anchorNode) {
         return '';
@@ -59,7 +59,12 @@ function extractContext() {
         start = indexBeforePreviousWords(text, offset);
         prefix = '... ';
     }
-    return prefix + text.substring(start, end).trim().replace(/\s+/g, ' ') + suffix;
+    var parts = [prefix];
+    parts.push(text.substring(start, offset).trimLeft().replace(/\s+/g, ' '));
+    parts.push('<strong>' + selectedText + '</strong>');
+    parts.push(text.substring(offset + selectedText.length, end).trimRight().replace(/\s+/g, ' '));
+    parts.push(suffix);
+    return parts.join('');
 }
 
 function findFirstBlockAncestor(selection) {
