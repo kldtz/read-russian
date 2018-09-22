@@ -47,17 +47,21 @@ function saveFlashcards() {
 }
 
 function createFlashcard(k, v) {
-    const lemma = extractLemma(k);
-    var fields = [
-        quote(lemma), 
-        quote(v.definitions),
-        quote(v.context ? v.context : ''),
-        quote(v.pronunciation ? v.pronunciation : lemma),
-        quote(v.pos),
-        quote(v.lemmaFeatures),
-        quote(v.wordFormFeatures)
-    ];
-    return fields.join(',');
+    const front = extractLemma(k);
+    const context = (v.context ? div('sentence', v.context) : '') +
+        div('features', v.pos + (v.wordFormFeatures ? ', ' + v.wordFormFeatures : '')
+        + (v.lemmaFeatures ? ', ' + v.lemmaFeatures : ''));
+    const back = div('definitions', span('pronunciation', 
+        (v.pronunciation ? v.pronunciation : lemma)) + ' ' + v.definitions);
+    return [quote(front), quote(context), quote(back)].join(',');
+}
+
+function div(classLabel, content) {
+    return '<div class="' + classLabel + '">' + content + '</div>';
+}
+
+function span(classLabel, content) {
+    return '<span class="' + classLabel + '">' + content + '</span>';
 }
 
 function extractLemma(value) {

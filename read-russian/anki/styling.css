@@ -5,9 +5,33 @@
     color: black;
     background-color: white;
 }
-   
-.context {
-    margin-top: 5px;
-    font-size: 15px;
+
+.hint {
+    font-size: 16px;
 }
-   
+
+.pronunciation::before {
+    content: '[';
+}
+
+.pronunciation::after {
+    content: ']:';
+}
+
+.sentence {
+    margin-top: 5px;
+    font-size: 18px;
+}
+
+.features {
+    margin-top: 5px;
+    font-size: 18px;
+}
+
+.features::after {
+    content: '.';
+}
+
+.tags {
+    font-variant: small-caps;
+}
