@@ -16,13 +16,15 @@ CSV files can be imported into Anki via _Files > Import..._ - please make sure t
 
 ## CSV Fields
 
-1. Lemma
-2. Translations
-3. Context
-4. Pronunciation
-5. POS
-6. Lemma features
-7. Word form features
+1. Front
+    * Lemma
+2. Back
+    * Pronunciation
+    * Translations
+3. Additional information
+    * Context
+    * POS
+    * Features
 
 ## License
 
