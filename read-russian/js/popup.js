@@ -53,7 +53,7 @@ function createFlashcard(k, v) {
         + (v.lemmaFeatures ? ', ' + v.lemmaFeatures : ''));
     const back = div('definitions', span('pronunciation', 
         (v.pronunciation ? v.pronunciation : lemma)) + ' ' + v.definitions);
-    return [quote(front), quote(context), quote(back)].join(',');
+    return [quote(front), quote(back), quote(context)].join(',');
 }
 
 function div(classLabel, content) {
