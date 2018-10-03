@@ -228,6 +228,7 @@ function createFooter() {
     titles.className = 'wikt-info-class';
     footer.appendChild(document.createTextNode('This information was aggregated from '));
     footer.appendChild(wiktionaryLink);
+    footer.appendChild(document.createTextNode(' '));
     footer.appendChild(titles);
     footer.appendChild(document.createTextNode(' under '));
     footer.appendChild(licenseLink);
