@@ -48,7 +48,7 @@ function logError(rejectedItem) {
 }
 
 chrome.runtime.onInstalled.addListener(function () {
-  chrome.storage.local.clear(function () { });
+  //chrome.storage.local.clear(function () { });
   chrome.contextMenus.create({
     "title": "Get info for '%s'",
     "id": MENU_ITEM_ID,

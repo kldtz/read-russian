@@ -1,6 +1,7 @@
 {
-    "name": "Learn Russian by Reading",
-    "version": "1.3.0",
+    "name": "Read Russian",
+    "short_name": "Read Russian",
+    "version": "1.3.2",
     "description": "Helps you learn Russian by translating words and creating flashcards.",
     "permissions": [
         "contextMenus",

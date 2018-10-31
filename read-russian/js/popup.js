@@ -41,7 +41,7 @@ function saveFlashcards() {
             if (rejectedItem === 'No Flashcards!') {
                 alert('No flashcards to export!');
             } else {
-                console.error(JSON.stringify(rejectedItem));
+                console.error(rejectedItem);
             }
         });
 }
@@ -52,7 +52,7 @@ function createFlashcard(k, v) {
         div('features', v.pos + (v.wordFormFeatures ? ', ' + v.wordFormFeatures : '')
         + (v.lemmaFeatures ? ', ' + v.lemmaFeatures : ''));
     const back = div('definitions', span('pronunciation', 
-        (v.pronunciation ? v.pronunciation : lemma)) + ' ' + v.definitions);
+        (v.pronunciation ? v.pronunciation : front)) + ' ' + v.definitions);
     return [quote(front), quote(back), quote(context)].join(',');
 }
 
