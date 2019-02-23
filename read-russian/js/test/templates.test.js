@@ -157,3 +157,12 @@ test('replaces given name', t => {
 
     t.is(replacement, 'male given name');
 });
+
+
+test('removes links in inflection-of template', t => {
+    const line = '{{inflection of|lang=ru|[[выходить#Etymology 2|вы́ходить]]||3|s|fut|ind|pfv}}';
+
+    const info = parseInflectionOf(line);
+
+    t.is(info.lemma, 'выходить');
+});

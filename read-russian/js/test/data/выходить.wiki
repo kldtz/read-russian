@@ -1,0 +1,22 @@
+
+==Russian==
+
+===Etymology 1===
+
+====Pronunciation====
+* {{ru-IPA|выхо́дит}}
+
+====Verb====
+{{head|ru|verb form|head=выхо́дит}}
+
+# {{inflection of|lang=ru|[[выходить#Etymology 1|выходи́ть]]||3|s|pres|ind|impfv}}
+
+===Etymology 2===
+
+====Pronunciation====
+* {{ru-IPA|вы́ходит}}
+
+====Verb====
+{{head|ru|verb form|head=вы́ходит}}
+
+# {{inflection of|lang=ru|[[выходить#Etymology 2|вы́ходить]]||3|s|fut|ind|pfv}}

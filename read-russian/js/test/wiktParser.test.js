@@ -199,5 +199,13 @@ test('reads aspect information', t => {
         const info = parseArticle(article, 'знать', new Set(['Verb']));
 
         t.is(info.meanings.Verb.aspect, 'impf');
-        t.is(info.meanings.Verb.aspectPartner, 'узна́ть')
+        t.is(info.meanings.Verb.aspectPartner, 'узна́ть');
+});
+
+test('removes links in inflection-of template', t => {
+        const article = fs.readFileSync('test/data/выходить.wiki').toString();
+
+        const info = parseArticle(article, 'выходить', new Set(['Verb']));
+
+        t.is(info.meanings.Verb.lemma, 'выходить');
 });

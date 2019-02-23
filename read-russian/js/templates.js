@@ -4,6 +4,7 @@ const FORM_OF = ['form of', 'abbreviation of', 'comparative of', 'superlative of
 const FORM_OF_PATTERN = new RegExp('{{(' + FORM_OF.join('|') + ')\\|(.+?)}}');
 const INFLECTION_OF_PATTERN = /{{(inflection of|ru-participle of)\|(.+?)}}/;
 const NAMED_PARAMETER = /^(\w+)=([^=]+)$/;
+const SIMPLE_LINK = /\[\[([^{}\[]+)\]\]/g;
 const TEMPLATE_FUNCTION_MAPPING = {
     'diminutive of': replaceDiminutive,
     'given name': replaceGivenName,
@@ -49,13 +50,33 @@ function parseInflectionOf(line) {
         return null;
     }
     var info = {};
-    const pMap = parseParameters(inflectionOf[2].split('|'));
+    // TODO: replace links
+    let templateString = replaceLinksNaively(inflectionOf[2]);
+    const pMap = parseParameters(templateString.split('|'));
     if (pMap.pos) {
         info.pos = titleCase(pMap.pos);
     }
     info.lemma = alt(findFirst(pMap.ps0, isCyrillic), pMap.ps0[0]);
     info.grammarInfo = pMap.ps0.filter(el => el.length > 0 && !isCyrillic(el)).join('.');
     return info;
+}
+
+function replaceLinksNaively(line) {
+    var output = [];
+    var match;
+    var start = 0;
+    while (match = SIMPLE_LINK.exec(line)) {
+        output.push(line.substring(start, match.index));
+        let fields = match[1].split('|');
+        let lemma = fields[0].split('#')[0];
+        output.push(lemma);
+        start = match.index + match[0].length;
+    }
+    if (start == 0) {
+        return line;
+    }
+    output.push(line.substring(start))
+    return output.join('');
 }
 
 function parseIpa(params) {
