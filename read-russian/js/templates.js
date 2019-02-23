@@ -50,7 +50,6 @@ function parseInflectionOf(line) {
         return null;
     }
     var info = {};
-    // TODO: replace links
     let templateString = replaceLinksNaively(inflectionOf[2]);
     const pMap = parseParameters(templateString.split('|'));
     if (pMap.pos) {
