@@ -4,7 +4,7 @@ const FORM_OF = ['form of', 'abbreviation of', 'comparative of', 'superlative of
 const FORM_OF_PATTERN = new RegExp('{{(' + FORM_OF.join('|') + ')\\|(.+?)}}');
 const INFLECTION_OF_PATTERN = /{{(inflection of|ru-participle of)\|(.+?)}}/;
 const NAMED_PARAMETER = /^(\w+)=([^=]+)$/;
-const SIMPLE_LINK = /\[\[([^{}\[]+)\]\]/g;
+const SIMPLE_LINK = /\[\[([^{}\[]+?)\]\]/g;
 const TEMPLATE_FUNCTION_MAPPING = {
     'diminutive of': replaceDiminutive,
     'given name': replaceGivenName,
