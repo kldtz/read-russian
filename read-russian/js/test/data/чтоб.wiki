@@ -1,0 +1,15 @@
+==Russian==
+
+===Etymology===
+{{affix|ru|что|б}}
+
+===Pronunciation===
+* {{ru-IPA}}
+* {{audio|ru|Ru-чтоб.ogg|Audio}}
+
+===Conjunction===
+{{head|ru|conjunction}} {{qualifier|+ past tense or the infinitive}}
+
+# {{alternative form of|ru|что́бы}}
+
+[[Category:Russian terms with irregular pronunciations]]

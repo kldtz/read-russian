@@ -1,6 +1,6 @@
 import { isCyrillic, titleCase, peek, alt, findFirst } from './utils.js'
 
-const FORM_OF = ['form of', 'abbreviation of', 'comparative of', 'superlative of', 'alternative spelling of', 'misspelling of', 'passive form of'];
+const FORM_OF = ['form of', 'abbreviation of', 'comparative of', 'superlative of', 'alternative spelling of', 'misspelling of', 'passive form of', 'alternative form of'];
 const FORM_OF_PATTERN = new RegExp('{{(' + FORM_OF.join('|') + ')\\|(.+?)}}');
 const INFLECTION_OF_PATTERN = /{{(inflection of|ru-participle of)\|(.+?)}}/;
 const NAMED_PARAMETER = /^(\w+)=([^=]+)$/;
@@ -30,12 +30,17 @@ const TEMPLATE_FUNCTION_MAPPING = {
 const NAME_GENDER = new Set(['male', 'female', 'unisex']);
 
 function parseFormOf(line) {
-    const formOf = FORM_OF_PATTERN.exec(line);
-    if (!formOf) {
-        return null;
-    }
     var info = {};
-    info.grammarInfo = formOf[1].substring(0, formOf[1].length - 3);
+    var formOf = FORM_OF_PATTERN.exec(line);
+    if (!formOf) {
+        formOf = /{{(ru-.+?-alt-ё)\|(.+?)}}/.exec(line);
+        if (!formOf) {
+            return null;
+        }
+        info.grammarInfo = "alternative spelling";
+    } else {
+        info.grammarInfo = formOf[1].substring(0, formOf[1].length - 3);
+    }
     const pMap = parseParameters(formOf[2].split('|'));
     if (pMap.pos) {
         info.pos = titleCase(pMap.pos);

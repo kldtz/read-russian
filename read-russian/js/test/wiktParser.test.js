@@ -57,6 +57,14 @@ test('reads only filtered pos', t => {
         t.falsy(info.meanings.Adverb);
 });
 
+test('extracts alternative form', t => {
+        const article = fs.readFileSync('test/data/чтоб.wiki').toString();
+
+        const info = parseArticle(article, 'чтоб');
+
+        t.is(info.meanings.Conjunction.alternative, 'что́бы');
+});
+
 test('extracts alternative noun form', t => {
         const article = fs.readFileSync('test/data/счет.wiki').toString();
 

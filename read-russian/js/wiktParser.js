@@ -79,9 +79,9 @@ function updatePos(state, line, posFilter) {
 }
 
 function extractAlternativeForm(line) {
-  var alternative = /{{(ru-.+?-alt-ё|alternative form of)\|(.+?)}}/.exec(line);
+  var alternative = parseFormOf(line);
   if (alternative) {
-    return alternative[2].split('|')[0];
+    return alternative.lemma;
   }
   return null;
 }
