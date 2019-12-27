@@ -156,6 +156,7 @@ function replaceTemplates(roots, line, start, end) {
 
 function replaceTemplate(root, line) {
     if (!(root.name in TEMPLATE_FUNCTION_MAPPING)) {
+        //console.log(root.name);
         return ''; // unknown templates are removed
     }
     let paramStrings = [];
@@ -238,7 +239,7 @@ function replaceAcronym(params) {
 function replaceDiminutive(params) {
     const ps = parsePositionalParams(params);
     var parts = ['<span class="diminutive">diminutive of '];
-    parts.push(ps[0]);
+    parts.push(alt(findFirst(ps, isCyrillic), ps[0]));
     parts.push('</span>');
     return parts.join('');
 }
@@ -257,7 +258,7 @@ function replaceGivenName(params) {
 function replacePejorative(params) {
     const ps = parsePositionalParams(params);
     var parts = ['<span class="pejorative">pejorative of ']
-    parts.push(ps[0]);
+    parts.push(alt(findFirst(ps, isCyrillic), ps[0]));
     parts.push('</span>')
     return parts.join('');
 }

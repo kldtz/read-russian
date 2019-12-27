@@ -1,4 +1,4 @@
-const CYRILLIC = /^[\u0300-\u036F\u0410-\u045F\-]+$/;
+const CYRILLIC = /^[\u0300-\u036F\u0410-\u045Fо́\-]+$/;
 
 function findBestResult(searchTerm, titles) {
     var swTitles = titles.filter(title => title.split(/\s+/).length === 1);
