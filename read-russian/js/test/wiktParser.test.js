@@ -127,7 +127,7 @@ test('removes only first part inside link', t => {
 
         t.is(info.meanings.Noun.definitions.length, 2);
         t.is(info.meanings.Noun.definitions[0].text, 'series');
-        t.is(info.meanings.Noun.definitions[1].text, 'episode, part')
+        t.is(info.meanings.Noun.definitions[1].text, 'episode, part (TV)')
 });
 
 test('parses template w (shorter links to English Wikipedia)', t => {

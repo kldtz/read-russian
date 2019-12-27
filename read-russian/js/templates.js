@@ -1,6 +1,6 @@
 import { isCyrillic, titleCase, peek, alt, findFirst } from './utils.js'
 
-const FORM_OF = ['form of', 'abbreviation of', 'comparative of', 'superlative of', 'alternative spelling of', 'misspelling of', 'passive form of', 'alternative form of'];
+const FORM_OF = ['form of', 'abbreviation of', 'comparative of', 'superlative of', 'alternative spelling of', 'misspelling of', 'passive form of', 'passive of', 'alternative form of'];
 const FORM_OF_PATTERN = new RegExp('{{(' + FORM_OF.join('|') + ')\\|(.+?)}}');
 const INFLECTION_OF_PATTERN = /{{(inflection of|ru-participle of)\|(.+?)}}/;
 const NAMED_PARAMETER = /^(\w+)=([^=]+)$/;
@@ -21,6 +21,8 @@ const TEMPLATE_FUNCTION_MAPPING = {
     m: replaceMention,
     mention: replaceMention,
     'non-gloss definition': replaceNonGlossDefinition,
+    q: replaceI,
+    'qualifier': replaceI,
     'pejorative of': replacePejorative,
     place: replacePlace,
     'ru-acronym of': replaceAcronym,
@@ -61,7 +63,7 @@ function parseInflectionOf(line) {
         info.pos = titleCase(pMap.pos);
     }
     info.lemma = alt(findFirst(pMap.ps0, isCyrillic), pMap.ps0[0]);
-    info.grammarInfo = pMap.ps0.filter(el => el.length > 0 && !isCyrillic(el)).join('.');
+    info.grammarInfo = pMap.ps0.filter(el => el.length > 0 && !isCyrillic(el) && el != 'ru').join('.');
     return info;
 }
 
@@ -156,7 +158,7 @@ function replaceTemplates(roots, line, start, end) {
 
 function replaceTemplate(root, line) {
     if (!(root.name in TEMPLATE_FUNCTION_MAPPING)) {
-        //console.log(root.name);
+        //alert(root.name);
         return ''; // unknown templates are removed
     }
     let paramStrings = [];
